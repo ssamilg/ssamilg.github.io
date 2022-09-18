@@ -1,16 +1,13 @@
 <script>
-import { defineComponent } from '@vue/composition-api'
-
-export default defineComponent({
+export default {
   name: 'Home',
-  setup() {
-    
-  },
-})
+}
 </script>
 
 <template>
   <div>
-    hello there !
+    <h1 class="text-3xl font-bold underline">
+      Hello world!
+    </h1>
   </div>
 </template>
