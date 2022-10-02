@@ -1,6 +1,28 @@
-<script>
+<script >
+ import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+
 export default {
   name: 'Home',
+  components: {
+    Tab,
+    TabList,
+    TabPanel,
+    TabGroup,
+    TabPanels,
+  },
+  data() {
+    return {
+      tabs: [
+        { id: 0, title: 'Me'},
+        { id: 1, title: 'Experience'},
+        { id: 2, title: 'Projects'},
+        { id: 3, title: 'Blog'},
+        { id: 4, title: 'Music'},
+        { id: 5, title: 'Contact'},
+      ],
+      activeTabId: 0,
+    };
+  },
 }
 </script>
 
@@ -34,15 +56,41 @@ export default {
         <div class="divider"/>
  
         <div class="content">
-          <div class="flex justify-center">
-
-            <div class="tabs tabs-boxed">
-              <a class="tab">Me</a> 
-              <a class="tab tab-active">Experience</a> 
-              <a class="tab">Contact</a>
-              <a class="tab">Blog</a>
-              <a class="tab">Music</a>
+          <TabGroup>
+            <div class="flex flex-row justify-center w-full">
+              <div>
+                <TabList class="tabs tabs-boxed justify-center">
+                  <Tab
+                    v-for="tab in tabs"
+                    :key="tab.id"
+                    class="tab"
+                    :class="activeTabId === tab.id ? ' tab-active': ''"
+                    @click="activeTabId = tab.id"
+                  >
+                    {{ tab.title }}
+                  </Tab>
+                </TabList>
+              </div>
             </div>
+
+            <div class="flex flex-row justify-center w-full">
+              <div class="basis-full">
+                  <TabPanels>
+                    <TabPanel>
+                      Content 1
+                    </TabPanel>
+                    <TabPanel>Content 2</TabPanel>
+                    <TabPanel>Content 3</TabPanel>
+                    <TabPanel>Content 4</TabPanel>
+                    <TabPanel>Content 5</TabPanel>
+                    <TabPanel>Content 6</TabPanel>
+                  </TabPanels>
+              </div>
+            </div>
+          </TabGroup>
+
+          <div class="flex">
+            I'm Şehit Şamil Gökmen
           </div>
         </div>
       </div>
@@ -70,6 +118,7 @@ export default {
 
     .content {
       height: 65%;
+      width: 100%;
     }
   }
 }
