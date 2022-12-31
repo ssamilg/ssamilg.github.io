@@ -1,35 +1,27 @@
-<script >
- import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
+<script>
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
 
 export default {
   name: 'Home',
-  components: {
-    Tab,
-    TabList,
-    TabPanel,
-    TabGroup,
-    TabPanels,
-  },
+  components: { TabGroup, TabList, Tab, TabPanels, TabPanel },
   data() {
     return {
       tabs: [
-        { id: 0, title: 'Me'},
-        { id: 1, title: 'Experience'},
-        { id: 2, title: 'Projects'},
-        { id: 3, title: 'Blog'},
-        { id: 4, title: 'Music'},
-        { id: 5, title: 'Contact'},
-      ],
-      activeTabId: 0,
+        { id: 0, title: 'Me', selected: false },
+        { id: 1, title: 'Experience', selected: true },
+        { id: 2, title: 'Contact', selected: false },
+        { id: 2, title: 'Blog', selected: false },
+        { id: 2, title: 'Music', selected: false },
+      ]
     };
-  },
+  }
 }
 </script>
 
 <template>
   <div id="home">
     <div class="flex justify-center wrapper">
-      <div class="flex flex-col">       
+      <div class="basis-full md:basis-2/4">
         <div class="header">
           <div class="flex justify-center">
             <div class="avatar">
@@ -39,58 +31,74 @@ export default {
             </div>
           </div>
 
-          <div class="flex justify-center">
+          <div class="flex flex-row justify-center">
             <h2 class="text-4xl font-bold">Hi!</h2>
           </div>
 
-          <div class="flex justify-center">
+          <div class="flex flex-row justify-center">
             <h2 class="text-2xl font-bold">My name is</h2>
           </div>
 
-          <div class="flex justify-center">
-            <h2 class="text-5xl font-bold">Şehit Şamil Gökmen</h2>
+          <div class="flex flex-row justify-center">
+            <h3>*chika-chika*</h3>
           </div>
 
+          <div class="flex flex-row justify-center">
+            <h2 class="text-5xl font-bold">Şehit Şamil Gökmen</h2>
+          </div>
         </div>
 
         <div class="divider"/>
- 
+
         <div class="content">
-          <TabGroup>
-            <div class="flex flex-row justify-center w-full">
-              <div>
-                <TabList class="tabs tabs-boxed justify-center">
-                  <Tab
-                    v-for="tab in tabs"
-                    :key="tab.id"
-                    class="tab"
-                    :class="activeTabId === tab.id ? ' tab-active': ''"
-                    @click="activeTabId = tab.id"
-                  >
-                    {{ tab.title }}
-                  </Tab>
-                </TabList>
-              </div>
+          <div class="flex flex-row justify-center">
+            <div class="basis-auto">
+              <TabGroup>
+                <div class="flex flex-row justify-center">
+                  <div class="basis-auto">
+                    <TabList class="tabs tabs-boxed flex flex-row">
+                      <Tab
+                        v-for="tab in tabs"
+                        :key="tab.id"
+                        v-slot="{ selected }"
+                        as="template"
+                      >
+                        <div class="tab" :class="{ 'tab tab-active': selected }">
+                          {{ tab.title }}
+                        </div>
+                      </Tab>
+                    </TabList>
+                  </div>
+                </div>
+      
+                <TabPanels class="flex flex-row">
+                  <TabPanel>
+                    <div class="card bg-base-200">
+                      <div class="card-body">
+                        Hi kids!
+                        Do you like violence?
+                        Wanna see me stick Nine inch Nails, through each one of my eyelids?
+                        Wanna copy me and do exactly like I did?
+                        Try acid and get fucked up worse that my life is?
+                        My brain's dead weight, I'm tryin' to get my head straight
+                        But I can't figure out which Spice Girl I want to impregnate
+                        And Dr. Dre said
+                        "Slim Shady you a base-head!"
+                      </div>
+                    </div>
+                  </TabPanel>
+                  <TabPanel>
+                    <div class="card bg-base-200">
+                      <div class="card-body">
+                        OOOO
+                      </div>
+                    </div>
+                  </TabPanel>
+                  <TabPanel>Content 2</TabPanel>
+                  <TabPanel>Content 3</TabPanel>
+                </TabPanels>          
+              </TabGroup>
             </div>
-
-            <div class="flex flex-row justify-center w-full">
-              <div class="basis-full">
-                  <TabPanels>
-                    <TabPanel>
-                      Content 1
-                    </TabPanel>
-                    <TabPanel>Content 2</TabPanel>
-                    <TabPanel>Content 3</TabPanel>
-                    <TabPanel>Content 4</TabPanel>
-                    <TabPanel>Content 5</TabPanel>
-                    <TabPanel>Content 6</TabPanel>
-                  </TabPanels>
-              </div>
-            </div>
-          </TabGroup>
-
-          <div class="flex">
-            I'm Şehit Şamil Gökmen
           </div>
         </div>
       </div>
@@ -112,13 +120,16 @@ export default {
     padding: 24px;
 
     .header {
-      height: 35%;
+      // height: 35%;
       text-align: center;
     }
 
     .content {
-      height: 65%;
-      width: 100%;
+      &-tab-panel {
+        border: 1px solid white;
+        padding: 8px;
+      }
+      // height: 65%;
     }
   }
 }
