@@ -56,7 +56,9 @@ export default {
 <template>
   <div>
     <a :href="link">
-      <img :src="iconPath" :style="`height:${height}`">
+      <div class="flex justify-center">
+        <img :src="iconPath" :style="`height:${height}`">
+      </div>
     </a>
   </div>
 </template>
