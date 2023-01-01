@@ -1,9 +1,10 @@
 <script>
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
+import VIcon from '@/components/VIcon.vue';
 
 export default {
   name: 'Home',
-  components: { TabGroup, TabList, Tab, TabPanels, TabPanel },
+  components: { TabGroup, TabList, Tab, TabPanels, TabPanel, VIcon },
   data() {
     return {
       tabs: [
@@ -153,7 +154,7 @@ export default {
                                         :key="techonlogy"
                                         class="basis-auto pr-2 pt-2"
                                       >
-                                        <img :src="`/src/assets/icons/${techonlogy}.svg`" style="height:24px">
+                                        <VIcon :icon="techonlogy" height="24px"/>
                                       </div>
                                     </div>                                    
                                   </div>
@@ -173,7 +174,7 @@ export default {
                                     :key="techonlogy"
                                     class="basis-auto p-2"
                                   >
-                                    <img :src="`/src/assets/icons/${techonlogy}.svg`" style="height:36px">
+                                    <VIcon :icon="techonlogy" height="36px"/>
                                   </div>
                                 </div>   
                               </div>
