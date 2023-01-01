@@ -8,11 +8,11 @@ export default {
   data() {
     return {
       tabs: [
-        { id: 0, title: 'Me', selected: false },
-        { id: 1, title: 'Experience', selected: true },
-        { id: 2, title: 'Contact', selected: false },
-        { id: 2, title: 'Blog', selected: false },
-        { id: 2, title: 'Music', selected: false },
+        { id: 0, title: 'Me' },
+        { id: 1, title: 'Experience' },
+        { id: 2, title: 'Contact' },
+        { id: 2, title: 'Blog' },
+        { id: 2, title: 'Music' },
       ],
       experiences: [
         {
@@ -52,14 +52,16 @@ export default {
       <div class="basis-full md:basis-2/4">
         <div class="header">
           <div class="flex justify-center">
-            <div class="avatar">
-              <div class="w-24 mask mask-hexagon">
-                <img src="https://pbs.twimg.com/profile_images/1545056575718432769/bbUr82yx_400x400.jpg" alt="profile_photo"/>
+            <div class="basis-auto">
+              <div class="avatar">
+                <div class="w-36 rounded full ring ring-primary ring-offset-base-100 ring-offset-2">
+                  <img src="https://pbs.twimg.com/profile_images/1545056575718432769/bbUr82yx_400x400.jpg" alt="profile_photo"/>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="flex flex-row justify-center">
+          <!-- <div class="flex flex-row justify-center">
             <h2 class="text-4xl font-bold">Hi!</h2>
           </div>
 
@@ -69,9 +71,9 @@ export default {
 
           <div class="flex flex-row justify-center">
             <h3>*chika-chika*</h3>
-          </div>
+          </div> -->
 
-          <div class="flex flex-row justify-center">
+          <div class="flex flex-row justify-center pt-4">
             <h2 class="text-5xl font-bold title-color">Şehit Şamil Gökmen</h2>
           </div>
         </div>
@@ -121,7 +123,9 @@ export default {
                         <div class="divider m-0">o</div>
 
                         <div class="flex flex-row">
-                          Interested in hiphop music, sci-fi cinema, singleplayer gaming and history.
+                          <div class="basis-full">
+                            Interested in hiphop music, sci-fi cinema, singleplayer gaming and history.
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -168,11 +172,11 @@ export default {
                               <div class="basis-auto text-center">
                                 <h2 class="text-xl font-bold title-color">Other Technologies I Use</h2>
 
-                                <div class="flex flex-row align-center mt-2">
+                                <div class="flex flex-row flex-wrap md:flex-nowrap align-center mt-2">
                                   <div
                                     v-for="techonlogy in otherTechnologies"
                                     :key="techonlogy"
-                                    class="basis-auto p-2"
+                                    class="basis-1/6 md:basis-auto p-2"
                                   >
                                     <VIcon :icon="techonlogy" height="36px"/>
                                   </div>
