@@ -21,7 +21,7 @@ export default {
         firebase: 'https://firebase.google.com/',
         flutter: 'https://flutter.dev/',
         git: 'https://git-scm.com/',
-        github: 'https://github.com/',
+        github: 'https://github.com/ssamilg',
         gitlab: 'https://about.gitlab.com/',
         heroku: 'https://www.heroku.com/',
         html5: 'https://www.w3.org/html/',
@@ -39,6 +39,9 @@ export default {
         vuejs: 'https://vuejs.org/',
         vuetify: 'https://vuetifyjs.com/',
         webpack: 'https://webpack.js.org/',
+        twitter: 'https://twitter.com/ssamilg/',
+        instagram: 'https://instagram.com/ssamilg/',
+        linkedin: 'https://www.linkedin.com/in/ssamilg/',
       },
     };
   },
