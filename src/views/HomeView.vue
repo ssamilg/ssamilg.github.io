@@ -38,7 +38,8 @@ export default {
           isCurrent: false,
           technologies: ['js', 'vuejs', 'vuetify', 'gitlab', 'postman', 'sass']
         },
-      ]
+      ],
+      otherTechnologies: ['nodejs', 'reactjs','html5', 'css3', 'vite', 'webpack', 'firebase', 'heroku', 'eslint', 'prettier', 'git', 'mongodb']
     };
   }
 }
@@ -100,16 +101,27 @@ export default {
                 <TabPanels class="mt-2">
                   <TabPanel>
                     <div class="card bg-base-200">
-                      <div class="card-body">
-                        Hi kids!
-                        Do you like violence?
-                        Wanna see me stick Nine inch Nails, through each one of my eyelids?
-                        Wanna copy me and do exactly like I did?
-                        Try acid and get fucked up worse that my life is?
-                        My brain's dead weight, I'm tryin' to get my head straight
-                        But I can't figure out which Spice Girl I want to impregnate
-                        And Dr. Dre said
-                        "Slim Shady you a base-head!"
+                      <div class="card-body text-center">
+                        <div class="flex flex-row">
+                          Born in year 1998 in Ankara. 
+                          Lived there until university. 
+                          Finished Computer Engineering in Sakarya University.
+                        </div>
+
+                        <div class="divider m-0">o</div>
+
+                        <div class="flex flex-row">
+                          Started proffesional work life in the last year of school.
+                          Working as a frontend developer since then.
+                          Worked in multiple companies with various sized of international teams.
+                          Currently working in an AI supported fraud detection startup Sensity to make internet a safer place.
+                        </div>
+
+                        <div class="divider m-0">o</div>
+
+                        <div class="flex flex-row">
+                          Interested in hiphop music, sci-fi cinema, singleplayer gaming and history.
+                        </div>
                       </div>
                     </div>
                   </TabPanel>
@@ -118,7 +130,7 @@ export default {
                     <div class="flex flex-row">
                       <div class="basis-full">
                         <div class="card bg-base-200">
-                          <div class="card-body">
+                          <div class="card-body">                          
                             <ul class="steps steps-vertical">
                               <li
                                 v-for="experience in experiences"
@@ -131,7 +143,7 @@ export default {
                                   <div class="basis-full text-left">
                                     <h2 class="text-xl font-bold title-color">{{ experience.company }}</h2>
 
-                                    <div>{{ experience.role }}</div>
+                                    <div class="font-bold">{{ experience.role }}</div>
 
                                     <div>{{ experience.description }}</div>
                                     
@@ -139,122 +151,39 @@ export default {
                                       <div
                                         v-for="techonlogy in experience.technologies"
                                         :key="techonlogy"
-                                        class="basis-auto p-1"
+                                        class="basis-auto pr-2 pt-2"
                                       >
                                         <img :src="`/src/assets/icons/${techonlogy}.svg`" style="height:24px">
                                       </div>
                                     </div>                                    
-                                    <!-- <img :src="`/src/assets/icons/js.svg`" style="height:128px"> -->
-                                    <!-- <div class="flex flex-row">
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/vuejs.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/js.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/bootstrap5.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/css.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/docker.svg">
-                                      </div>
-                                    </div>
-
-                                    <div class="flex flex-row">
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/eslint.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/firebase.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/flutter.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/git.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/github.svg">
-                                      </div>
-                                    </div>
-
-                                    <div class="flex flex-row">
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/gitlab.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/heroku.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/html5.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/mongodb.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/nextjs.svg">
-                                      </div>
-                                    </div>
-
-                                    <div class="flex flex-row">
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/nodejs.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/npm.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/postman.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/prettier.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/reactjs.svg">
-                                      </div>
-                                    </div>
-
-                                    <div class="flex flex-row">
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/sass.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/vitejs.svg">
-                                      </div>
-
-                                      <div class="basis-auto">
-                                        <img src="@/assets/icons/webpack.svg">
-                                      </div>
-                                    </div> -->
                                   </div>
                                 </div>
                               </li>
                             </ul>
+                            
+                            <div class="divider">o</div>
+                            
+                            <div class="flex flex-row justify-center">
+                              <div class="basis-auto text-center">
+                                <h2 class="text-xl font-bold title-color">Other Technologies I Use</h2>
+
+                                <div class="flex flex-row align-center mt-2">
+                                  <div
+                                    v-for="techonlogy in otherTechnologies"
+                                    :key="techonlogy"
+                                    class="basis-auto p-2"
+                                  >
+                                    <img :src="`/src/assets/icons/${techonlogy}.svg`" style="height:36px">
+                                  </div>
+                                </div>   
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </TabPanel>
+
                   <TabPanel>Content 2</TabPanel>
                   <TabPanel>Content 3</TabPanel>
                   <TabPanel>
