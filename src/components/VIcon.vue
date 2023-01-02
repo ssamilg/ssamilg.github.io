@@ -47,7 +47,9 @@ export default {
   },
   computed: {
     iconPath() {
-      return `/src/assets/icons/${this.icon}.svg`;
+      const iconUrl = new URL(`/src/assets/icons/${this.icon}.svg`, import.meta.url)
+
+      return iconUrl;
     },
     link() {
       return this.links[this.icon];
