@@ -1,10 +1,12 @@
 <script>
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue';
-import VIcon from '@/components/VIcon.vue';
+import VIcon from '@/components/common/VIcon.vue';
+import VTabPanelCard from '@/components/common/VTabPanelCard.vue';
+import BiographyCard from '@/components/modules/biography/BiographyCard.vue';
 
 export default {
   name: 'Home',
-  components: { TabGroup, TabList, Tab, TabPanels, TabPanel, VIcon },
+  components: { TabGroup, TabList, Tab, TabPanels, TabPanel, VIcon, VTabPanelCard, BiographyCard },
   data() {
     return {
       tabs: [
@@ -105,138 +107,109 @@ export default {
                     </TabList>
                   </div>
                 </div>
-                      
+
                 <TabPanels class="mt-2">
                   <TabPanel>
-                    <div class="card bg-base-200">
-                      <div class="card-body text-center">
-                        <div class="flex flex-row">
-                          Born in year 1998 in Ankara. 
-                          Lived there until university. 
-                          Finished Computer Engineering in Sakarya University.
-                        </div>
-
-                        <div class="divider m-0">o</div>
-
-                        <div class="flex flex-row">
-                          Started proffesional work life in the last year of school.
-                          Working as a frontend developer since then.
-                          Worked in multiple companies with various sized of international teams.
-                          Currently working in an AI supported fraud detection startup Sensity to make internet a safer place.
-                        </div>
-
-                        <div class="divider m-0">o</div>
-
-                        <div class="flex flex-row">
-                          <div class="basis-full">
-                            Interested in hiphop music, sci-fi cinema, singleplayer gaming and history.
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <BiographyCard/>
                   </TabPanel>
 
                   <TabPanel>
-                    <div class="flex flex-row">
-                      <div class="basis-full">
-                        <div class="card bg-base-200">
-                          <div class="card-body">
-                            <div class="experience-list">
-                              <div
-                                v-for="experience in experiences"
-                                :key="experience.id"
-                                class="experience-list-item"
-                              >
-                                <div class="flex flex-row mt-3 p-1">
-                                  <div class="basis-auto mr-2 mt-1 list-bullet">
-                                    <img
-                                      :src="experience.companyLogo"
-                                      alt="company-logo"
-                                      class="company-logo"
+                    <VTabPanelCard>
+                      <div>
+                        <div class="experience-list">
+                          <div
+                            v-for="experience in experiences"
+                            :key="experience.id"
+                            class="experience-list-item"
+                          >
+                            <div class="flex flex-row mt-3 p-1">
+                              <div class="basis-auto mr-2 mt-1 list-bullet">
+                                <img
+                                  :src="experience.companyLogo"
+                                  alt="company-logo"
+                                  class="company-logo"
+                                  @click="openLink(experience.companyLink)"
+                                >
+
+                                <div class="list-bullet-line">
+                                  <div class="list-bullet-line-content"/>
+                                </div>
+                              </div>
+
+                              <div class="basis-auto text-left">
+                                <div class="flex flex-row">
+                                  <div class="basis-auto">
+                                    <h2
+                                      class="text-xl font-bold title-color"
                                       @click="openLink(experience.companyLink)"
                                     >
-
-                                    <div class="list-bullet-line">
-                                      <div class="list-bullet-line-content"/>
-                                    </div>
+                                      {{ experience.company }}
+                                    </h2>
+                                    <div class="font-bold">{{ experience.role }}</div>
                                   </div>
+                                </div>
 
-                                  <div class="basis-auto text-left">
-                                    <div class="flex flex-row">
-                                      <div class="basis-full">
-                                        <h2
-                                          class="text-xl font-bold title-color"
-                                          @click="openLink(experience.companyLink)"
-                                        >
-                                          {{ experience.company }}
-                                        </h2>
-                                        <div class="font-bold">{{ experience.role }}</div>
-                                      </div>
-                                    </div>
-
-                                    <div class="flex py-2">
-                                      <div class="basis-auto">
-                                        {{ experience.description }}
-                                      </div>
-                                    </div>
-                                    
-                                    <div class="flex flex-row align-center pt-2">
-                                      <div
-                                        v-for="techonlogy in experience.technologies"
-                                        :key="techonlogy"
-                                        class="basis-auto pr-2"
-                                      >
-                                        <VIcon :icon="techonlogy" height="24px"/>
-                                      </div>
-                                    </div>
+                                <div class="flex py-2">
+                                  <div class="basis-auto">
+                                    {{ experience.description }}
+                                  </div>
+                                </div>
+                                
+                                <div class="flex flex-row align-center pt-2">
+                                  <div
+                                    v-for="techonlogy in experience.technologies"
+                                    :key="techonlogy"
+                                    class="basis-auto pr-2"
+                                  >
+                                    <VIcon :icon="techonlogy" height="24px"/>
                                   </div>
                                 </div>
                               </div>
                             </div>
+                          </div>
+                        </div>
 
-                            <div class="divider">o</div>
+                        <div class="divider">o</div>
 
-                            <div class="flex flex-row justify-center">
-                              <div class="basis-auto text-center">
-                                <h2 class="text-xl font-bold title-color">Other Technologies I Use</h2>
+                        <div class="flex flex-row justify-center">
+                          <div class="basis-auto text-center">
+                            <h2 class="text-xl font-bold title-color">Other Technologies I Use</h2>
 
-                                <div class="flex flex-row flex-wrap md:flex-nowrap align-center mt-2">
-                                  <div
-                                    v-for="techonlogy in otherTechnologies"
-                                    :key="techonlogy"
-                                    class="basis-1/6 md:basis-auto p-2"
-                                  >
-                                    <VIcon :icon="techonlogy" height="36px"/>
-                                  </div>
-                                </div>   
+                            <div class="flex flex-row flex-wrap md:flex-nowrap align-center mt-2">
+                              <div
+                                v-for="techonlogy in otherTechnologies"
+                                :key="techonlogy"
+                                class="basis-1/6 md:basis-auto p-2"
+                              >
+                                <VIcon :icon="techonlogy" height="36px"/>
                               </div>
-                            </div>
+                            </div>   
                           </div>
                         </div>
                       </div>
-                    </div>
+                    </VTabPanelCard>
                   </TabPanel>
 
                   <TabPanel>
-                     <div class="card bg-base-200">
-                      <div class="card-body text-center">
-                        <div class="flex flex-row justify-center content-center">
-                          <div class="basis-auto">
-                            There is nothing here... yet.
-                          </div>
+                    <VTabPanelCard>
+                      <div class="flex flex-row justify-center content-center">
+                        <div class="basis-auto">
+                          There is nothing here... yet.
                         </div>
                       </div>
-                    </div>
+                    </VTabPanelCard>
                   </TabPanel>
 
                   <TabPanel>
-                    <div class="flex flex-row">
-                      <div class="basis-full">
-                        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0ZpXPN3NwzsaKubfrjWjhx?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                        <iframe class="mt-2" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1395979963&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/ssgbeatz" title="SSGBeatz" target="_blank" style="color: #cccccc; text-decoration: none;">SSGBeatz</a> · <a href="https://soundcloud.com/ssgbeatz/amplified" title="Amplified" target="_blank" style="color: #cccccc; text-decoration: none;">Amplified</a></div>
-                        <!-- <iframe class="mt-2" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1395979963&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/ssgbeatz" title="SSGBeatz" target="_blank" style="color: #cccccc; text-decoration: none;">SSGBeatz</a> · <a href="https://soundcloud.com/ssgbeatz/amplified" title="Amplified" target="_blank" style="color: #cccccc; text-decoration: none;">Amplified</a></div> -->
+                    <VTabPanelCard>
+                      <div class="flex flex-row">
+                        <div class="basis-full">
+                          <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0ZpXPN3NwzsaKubfrjWjhx?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                          <iframe class="mt-2" width="100%" height="166" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1395979963&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/ssgbeatz" title="SSGBeatz" target="_blank" style="color: #cccccc; text-decoration: none;">SSGBeatz</a> · <a href="https://soundcloud.com/ssgbeatz/amplified" title="Amplified" target="_blank" style="color: #cccccc; text-decoration: none;">Amplified</a></div>
+                          <!-- <iframe class="mt-2" width="100%" height="300" scrolling="no" frameborder="no" allow="autoplay" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/1395979963&color=%23ff5500&auto_play=false&hide_related=false&show_comments=true&show_user=true&show_reposts=false&show_teaser=true&visual=true"></iframe><div style="font-size: 10px; color: #cccccc;line-break: anywhere;word-break: normal;overflow: hidden;white-space: nowrap;text-overflow: ellipsis; font-family: Interstate,Lucida Grande,Lucida Sans Unicode,Lucida Sans,Garuda,Verdana,Tahoma,sans-serif;font-weight: 100;"><a href="https://soundcloud.com/ssgbeatz" title="SSGBeatz" target="_blank" style="color: #cccccc; text-decoration: none;">SSGBeatz</a> · <a href="https://soundcloud.com/ssgbeatz/amplified" title="Amplified" target="_blank" style="color: #cccccc; text-decoration: none;">Amplified</a></div> -->
+                        </div>
                       </div>
-                    </div>
+                    </VTabPanelCard>
                   </TabPanel>
                 </TabPanels>   
               </TabGroup>
