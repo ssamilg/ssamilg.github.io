@@ -17,6 +17,7 @@ export default {
         {
           id: 0,
           company: 'Sensity AI',
+          companyLink: 'https://sensity.ai/',
           companyLogo: 'https://pbs.twimg.com/profile_images/1288045838024007682/EKo6Gp7c_400x400.jpg',
           role: 'Frontend Developer',
           description: 'I am responsible for the Sensity\'s JS based products. I am maintaining the platform project and SDK\'s, improving the code quality and adding new features.',
@@ -26,6 +27,7 @@ export default {
         {
           id: 1,
           company: 'Pitcher AG',
+          companyLink: 'https://www.pitcher.com/',
           companyLogo: 'https://play-lh.googleusercontent.com/9RgJbmjOoVNULZKi--OUvjxUr1isDGO7LBcpGna5pY59H-FDHouKrD0MnXi9OVMOViI',
           role: 'Software Engineer',
           description: 'I was part of the Pitcher\'s product team. I worked on maintaining and renewing old applications, desinging new interfaces for cross platform (iOS, Android, Windows)',
@@ -35,6 +37,7 @@ export default {
         {
           id: 2,
           company: 'reybex ERP',
+          companyLink: 'https://www.reybex.com/en/',
           companyLogo: 'https://play-lh.googleusercontent.com/TDS_eHqkzroSDM-96YHgx-I6h_e4QDL2AhBh-k1KQocf_h5G18x6uI3BmSOvnfgoSQ=s96-rw',
           role: 'Frontend Developer',
           description: 'I was part of the team that developing reybex 2.0. I worked on maintaining existing modules and coding new interfaces for ERP modules.',
@@ -44,7 +47,12 @@ export default {
       ],
       otherTechnologies: ['nodejs', 'reactjs','html5', 'css3', 'vite', 'webpack', 'firebase', 'heroku', 'eslint', 'prettier', 'git', 'mongodb']
     };
-  }
+  },
+  methods: {
+    openLink(link) {
+      window.open(link);
+    },
+  },
 }
 </script>
 
@@ -141,7 +149,12 @@ export default {
                               >
                                 <div class="flex flex-row mt-3 p-1">
                                   <div class="basis-auto mr-2 mt-1 list-bullet">
-                                    <img :src="experience.companyLogo" alt="company-logo" class="company-logo">
+                                    <img
+                                      :src="experience.companyLogo"
+                                      alt="company-logo"
+                                      class="company-logo"
+                                      @click="openLink(experience.companyLink)"
+                                    >
 
                                     <div class="list-bullet-line">
                                       <div class="list-bullet-line-content"/>
@@ -151,7 +164,12 @@ export default {
                                   <div class="basis-auto text-left">
                                     <div class="flex flex-row">
                                       <div class="basis-full">
-                                        <h2 class="text-xl font-bold title-color">{{ experience.company }}</h2>
+                                        <h2
+                                          class="text-xl font-bold title-color"
+                                          @click="openLink(experience.companyLink)"
+                                        >
+                                          {{ experience.company }}
+                                        </h2>
                                         <div class="font-bold">{{ experience.role }}</div>
                                       </div>
                                     </div>
@@ -234,7 +252,6 @@ export default {
 #home {
   width: 100%;
 
-
   .title-color {
     color: hsl(var(--ac));
   }
@@ -250,6 +267,14 @@ export default {
     .content {
       .experience-list {
         &-item {
+          h2 {
+            cursor: pointer;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+
           .list-bullet {
             img {
               max-width: inherit;
@@ -296,6 +321,7 @@ export default {
         border-radius: 8px;
         height: 48px;
         width: 48px;
+        cursor: pointer;
       }
     }
   }
