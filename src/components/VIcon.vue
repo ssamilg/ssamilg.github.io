@@ -22,6 +22,7 @@ export default {
         flutter: 'https://flutter.dev/',
         git: 'https://git-scm.com/',
         github: 'https://github.com/ssamilg',
+        github_light: 'https://github.com/ssamilg',
         gitlab: 'https://about.gitlab.com/',
         heroku: 'https://www.heroku.com/',
         html5: 'https://www.w3.org/html/',
@@ -61,7 +62,7 @@ export default {
 <template>
   <div>
     <a :href="link">
-      <div class="flex justify-center">
+      <div class="flex justify-center content-center">
         <img :src="iconPath" :style="`height:${height}`">
       </div>
     </a>
