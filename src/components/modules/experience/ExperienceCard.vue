@@ -54,7 +54,7 @@ export default {
         class="experience-list-item"
       >
         <div class="flex flex-row mt-3 p-1">
-          <div class="basis-auto mr-2 mt-1 list-bullet">
+          <div class="hidden md:block basis-auto mr-2 mt-1 list-bullet">
             <img
               :src="experience.companyLogo"
               alt="company-logo"
@@ -69,6 +69,15 @@ export default {
 
           <div class="basis-auto text-left">
             <div class="flex flex-row">
+              <div class="basis-auto md:hidden mr-2 mt-1">
+                <img
+                  :src="experience.companyLogo"
+                  alt="company-logo"
+                  class="company-logo"
+                  @click="openLink(experience.companyLink)"
+                >
+              </div>
+
               <div class="basis-auto">
                 <h2
                   class="text-xl font-bold title-color"
