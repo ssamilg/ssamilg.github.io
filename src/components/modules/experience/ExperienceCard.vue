@@ -42,6 +42,11 @@ export default {
       otherTechnologies: ['nodejs', 'reactjs','html5', 'css3', 'vite', 'webpack', 'firebase', 'heroku', 'eslint', 'prettier', 'git', 'mongodb']
     };
   },
+  methods: {
+    openLink(link) {
+      window.open(link);
+    },
+  },
 };
 </script>
 

@@ -32,11 +32,6 @@ export default {
       ],
     };
   },
-  methods: {
-    openLink(link) {
-      window.open(link);
-    },
-  },
 }
 </script>
 
