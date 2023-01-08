@@ -7,6 +7,7 @@ This project is developing with Vue 3 in Vite.
 * Different language support should be added.
 * Projects section should be added.
 * Content should be added to blog section.
+* Music section should be redesigned.
 
 ## Project Setup
 
