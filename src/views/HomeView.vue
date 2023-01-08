@@ -43,7 +43,7 @@ export default {
 <template>
   <div id="home">
     <div class="flex justify-center wrapper">
-      <div class="basis-full md:basis-2/4">
+      <div class="basis-full md:basis-3/4 lg:basis-2/4">
         <div class="header">
           <div class="flex justify-center">
             <div class="basis-auto">
