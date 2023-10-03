@@ -44,7 +44,7 @@ export default {
             <div class="basis-auto">
               <div class="avatar">
                 <div class="w-36 rounded full ring ring-primary ring-offset-base-100 ring-offset-2">
-                  <img src="https://pbs.twimg.com/profile_images/1545056575718432769/bbUr82yx_400x400.jpg" alt="profile_photo"/>
+                  <img src="https://pbs.twimg.com/profile_images/1674901389888090112/kgexvPzN_400x400.jpg" alt="profile_photo"/>
                 </div>
               </div>
             </div>
