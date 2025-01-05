@@ -41,6 +41,7 @@ export default {
         vuetify: 'https://vuetifyjs.com/',
         webpack: 'https://webpack.js.org/',
         twitter: 'https://twitter.com/ssamilg/',
+        X: 'https://twitter.com/ssamilg/',
         instagram: 'https://instagram.com/ssamilg/',
         linkedin: 'https://www.linkedin.com/in/ssamilg/',
       },
@@ -60,11 +61,9 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="v-icon inline-flex items-center justify-center">
     <a :href="link">
-      <div class="flex justify-center content-center">
-        <img :src="iconPath" :style="`height:${height}`">
-      </div>
+      <img :src="iconPath" :style="`height:${height}`" :alt="icon">
     </a>
   </div>
 </template>
