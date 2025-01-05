@@ -43,19 +43,17 @@ export default {
       try {
         element.setAttribute('data-theme', 'ssg_light');
 
-        // Handle company logos
-        const companyLogos = element.querySelectorAll('.avatar .w-16');
-        companyLogos.forEach(logoContainer => {
-          // Create placeholder div with same dimensions and styling
-          const placeholder = document.createElement('div');
-          placeholder.className = logoContainer.className;
-          placeholder.classList.add('bg-base-300');
-
-          // Clear the container and add placeholder
-          while (logoContainer.firstChild) {
-            logoContainer.removeChild(logoContainer.firstChild);
+        // Remove company logo containers completely
+        const companyHeaders = element.querySelectorAll('.experience-item .flex.items-center.gap-4');
+        companyHeaders.forEach(header => {
+          // Remove avatar div
+          const avatar = header.querySelector('.avatar');
+          if (avatar) {
+            avatar.remove();
           }
-          logoContainer.classList.add('bg-base-300');
+
+          // Remove gap class from header since we don't need it anymore
+          header.classList.remove('gap-4');
         });
 
         // Transform social buttons into a list
