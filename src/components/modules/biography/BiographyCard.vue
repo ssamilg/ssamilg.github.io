@@ -1,31 +1,31 @@
 <script>
-import VTabPanelCard from '@/components/common/VTabPanelCard.vue';
-
 export default {
   name: 'BiographyCard',
-  components: { VTabPanelCard },
   data() {
     return {
-      biographySections : [
-        'Born in year 1998 in Ankara. Lived there until university. Finished Computer Engineering in Sakarya University.',
-        'Started proffesional work life in the last year of school. Working as a frontend developer since then. Worked in multiple companies with various sized of international teams. Currently working in an AI supported fraud detection startup Sensity to make internet a safer place.',
-        'Interested in hiphop music, sci-fi cinema, singleplayer gaming and history.',
-      ],
+      biographySections: [
+        "From the heart of Ankara to the world of tech, my journey began in '98. Armed with a Computer Engineering degree from Sakarya University, I dove into frontend development before graduating.",
+        "My code has traveled through startups and established companies, always part of international teams pushing boundaries. Currently at Sensity, turning AI into our ally against digital fraud.",
+        "When I'm not coding, you'll find me vibing to old school hip-hop, immersive single-player gaming adventures, cinema in all its forms, and a growing collection of books ranging from history to sci-fi.",
+      ]
     };
-  },
+  }
 };
 </script>
 
 <template>
-  <VTabPanelCard>
-    <template v-for="(section, index) in biographySections" :key="index">
-      <div class="flex flex-row">
-        <div class="basis-full">
-          {{ section }}
-        </div>
-      </div>
+  <div class="pb-4 px-2 md:px-8">
+    <h1 class="text-4xl font-bold text-base-content mb-4">About Me</h1>
 
-      <div v-if="index !== biographySections.length - 1" class="divider m-0">o</div>
-    </template>
-  </VTabPanelCard>  
+    <div class="bg-base-200 bg-opacity-50 p-5 border border-gray-800 rounded">
+      <div v-for="(section, index) in biographySections" :key="index">
+        <p class="text-base text-base-content/80">
+          {{ section }}
+        </p>
+
+        <div v-if="index !== biographySections.length - 1"
+              class="divider">o</div>
+      </div>
+    </div>
+  </div>
 </template>
