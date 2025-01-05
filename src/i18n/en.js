@@ -34,5 +34,11 @@ export default {
         period: "Nov 2019 - Jun 2021"
       }
     }
+  },
+  actions: {
+    downloadCV: "Download CV"
+  },
+  errors: {
+    pdfGeneration: "Failed to generate PDF. Please try again."
   }
 }

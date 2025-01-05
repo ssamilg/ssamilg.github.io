@@ -34,5 +34,11 @@ export default {
         period: "Kas 2019 - Haz 2021"
       }
     }
+  },
+  actions: {
+    downloadCV: "CV İndir"
+  },
+  errors: {
+    pdfGeneration: "PDF oluşturulamadı. Lütfen tekrar deneyin."
   }
 }
