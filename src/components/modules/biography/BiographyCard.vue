@@ -17,7 +17,7 @@ export default {
   <div class="pb-4 px-2 md:px-8">
     <h1 class="text-4xl font-bold text-base-content mb-4">About Me</h1>
 
-    <div class="bg-base-200 bg-opacity-50 p-5 border border-gray-800 rounded">
+    <div class="bg-base-200/50 p-5 border border-gray-800 rounded">
       <div v-for="(section, index) in biographySections" :key="index">
         <p class="text-base text-base-content/80">
           {{ section }}
