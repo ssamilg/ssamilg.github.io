@@ -1,6 +1,7 @@
 <script>
 import { ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
+import html2pdf from 'html2pdf.js';
 import VIcon from '@/components/common/VIcon.vue';
 import VTabPanelCard from '@/components/common/VTabPanelCard.vue';
 import BlogCard from '@/components/modules/blog/BlogCard.vue';
@@ -19,8 +20,9 @@ export default {
     ExperienceCard,
   },
   setup() {
-    const { locale } = useI18n();
+    const { locale, t } = useI18n();
     const theme = ref('ssg_dark');
+    const contentRef = ref(null);
 
     const toggleTheme = () => {
       theme.value = theme.value === 'ssg_dark' ? 'ssg_light' : 'ssg_dark';
@@ -33,6 +35,111 @@ export default {
       document.querySelector('html').setAttribute('lang', newLocale);
       localStorage.setItem('locale', newLocale);
     });
+
+    const exportToPDF = async () => {
+      const originalElement = contentRef.value;
+      const element = originalElement.cloneNode(true);
+
+      try {
+        element.setAttribute('data-theme', 'ssg_light');
+
+        // Handle company logos
+        const companyLogos = element.querySelectorAll('.avatar .w-16');
+        companyLogos.forEach(logoContainer => {
+          // Create placeholder div with same dimensions and styling
+          const placeholder = document.createElement('div');
+          placeholder.className = logoContainer.className;
+          placeholder.classList.add('bg-base-300');
+
+          // Clear the container and add placeholder
+          while (logoContainer.firstChild) {
+            logoContainer.removeChild(logoContainer.firstChild);
+          }
+          logoContainer.classList.add('bg-base-300');
+        });
+
+        // Transform social buttons into a list
+        const socialButtonsContainer = element.querySelector('.social-buttons');
+        if (socialButtonsContainer) {
+          const socialList = document.createElement('div');
+          socialList.className = 'flex flex-col gap-2 mt-4';
+
+          const socialButtons = socialButtonsContainer.querySelectorAll('.btn');
+          socialButtons.forEach(btn => {
+            const listItem = document.createElement('div');
+            listItem.className = 'flex items-center gap-2 text-primary';
+
+            const icon = btn.querySelector('img');
+            if (icon) {
+              const iconClone = icon.cloneNode(true);
+              iconClone.style.height = '20px';
+              listItem.appendChild(iconClone);
+            }
+
+            const text = document.createElement('span');
+            text.textContent = btn.getAttribute('href');
+            text.style.fontSize = '14px';
+
+            listItem.appendChild(text);
+            socialList.appendChild(listItem);
+          });
+
+          // Replace buttons with list
+          socialButtonsContainer.innerHTML = '';
+          socialButtonsContainer.appendChild(socialList);
+        }
+
+        // Remove biography section
+        const bioSection = element.querySelector('.content > div:first-child');
+        if (bioSection) {
+          bioSection.remove();
+        }
+
+        // Remove margin from experience section after bio removal
+        const experienceSection = element.querySelector('.content > div');
+        if (experienceSection) {
+          experienceSection.classList.remove('mt-8');
+        }
+
+        // Remove centering classes and adjust wrapper for PDF
+        const contentWrapper = element.querySelector('.wrapper').parentElement.parentElement;
+        contentWrapper.className = '';
+
+        const innerWrapper = element.querySelector('.wrapper').parentElement;
+        innerWrapper.className = '';
+
+        const wrapper = element.querySelector('.wrapper');
+        if (wrapper) {
+          wrapper.style.paddingLeft = '0';
+          wrapper.style.paddingRight = '0';
+        }
+
+        const opt = {
+          margin: [10, 10],
+          filename: `${t('header.title')}_CV.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            letterRendering: true,
+            logging: false,
+            imageTimeout: 0,
+            removeContainer: true
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+          }
+        };
+
+        await new Promise(resolve => setTimeout(resolve, 500));
+        await html2pdf().set(opt).from(element).save();
+      } catch (error) {
+        console.error('PDF generation failed:', error);
+        alert(t('errors.pdfGeneration'));
+      }
+    };
 
     onMounted(() => {
       // Get saved theme and locale
@@ -49,7 +156,31 @@ export default {
     return {
       theme,
       toggleTheme,
-      locale
+      locale,
+      contentRef,
+      exportToPDF,
+      socialLinks: [
+        {
+          icon: 'github_light',
+          link: 'https://github.com/ssamilg',
+          title: 'GitHub'
+        },
+        {
+          icon: 'linkedin',
+          link: 'https://www.linkedin.com/in/ssamilg/',
+          title: 'LinkedIn'
+        },
+        {
+          icon: 'X',
+          link: 'https://twitter.com/ssamilg/',
+          title: 'Twitter'
+        },
+        {
+          icon: 'instagram',
+          link: 'https://instagram.com/ssamilg/',
+          title: 'Instagram'
+        }
+      ]
     };
   }
 }
@@ -58,14 +189,38 @@ export default {
 <template>
   <div id="home">
     <div class="flex justify-between p-4">
-      <!-- Language Switcher -->
-      <select
-        v-model="locale"
-        class="select select-ghost select-sm"
-      >
-        <option value="en">English</option>
-        <option value="tr">Türkçe</option>
-      </select>
+      <div class="flex gap-4">
+        <!-- Language Switcher -->
+        <select
+          v-model="locale"
+          class="select select-ghost select-sm"
+        >
+          <option value="en">English</option>
+          <option value="tr">Türkçe</option>
+        </select>
+
+        <!-- PDF Export Button -->
+        <button
+          class="btn btn-ghost btn-sm normal-case gap-2"
+          @click="exportToPDF"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-5 w-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+          {{ $t('actions.downloadCV') }}
+        </button>
+      </div>
 
       <!-- Theme Switcher -->
       <label class="swap swap-rotate">
@@ -96,53 +251,50 @@ export default {
       </label>
     </div>
 
-    <div class="flex justify-center">
-      <div class="basis-full md:basis-3/4 lg:basis-2/4 wrapper">
-
-        <div class="header">
-          <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-            <div class="avatar mb-4 md:mb-0">
-              <div class="w-40 md:w-48 rounded ring ring-primary ring-offset-base-100 ring-offset-2">
-                <img src="https://pbs.twimg.com/profile_images/1674901389888090112/kgexvPzN_400x400.jpg" alt="profile_photo"/>
+    <!-- Add ref to the content we want to export -->
+    <div ref="contentRef">
+      <div class="flex justify-center">
+        <div class="basis-full md:basis-3/4 lg:basis-2/4 wrapper">
+          <div class="header">
+            <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+              <div class="avatar mb-4 md:mb-0">
+                <div class="w-40 md:w-48 rounded ring ring-primary ring-offset-base-100 ring-offset-2">
+                  <img src="https://pbs.twimg.com/profile_images/1674901389888090112/kgexvPzN_400x400.jpg" alt="profile_photo"/>
+                </div>
               </div>
-            </div>
 
-            <div class="flex flex-col items-center md:items-start">
-              <h1 class="text-4xl md:text-5xl font-bold text-center md:text-left mb-2 px-4 md:px-0">
-                {{ $t('header.title') }}
-              </h1>
-              <p class="text-lg md:text-xl text-base-content/70 mb-4 text-center md:text-left px-4 md:px-0">
-                {{ $t('header.role') }}
-              </p>
+              <div class="flex flex-col items-center md:items-start">
+                <h1 class="text-4xl md:text-5xl font-bold text-center md:text-left mb-2 px-4 md:px-0">
+                  {{ $t('header.title') }}
+                </h1>
+                <p class="text-lg md:text-xl text-base-content/70 mb-4 text-center md:text-left px-4 md:px-0">
+                  {{ $t('header.role') }}
+                </p>
 
-              <div class="flex gap-4">
-                <div class="btn btn-ghost border-gray-800 bg-base-200/50">
-                  <VIcon icon="github_light" height="32px"/>
-                </div>
-
-                <div class="btn btn-ghost border-gray-800 bg-base-200/50">
-                  <VIcon icon="linkedin" height="32px"/>
-                </div>
-
-                <div class="btn btn-ghost border-gray-800 bg-base-200/50">
-                  <VIcon icon="X" height="32px"/>
-                </div>
-
-                <div class="btn btn-ghost border-gray-800 bg-base-200/50">
-                  <VIcon icon="instagram" height="32px"/>
+                <!-- Add class for targeting social buttons -->
+                <div class="flex gap-4 social-buttons">
+                  <a
+                    v-for="social in socialLinks"
+                    :key="social.icon"
+                    :href="social.link"
+                    :title="social.title"
+                    class="btn btn-ghost border-gray-800 bg-base-200/50"
+                  >
+                    <VIcon :icon="social.icon" height="32px"/>
+                  </a>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <div class="content">
-          <div class="flex mt-8">
-            <BiographyCard/>
-          </div>
+          <div class="content">
+            <div class="flex mt-8">
+              <BiographyCard/>
+            </div>
 
-          <div class="flex mt-8">
-            <ExperienceCard/>
+            <div class="flex mt-8">
+              <ExperienceCard/>
+            </div>
           </div>
         </div>
       </div>
@@ -152,7 +304,6 @@ export default {
 
 <style lang="scss" scoped>
 #home {
-  // @apply py-16;
   width: 100%;
 
   .wrapper {
