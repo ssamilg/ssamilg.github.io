@@ -1,5 +1,5 @@
 <script>
-import { ref, onMounted, watch } from 'vue';
+import { ref, onMounted, watch, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import html2pdf from 'html2pdf.js';
 import VIcon from '@/components/common/VIcon.vue';
@@ -139,6 +139,29 @@ export default {
       }
     };
 
+    const socialLinks = computed(() => [
+      {
+        icon: theme.value === 'ssg_light' ? 'github' : 'github_light',
+        link: 'https://github.com/ssamilg',
+        title: 'GitHub'
+      },
+      {
+        icon: 'linkedin',
+        link: 'https://www.linkedin.com/in/ssamilg/',
+        title: 'LinkedIn'
+      },
+      {
+        icon: 'X',
+        link: 'https://twitter.com/ssamilg/',
+        title: 'Twitter'
+      },
+      {
+        icon: 'instagram',
+        link: 'https://instagram.com/ssamilg/',
+        title: 'Instagram'
+      }
+    ]);
+
     onMounted(() => {
       // Get saved theme and locale
       const savedTheme = localStorage.getItem('theme') || 'ssg_dark';
@@ -157,28 +180,7 @@ export default {
       locale,
       contentRef,
       exportToPDF,
-      socialLinks: [
-        {
-          icon: 'github_light',
-          link: 'https://github.com/ssamilg',
-          title: 'GitHub'
-        },
-        {
-          icon: 'linkedin',
-          link: 'https://www.linkedin.com/in/ssamilg/',
-          title: 'LinkedIn'
-        },
-        {
-          icon: 'X',
-          link: 'https://twitter.com/ssamilg/',
-          title: 'Twitter'
-        },
-        {
-          icon: 'instagram',
-          link: 'https://instagram.com/ssamilg/',
-          title: 'Instagram'
-        }
-      ]
+      socialLinks,
     };
   }
 }
@@ -272,11 +274,11 @@ export default {
                 <!-- Add class for targeting social buttons -->
                 <div class="flex gap-4 social-buttons">
                   <a
-                    v-for="social in socialLinks"
-                    :key="social.icon"
-                    :href="social.link"
-                    :title="social.title"
-                    class="btn btn-ghost border-gray-800 bg-base-200/50"
+                  v-for="social in socialLinks"
+                  :key="social.icon"
+                  :href="social.link"
+                  :title="social.title"
+                  class="btn btn-ghost border-gray-800 bg-base-200/50"
                   >
                     <VIcon :icon="social.icon" height="32px"/>
                   </a>
@@ -299,7 +301,6 @@ export default {
     </div>
   </div>
 </template>
-
 <style lang="scss" scoped>
 #home {
   width: 100%;
