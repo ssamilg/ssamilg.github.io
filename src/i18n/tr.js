@@ -40,5 +40,9 @@ export default {
   },
   errors: {
     pdfGeneration: "PDF oluşturulamadı. Lütfen tekrar deneyin."
+  },
+  routes: {
+    home: "Ana Sayfa",
+    cv: "CV"
   }
 }

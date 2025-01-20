@@ -40,5 +40,9 @@ export default {
   },
   errors: {
     pdfGeneration: "Failed to generate PDF. Please try again."
+  },
+  routes: {
+    home: "Home",
+    cv: "CV"
   }
 }
