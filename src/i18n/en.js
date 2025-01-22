@@ -8,7 +8,7 @@ export default {
     sections: [
       "From the heart of Ankara to the world of tech, my journey began in '98. Armed with a Computer Engineering degree from Sakarya University, I dove into frontend development before graduating.",
       "My code has traveled through startups and established companies, always part of international teams pushing boundaries. Currently at Sensity, turning AI into our ally against digital fraud.",
-      "When I'm not coding, you'll find me vibing to old school hip-hop, immersive single-player gaming adventures, cinema in all its forms, and a growing collection of books ranging from history to sci-fi."
+      "When I'm not coding, you'll find me vibing to old school hip-hop, immersive single-player gaming adventures, setting up camp under the stars, cinema in all its forms and a growing collection of books ranging from history to sci-fi."
     ]
   },
   experience: {
