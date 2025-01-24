@@ -1,4 +1,3 @@
-# App.vue
 <script setup>
 import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -67,6 +66,33 @@ const sections = [
     icon: CommandLineIcon
   }
 ]
+
+const experienceItems = [
+  {
+    id: 'sensity',
+    name: 'experience.companies.sensity.name',
+    period: 'experience.companies.sensity.period',
+    role: 'experience.roles.frontend',
+    description: 'experience.companies.sensity.description',
+    delay: 0.3
+  },
+  {
+    id: 'pitcher',
+    name: 'experience.companies.pitcher.name',
+    period: 'experience.companies.pitcher.period',
+    role: 'experience.roles.software',
+    description: 'experience.companies.pitcher.description',
+    delay: 0.6
+  },
+  {
+    id: 'reybex',
+    name: 'experience.companies.reybex.name',
+    period: 'experience.companies.reybex.period',
+    role: 'experience.roles.frontend',
+    description: 'experience.companies.reybex.description',
+    delay: 0.9
+  }
+];
 
 const handleScroll = (e) => {
   e.stopPropagation()
@@ -175,7 +201,8 @@ const experienceClasses = computed(() => ({
   description: getTransitionClasses(2, { direction: 'x' }),
   icon: getTransitionClasses(2, { direction: 'x', includeRotate: true }),
   image: getTransitionClasses(2, { direction: 'x', showScale: true, reverse: true }),
-  button: getTransitionClasses(2, { showScale: true })
+  button: getTransitionClasses(2, { showScale: true }),
+  card: getTransitionClasses(2, { direction: 'x', showScale: true, reverse: true }),
 }))
 
 const showcaseClasses = computed(() => ({
@@ -207,7 +234,21 @@ const getTypingClasses = (delay) => ({
   'opacity-0': !isInView(7),
   'opacity-100': isInView(7),
   'transition-delay': `${delay}s`
-})
+});
+
+const experienceCardBackground = (index) => {
+  let bgClass = 'bg-primary/90'
+
+  if (index === 0) {
+    bgClass = 'bg-primary/90'
+  } else if (index === 1) {
+    bgClass = 'bg-primary/45'
+  } else if (index === 2) {
+    bgClass = 'bg-primary/10'
+  }
+
+  return bgClass
+}
 </script>
 
 <template>
@@ -332,34 +373,54 @@ const getTypingClasses = (delay) => ({
                 <BookOpenIcon class="biography-icon" />
                 <p class="biography-text">{{ $tm('biography.sections')[2] }}</p>
               </div>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
       <!-- Experience Section -->
       <div class="section-experience" :style="{ height: contentHeight + 'px' }">
-        <div class="content-container flex-container-reverse">
-          <div class="section-image-container" :class="experienceClasses.image">
-            <div class="section-gradient-reverse"></div>
-          </div>
+        <div class="content-container">
+          <div class="experience-container">
+            <div
+              v-for="(item, index) in experienceItems"
+              :key="item.id"
+              class="experience-item"
+              :class="[
+                experienceClasses.card,
+                {
+                  'translate-x-full opacity-0': !isInView(2),
+                  'translate-x-0 opacity-100': isInView(2)
+                }
+              ]"
+              :style="{
+                marginLeft: `${index * 20}%`,
+                transitionDelay: `${0.2 * index}s`
+              }"
+            >
+              <div class="year">{{ $t(item.period) }}</div>
+              <div class="experience-card" :class="experienceCardBackground(index)">
+                <h2 class="card-role">{{ $t(item.role) }}</h2>
+                <h3 class="card-company">{{ $t(item.name) }}</h3>
+                <p class="card-description">{{ $t(item.description) }}</p>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mb-12">
+              <div class="flex items-center gap-4">
+                <BriefcaseIcon class="section-icon" :class="experienceClasses.icon" />
+                <h2 class="section-title !mb-0" :class="experienceClasses.title">
+                  {{ sections[2].title }}
+                </h2>
+              </div>
 
-          <div class="section-half">
-            <BriefcaseIcon class="section-icon"
-                          :class="experienceClasses.icon" />
-
-            <h2 class="section-title" :class="experienceClasses.title">
-              {{ sections[2].title }}
-            </h2>
-
-            <p class="section-description" :class="experienceClasses.description">
-              {{ sections[2].description }}
-            </p>
-
-            <div class="base-transition delay-500 transform" :class="experienceClasses.button">
-              <router-link to="/cv" class="btn btn-outline btn-lg group relative overflow-hidden">
-                <span class="relative z-10">See Full Experience</span>
-                <div class="absolute inset-0 bg-primary/10 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+              <router-link
+                to="/cv"
+                class="px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 flex items-center gap-2 text-sm font-medium"
+              >
+                View Full Experience
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
               </router-link>
             </div>
           </div>
@@ -395,13 +456,13 @@ const getTypingClasses = (delay) => ({
           <img src="https://picsum.photos/1920/1080?2"
                alt="Middle"
                class="showcase-image opacity-70" />
-        </div>
+                        </div>
         <div class="showcase-content delay-400"
              :style="{ transform: `translateY(${isInView(4) ? '0' : '25px'})` }">
           <h2 class="section-title-light">{{ sections[4].title }}</h2>
           <p class="section-description-light">{{ sections[4].description }}</p>
-        </div>
-      </div>
+                  </div>
+                </div>
 
       <!-- Grid Section -->
       <div class="section-grid" :style="{ height: contentHeight + 'px' }">
@@ -467,18 +528,18 @@ const getTypingClasses = (delay) => ({
   &-base {
     @apply flex items-center justify-center relative overflow-hidden;
 
-    &::before {
-      @apply absolute inset-0 opacity-[0.05] z-0;
-      content: '';
-      background-image:
-        linear-gradient(var(--blueprint-color) 1.5px, transparent 1.5px),
-        linear-gradient(90deg, var(--blueprint-color) 1.5px, transparent 1.5px),
-        linear-gradient(var(--blueprint-color) 0.75px, transparent 0.75px),
-        linear-gradient(90deg, var(--blueprint-color) 0.75px, transparent 0.75px);
-      background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
-      background-position: -1.5px -1.5px, -1.5px -1.5px, -0.75px -0.75px, -0.75px -0.75px;
-      --blueprint-color: theme('colors.primary');
-    }
+    // &::before {
+    //   @apply absolute inset-0 opacity-[0.05] z-0;
+    //   content: '';
+    //   background-image:
+    //     linear-gradient(var(--blueprint-color) 1.5px, transparent 1.5px),
+    //     linear-gradient(90deg, var(--blueprint-color) 1.5px, transparent 1.5px),
+    //     linear-gradient(var(--blueprint-color) 0.75px, transparent 0.75px),
+    //     linear-gradient(90deg, var(--blueprint-color) 0.75px, transparent 0.75px);
+    //   background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+    //   background-position: -1.5px -1.5px, -1.5px -1.5px, -0.75px -0.75px, -0.75px -0.75px;
+    //   --blueprint-color: theme('colors.primary');
+    // }
   }
 
   &-hero {
@@ -850,6 +911,42 @@ const getTypingClasses = (delay) => ({
     @apply opacity-100 translate-y-0 translate-x-0;
   }
 }
+
+/* Add these styles to your existing SCSS */
+.experience-container {
+  @apply max-w-5xl mx-auto;
+}
+
+.experience-item {
+  @apply flex items-start transition-all duration-700 ease-out;
+
+  .year {
+    @apply text-primary font-mono text-lg w-44;
+    padding-top: 1.5rem;
+  }
+
+  .experience-card {
+    @apply rounded-2xl p-6 my-2 w-full;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+}
+
+.card-role {
+  @apply text-2xl font-bold text-primary-content;
+}
+
+.card-company {
+  @apply text-lg font-semibold text-primary-content/80 mb-2;
+}
+
+.card-description {
+  @apply text-base text-primary-content/80;
+}
+
 </style>
 
 <style>
