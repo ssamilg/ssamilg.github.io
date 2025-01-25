@@ -14,6 +14,9 @@ const { t } = useI18n()
 const currentSection = ref(0)
 const isScrolling = ref(false)
 const contentHeight = ref(0)
+const lastWheelTime = ref(0)
+const wheelThreshold = 5 // Minimum delta required to trigger scroll
+const wheelCooldown = 1000 // Time in ms before accepting next wheel event
 
 const sections = [
   {
@@ -100,7 +103,14 @@ const handleScroll = (e) => {
 
   if (isScrolling.value) return
 
+  const now = Date.now()
+  if (now - lastWheelTime.value < wheelCooldown) return
+
+  // Only trigger if wheel delta exceeds threshold
+  if (Math.abs(e.deltaY) < wheelThreshold) return
+
   const direction = e.deltaY > 0 ? 1 : -1
+  lastWheelTime.value = now
 
   if (direction > 0 && currentSection.value < sections.length - 1) {
     isScrolling.value = true
@@ -405,7 +415,8 @@ const experienceCardBackground = (index) => {
                 <p class="card-description">{{ $t(item.description) }}</p>
               </div>
             </div>
-            <div class="flex items-center justify-between mb-12">
+
+            <div class="flex items-center justify-between">
               <div class="flex items-center gap-4">
                 <BriefcaseIcon class="section-icon" :class="experienceClasses.icon" />
                 <h2 class="section-title !mb-0" :class="experienceClasses.title">
