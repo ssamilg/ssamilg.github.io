@@ -8,6 +8,7 @@ import {
   ChevronDoubleDownIcon,
   RocketLaunchIcon,
   BookOpenIcon,
+  WrenchScrewdriverIcon
 } from '@heroicons/vue/24/outline'
 
 const { t } = useI18n()
@@ -17,6 +18,7 @@ const contentHeight = ref(0)
 const lastWheelTime = ref(0)
 const wheelThreshold = 5 // Minimum delta required to trigger scroll
 const wheelCooldown = 1000 // Time in ms before accepting next wheel event
+const currentProject = ref(0)
 
 const sections = [
   {
@@ -37,6 +39,18 @@ const sections = [
     title: 'Experience',
     description: 'Currently working at Sensity AI, focusing on frontend development and modern web technologies.',
     icon: BriefcaseIcon
+  },
+  {
+    id: 'skills',
+    title: 'Skills',
+    description: 'Interactive technology map',
+    icon: WrenchScrewdriverIcon
+  },
+  {
+    id: 'projects',
+    title: 'Personal Projects',
+    description: 'A collection of my notable projects',
+    icon: CommandLineIcon
   },
   {
     id: 'showcase',
@@ -67,7 +81,7 @@ const sections = [
     title: 'Code is Poetry',
     description: '> Every line of code tells a story_',
     icon: CommandLineIcon
-  }
+  },
 ]
 
 const experienceItems = [
@@ -96,6 +110,153 @@ const experienceItems = [
     delay: 0.9
   }
 ];
+
+const projects = [
+  {
+    id: 'featured',
+    title: 'Iftar Timer',
+    description: 'Iftar Timer is a simple and easy-to-use application that helps you to calculate the time of Iftar.',
+    image: new URL('@/assets/images/iftar-timer.png', import.meta.url),
+    technologies: ['Vue.js', 'Tailwind'],
+    liveUrl: '#',
+    sourceUrl: '#',
+    featured: true
+  },
+  // {
+  //   id: 'project2',
+  //   title: 'Project Appcomplishd',
+  //   description: 'Your life wrapped in a single app',
+  //   image: 'https://picsum.photos/800/600?2',
+  //   technologies: ['TBD'],
+  //   liveUrl: '#',
+  //   sourceUrl: '#'
+  // },
+  {
+    id: 'weather-forecast-demo',
+    title: 'Weather Forecast Demo',
+    description: 'Weather Forecast Demo is a simple and easy-to-use application that shows the weather forecast of the selected city.',
+    image: new URL('@/assets/images/weather-forecast.png', import.meta.url),
+    technologies: ['Vue', 'Vuetify'],
+    liveUrl: '#',
+    sourceUrl: '#'
+  },
+  {
+    id: 'meme-generator-demo',
+    title: 'Meme Generator Demo',
+    description: 'Meme Generator Demo is a simple and easy-to-use application that helps you to generate memes.',
+    image: new URL('@/assets/images/meme-generator.png', import.meta.url),
+    technologies: ['Next.js'],
+    liveUrl: '#',
+    sourceUrl: '#'
+  }
+]
+
+const skillsMap = {
+  categories: [
+    {
+      id: "dev",
+      name: "Development Technologies",
+      color: "text-blue-500",
+      background: "bg-blue-900/10"
+    },
+    {
+      id: "cicd",
+      name: "CI/CD & Tools",
+      color: "text-green-500",
+      background: "bg-green-900/10"
+    },
+    {
+      id: "methods",
+      name: "Methodologies & Practices",
+      color: "text-purple-500",
+      background: "bg-purple-900/10"
+    }
+  ],
+  skills: [
+    // Development Technologies
+    {
+      id: "js",
+      name: "JavaScript/TypeScript",
+      category: "dev",
+      primary: true
+    },
+    {
+      id: "vue",
+      name: "Vue.js",
+      category: "dev",
+      primary: true
+    },
+    {
+      id: "react",
+      name: "React",
+      category: "dev"
+    },
+    {
+      id: "html",
+      name: "HTML5",
+      category: "dev"
+    },
+    {
+      id: "css",
+      name: "CSS3",
+      category: "dev"
+    },
+    {
+      id: "node",
+      name: "Node.js",
+      category: "dev"
+    },
+    {
+      id: "vite",
+      name: "Vite",
+      category: "dev"
+    },
+
+    // CI/CD & Tools
+    {
+      id: "git",
+      name: "Git/GitHub",
+      category: "cicd"
+    },
+    {
+      id: "docker",
+      name: "Docker",
+      category: "cicd"
+    },
+    {
+      id: "gitlab",
+      name: "GitLab CI",
+      category: "cicd"
+    },
+    {
+      id: "vscode",
+      name: "VS Code",
+      category: "cicd"
+    },
+
+    // Methodologies & Practices
+    {
+      id: "agile",
+      name: "Agile",
+      category: "methods"
+    },
+    {
+      id: "scrum",
+      name: "Scrum",
+      category: "methods"
+    },
+    {
+      id: "kanban",
+      name: "Kanban",
+      category: "methods"
+    },
+    {
+      id: "clean",
+      name: "Clean Code",
+      category: "methods"
+    }
+  ]
+}
 
 const handleScroll = (e) => {
   e.stopPropagation()
@@ -178,7 +339,7 @@ const getTransitionClasses = (index, {
     transform.push(`scale-${isVisible ? scaleAmount : '95'}`)
   }
 
-  return {
+    return {
     [transform.join(' ')]: !isVisible,
     'opacity-100': isVisible,
     'opacity-0': !isVisible,
@@ -217,32 +378,32 @@ const experienceClasses = computed(() => ({
 
 const showcaseClasses = computed(() => ({
   container: {
-    'scale-100': !isInView(3),
-    'scale-75': isInView(3)
+    'scale-100': !isInView(4),
+    'scale-75': isInView(4)
   },
   image: {
-    'scale-125 blur-sm': !isInView(3),
-    'scale-100 blur-0': isInView(3)
+    'scale-125 blur-sm': !isInView(4),
+    'scale-100 blur-0': isInView(4)
   },
   overlay: {
-    'opacity-100': !isInView(3),
-    'opacity-0': isInView(3)
+    'opacity-100': !isInView(4),
+    'opacity-0': isInView(4)
   },
-  content: getTransitionClasses(3)
+  content: getTransitionClasses(4)
 }))
 
 const terminalClasses = computed(() => ({
   container: {
-    'scale-100': !isInView(7),
-    'scale-50 !bg-opacity-95': isInView(7)
+    'scale-100': !isInView(8),
+    'scale-50 !bg-opacity-95': isInView(8)
   },
-  content: getTransitionClasses(7)
+  content: getTransitionClasses(8)
 }))
 
 const getTypingClasses = (delay) => ({
-  'typing-animation': isInView(7),
-  'opacity-0': !isInView(7),
-  'opacity-100': isInView(7),
+  'typing-animation': isInView(8),
+  'opacity-0': !isInView(8),
+  'opacity-100': isInView(8),
   'transition-delay': `${delay}s`
 });
 
@@ -259,6 +420,24 @@ const experienceCardBackground = (index) => {
 
   return bgClass
 }
+
+const prevProject = () => {
+  if (currentProject.value > 0) {
+    currentProject.value--
+  }
+}
+
+const nextProject = () => {
+  if (currentProject.value < projects.length - 1) {
+    currentProject.value++
+  }
+}
+
+const skillsClasses = computed(() => ({
+  title: getTransitionClasses(3, { delay: 0.3 }),
+  description: getTransitionClasses(3, { delay: 0.5 }),
+  categories: getTransitionClasses(3, { delay: 0.7 })
+}))
 </script>
 
 <template>
@@ -276,8 +455,8 @@ const experienceCardBackground = (index) => {
             : 'bg-base-content/30 hover:bg-base-content/50'
         ]"
       />
-    </div>
-  </div>
+                </div>
+              </div>
 
   <!-- Main scroll container -->
   <div class="overflow-hidden relative" :style="{ height: contentHeight + 'px' }">
@@ -292,7 +471,7 @@ const experienceCardBackground = (index) => {
       <div class="section-hero" :style="{ height: contentHeight + 'px' }">
         <div class="hero-gradient" :class="heroClasses.gradient">
           <div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent"></div>
-        </div>
+            </div>
 
         <div class="hero-blueprint"></div>
 
@@ -311,78 +490,80 @@ const experienceCardBackground = (index) => {
           <p class="hero-description" :class="heroClasses.description">
             {{ sections[0].description }}
           </p>
-        </div>
+          </div>
 
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDoubleDownIcon class="h-6 w-6 text-primary" />
         </div>
-      </div>
+          </div>
 
       <!-- About Section -->
       <div class="section-about" :style="{ height: contentHeight + 'px' }">
-        <div class="content-container">
-          <!-- Header -->
-          <div class="flex items-center gap-4 mb-12">
-            <UserIcon class="section-icon" :class="aboutClasses.icon" />
-            <h2 class="section-title !mb-0" :class="aboutClasses.title">
-              {{ sections[1].title }}
-            </h2>
-          </div>
-
-          <!-- Photo and Content -->
-          <div class="relative">
-            <!-- Polaroid Photo -->
-            <div class="polaroid-container" :class="aboutClasses.photo">
-              <div class="polaroid">
-                <div class="photo-wrapper">
-                  <img src="@/assets/images/ssg1.jpeg" alt="ssg_about" class="photo">
-                </div>
-                <div class="photo-caption">Efes, 2023</div>
-                <div class="photo-pin">
-                  <div class="pin-head"></div>
-                  <div class="pin-leg"></div>
-                </div>
-              </div>
+        <div class="content-container flex justify-center">
+          <div class="basis-full 2xl:basis-3/4 3xl:basis-1/2">
+            <!-- Header -->
+            <div class="flex items-center gap-4 mb-12">
+              <UserIcon class="section-icon" :class="aboutClasses.icon" />
+              <h2 class="section-title !mb-0" :class="aboutClasses.title">
+                {{ sections[1].title }}
+              </h2>
             </div>
 
-            <!-- Biography Paragraphs -->
-            <div class="biography-content">
-              <div class="biography-item text-left" :class="getTransitionClasses(1, { delay: 0.3 })">
-                <RocketLaunchIcon class="biography-icon" />
-                <p class="biography-text">{{ $tm('biography.sections')[0] }}</p>
-              </div>
+            <!-- Photo and Content -->
+            <div class="relative">
+              <!-- Polaroid Photo -->
+              <div class="polaroid-container" :class="aboutClasses.photo">
+                <div class="polaroid">
+                  <div class="photo-wrapper">
+                    <img src="@/assets/images/ssg1.jpeg" alt="ssg_about" class="photo">
+                  </div>
+                  <div class="photo-caption">Efes, 2023</div>
+                  <div class="photo-pin">
+                    <div class="pin-head"></div>
+                    <div class="pin-leg"></div>
+                  </div>
+          </div>
+        </div>
 
-              <!-- First arrow with hover tilt -->
-              <img
-                src="@/assets/icons/curve-arrow.svg"
-                class="curved-arrow left-arrow"
-                :class="[
-                  getTransitionClasses(1, { delay: 0.6 }),
-                  { 'opacity-60 hover:opacity-100': isInView(1) }
-                ]"
-                alt="curve arrow"
-              />
+              <!-- Biography Paragraphs -->
+              <div class="biography-content">
+                <div class="biography-item text-left" :class="getTransitionClasses(1, { delay: 0.3 })">
+                  <RocketLaunchIcon class="biography-icon" />
+                  <p class="biography-text">{{ $tm('biography.sections')[0] }}</p>
+                </div>
 
-              <div class="biography-item text-right ml-auto" :class="getTransitionClasses(1, { delay: 0.9 })">
-                <BriefcaseIcon class="biography-icon" />
-                <p class="biography-text">{{ $tm('biography.sections')[1] }}</p>
-              </div>
+                <!-- First arrow with hover tilt -->
+                <img
+                  src="@/assets/icons/curve-arrow.svg"
+                  class="curved-arrow left-arrow"
+                  :class="[
+                    getTransitionClasses(1, { delay: 0.6 }),
+                    { 'opacity-60 hover:opacity-100': isInView(1) }
+                  ]"
+                  alt="curve arrow"
+                />
 
-              <!-- Second arrow with hover tilt -->
-              <img
-                src="@/assets/icons/curve-arrow.svg"
-                class="curved-arrow right-arrow"
-                :class="[
-                  getTransitionClasses(1, { delay: 1.2 }),
-                  { 'opacity-60 hover:opacity-100': isInView(1) }
-                ]"
-                alt="curve arrow"
-              />
+                <div class="biography-item text-right ml-auto" :class="getTransitionClasses(1, { delay: 0.9 })">
+                  <BriefcaseIcon class="biography-icon" />
+                  <p class="biography-text">{{ $tm('biography.sections')[1] }}</p>
+                </div>
 
-              <div class="biography-item text-left" :class="getTransitionClasses(1, { delay: 1.5 })">
-                <BookOpenIcon class="biography-icon" />
-                <p class="biography-text">{{ $tm('biography.sections')[2] }}</p>
-              </div>
+                <!-- Second arrow with hover tilt -->
+                <img
+                  src="@/assets/icons/curve-arrow.svg"
+                  class="curved-arrow right-arrow"
+                  :class="[
+                    getTransitionClasses(1, { delay: 1.2 }),
+                    { 'opacity-60 hover:opacity-100': isInView(1) }
+                  ]"
+                  alt="curve arrow"
+                />
+
+                <div class="biography-item text-left" :class="getTransitionClasses(1, { delay: 1.5 })">
+                  <BookOpenIcon class="biography-icon" />
+                  <p class="biography-text">{{ $tm('biography.sections')[2] }}</p>
+                </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -413,8 +594,8 @@ const experienceCardBackground = (index) => {
                 <h2 class="card-role">{{ $t(item.role) }}</h2>
                 <h3 class="card-company">{{ $t(item.name) }}</h3>
                 <p class="card-description">{{ $t(item.description) }}</p>
-              </div>
-            </div>
+                        </div>
+                  </div>
 
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-4">
@@ -422,7 +603,7 @@ const experienceCardBackground = (index) => {
                 <h2 class="section-title !mb-0" :class="experienceClasses.title">
                   {{ sections[2].title }}
                 </h2>
-              </div>
+                </div>
 
               <router-link
                 to="/cv"
@@ -433,6 +614,228 @@ const experienceCardBackground = (index) => {
                   <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
               </router-link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills Section -->
+      <div class="section-skills" :style="{ height: contentHeight + 'px' }">
+        <div class="content-container h-full">
+          <!-- Header -->
+          <div class="flex items-center justify-between mb-12">
+            <div class="flex items-center gap-4">
+              <WrenchScrewdriverIcon class="section-icon" :class="skillsClasses.title" />
+              <h2 class="section-title !mb-0" :class="skillsClasses.title">
+                {{ sections[3].title }}
+              </h2>
+            </div>
+          </div>
+
+          <!-- Skills Categories -->
+          <div class="grid grid-cols-3 gap-8 h-[80%]">
+            <!-- Development Technologies -->
+            <div class="skill-category" :class="{ 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }" style="transition-delay: 0.2s">
+              <h3 class="text-xl font-bold text-blue-500 mb-6">Development Technologies</h3>
+              <div class="space-y-4">
+                <div v-for="skill in skillsMap.skills.filter(s => s.category === 'dev')"
+                     :key="skill.id"
+                     class="skill-item"
+                     :class="{ 'primary': skill.primary }">
+                  {{ skill.name }}
+                </div>
+              </div>
+            </div>
+
+            <!-- CI/CD & Tools -->
+            <div class="skill-category" :class="{ 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }" style="transition-delay: 0.4s">
+              <h3 class="text-xl font-bold text-green-500 mb-6">CI/CD & Tools</h3>
+              <div class="space-y-4">
+                <div v-for="skill in skillsMap.skills.filter(s => s.category === 'cicd')"
+                     :key="skill.id"
+                     class="skill-item">
+                  {{ skill.name }}
+                </div>
+              </div>
+            </div>
+
+            <!-- Methodologies & Practices -->
+            <div class="skill-category" :class="{ 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }" style="transition-delay: 0.6s">
+              <h3 class="text-xl font-bold text-purple-500 mb-6">Methodologies & Practices</h3>
+              <div class="space-y-4">
+                <div v-for="skill in skillsMap.skills.filter(s => s.category === 'methods')"
+                     :key="skill.id"
+                     class="skill-item">
+                  {{ skill.name }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects Section -->
+      <div class="section-projects" :style="{ height: contentHeight + 'px' }">
+        <div class="content-container h-full">
+          <!-- Header -->
+          <div class="flex items-center justify-between my-8"
+               :class="{ 'opacity-0': !isInView(4), 'opacity-100': isInView(4) }"
+               style="transition: opacity 0.5s ease 0.5s"
+          >
+            <div class="flex items-center gap-4">
+              <CommandLineIcon class="section-icon" />
+              <h2 class="section-title !mb-0">
+                {{ sections[4].title }}
+              </h2>
+      </div>
+          </div>
+
+          <!-- Project Grid -->
+          <div class="grid grid-cols-3 gap-8 h-[75%] relative perspective-1000">
+            <!-- Featured Project -->
+            <div
+              class="project-card col-span-2 row-span-2 transform-gpu group"
+              :style="{
+                transform: isInView(4) ? 'rotateX(0deg) translateY(0)' : 'rotateX(45deg) translateY(100px)',
+                opacity: isInView(4) ? '1' : '0',
+                transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)',
+                transformOrigin: 'center bottom'
+              }"
+            >
+              <div class="relative h-full bg-base-200 rounded-xl overflow-hidden">
+                <!-- Project Image -->
+                <img
+                  :src="projects[0].image"
+                  :alt="projects[0].title"
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                >
+                <!-- Dark Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
+
+                <!-- Project Content -->
+                <div class="absolute inset-0 p-8 flex flex-col justify-end">
+                  <h3
+                    class="text-4xl font-bold text-white mb-4 transition-all duration-500"
+                    :class="[isInView(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+                    style="transition-delay: 0.4s"
+                  >
+                    {{ projects[0].title }}
+                  </h3>
+                  <p
+                    class="text-xl text-white/80 mb-6 transition-all duration-500"
+                    :class="[isInView(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+                    style="transition-delay: 0.6s"
+                  >
+                    {{ projects[0].description }}
+                  </p>
+
+                  <!-- Tech Stack -->
+                  <div
+                    class="flex gap-3 mb-6 transition-all duration-500"
+                    :class="[isInView(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+                    style="transition-delay: 0.8s"
+                  >
+                    <span
+                      v-for="tech in projects[0].technologies"
+                      :key="tech"
+                      class="px-4 py-2 rounded-lg bg-white/10 text-white/90 text-sm backdrop-blur-sm transition-all duration-300 group-hover:bg-primary/20 group-hover:text-white"
+                    >
+                      {{ tech }}
+                    </span>
+                  </div>
+
+                  <!-- Links -->
+                  <div
+                    class="flex gap-6 transition-all duration-500"
+                    :class="[isInView(4) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+                    style="transition-delay: 1s"
+                  >
+                    <a
+                      :href="projects[0].liveUrl"
+                      class="text-white/70 hover:text-primary transition-all duration-300 flex items-center gap-2 group-hover:translate-x-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                      </svg>
+                      Live Demo
+                    </a>
+                    <a
+                      :href="projects[0].sourceUrl"
+                      class="text-white/70 hover:text-primary transition-all duration-300 flex items-center gap-2 group-hover:translate-x-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                      </svg>
+                      Source Code
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Other Projects -->
+            <div
+              v-for="(project, index) in projects.slice(1)"
+              :key="project.id"
+              class="project-card transform-gpu group"
+              :style="{
+                transform: isInView(4) ? 'rotateX(0deg) translateY(0)' : 'rotateX(45deg) translateY(100px)',
+                opacity: isInView(4) ? '1' : '0',
+                transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)',
+                transitionDelay: `${0.2 + (index * 0.2)}s`,
+                transformOrigin: 'center bottom'
+              }"
+            >
+              <div class="relative h-[100%] bg-base-200 rounded-xl overflow-hidden">
+                <!-- Project Image -->
+                <img
+                  :src="project.image"
+                  :alt="project.title"
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                >
+                <!-- Dark Overlay -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent transition-opacity duration-500 group-hover:opacity-95"/>
+
+                <!-- Project Content -->
+                <div class="absolute inset-0 p-6 flex flex-col justify-end transform transition-all duration-500">
+                  <h3 class="text-xl font-bold text-white mb-3 transition-colors duration-300">{{ project.title }}</h3>
+
+                  <!-- Tech Stack -->
+                  <div class="flex gap-2 mb-4">
+                    <span
+                      v-for="tech in project.technologies"
+                      :key="tech"
+                      class="px-3 py-1 rounded-lg bg-white/10 text-white/90 text-xs backdrop-blur-sm transition-all duration-300 group-hover:bg-primary/20 group-hover:text-white"
+                    >
+                      {{ tech }}
+                    </span>
+                  </div>
+
+                  <!-- Links -->
+                  <div class="flex gap-4">
+                    <a
+                      :href="project.liveUrl"
+                      class="text-white/70 hover:text-primary transition-all duration-300 flex items-center gap-2 text-sm group-hover:translate-x-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
+                        <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
+                      </svg>
+                      Live Demo
+                    </a>
+                    <a
+                      :href="project.sourceUrl"
+                      class="text-white/70 hover:text-primary transition-all duration-300 flex items-center gap-2 text-sm group-hover:translate-x-2"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                      </svg>
+                      Source Code
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -457,32 +860,32 @@ const experienceCardBackground = (index) => {
       <!-- Parallax Section -->
       <div class="section-parallax" :style="{ height: contentHeight + 'px' }">
         <div class="showcase-container"
-             :style="{ transform: `translateY(${isInView(4) ? '0' : '100px'}) scale(${isInView(4) ? '1' : '1.5'})` }">
+             :style="{ transform: `translateY(${isInView(5) ? '0' : '100px'}) scale(${isInView(5) ? '1' : '1.5'})` }">
           <img src="https://picsum.photos/1920/1080?1"
                alt="Background"
                class="showcase-image opacity-50" />
         </div>
         <div class="showcase-container delay-200"
-             :style="{ transform: `translateY(${isInView(4) ? '0' : '50px'}) scale(${isInView(4) ? '1' : '1.2'})` }">
+             :style="{ transform: `translateY(${isInView(5) ? '0' : '50px'}) scale(${isInView(5) ? '1' : '1.2'})` }">
           <img src="https://picsum.photos/1920/1080?2"
                alt="Middle"
                class="showcase-image opacity-70" />
                         </div>
         <div class="showcase-content delay-400"
-             :style="{ transform: `translateY(${isInView(4) ? '0' : '25px'})` }">
-          <h2 class="section-title-light">{{ sections[4].title }}</h2>
-          <p class="section-description-light">{{ sections[4].description }}</p>
+             :style="{ transform: `translateY(${isInView(5) ? '0' : '25px'})` }">
+          <h2 class="section-title-light">{{ sections[5].title }}</h2>
+          <p class="section-description-light">{{ sections[5].description }}</p>
                   </div>
                 </div>
 
       <!-- Grid Section -->
       <div class="section-grid" :style="{ height: contentHeight + 'px' }">
         <div class="grid-container">
-          <div class="grid-layout" :class="{ 'rotate-x-45': isInView(5) }">
+          <div class="grid-layout" :class="{ 'rotate-x-45': isInView(6) }">
             <div v-for="i in 6" :key="i"
                  class="grid-item"
                  :style="{ transitionDelay: `${i * 100}ms` }"
-                 :class="{ 'translate-y-0 opacity-100': isInView(5), 'translate-y-20 opacity-0': !isInView(5) }">
+                 :class="{ 'translate-y-0 opacity-100': isInView(6), 'translate-y-20 opacity-0': !isInView(6) }">
               <img :src="`https://picsum.photos/400/400?${i}`"
                    :alt="`Project ${i}`"
                    class="showcase-image rounded-lg" />
@@ -493,13 +896,13 @@ const experienceCardBackground = (index) => {
 
       <!-- Curtain Section -->
       <div class="section-curtain" :style="{ height: contentHeight + 'px' }">
-        <div class="curtain-left" :class="{ '-translate-x-full': isInView(6) }"></div>
-        <div class="curtain-right" :class="{ 'translate-x-full': isInView(6) }"></div>
+        <div class="curtain-left" :class="{ '-translate-x-full': isInView(7) }"></div>
+        <div class="curtain-right" :class="{ 'translate-x-full': isInView(7) }"></div>
         <div class="showcase-content">
           <img src="https://picsum.photos/1920/1080?3"
                alt="Revealed Content"
                class="showcase-image rounded-lg shadow-2xl delay-500"
-               :class="{ 'scale-100 opacity-100': isInView(6), 'scale-90 opacity-0': !isInView(6) }" />
+               :class="{ 'scale-100 opacity-100': isInView(7), 'scale-90 opacity-0': !isInView(7) }" />
         </div>
       </div>
 
@@ -529,6 +932,7 @@ const experienceCardBackground = (index) => {
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -619,6 +1023,10 @@ const experienceCardBackground = (index) => {
 
   &-image-container {
     @apply md:w-1/2 relative h-96 transition-all duration-1000 transform;
+  }
+
+  &-projects {
+    @apply section-base bg-base-200;
   }
 }
 
@@ -785,6 +1193,9 @@ const experienceCardBackground = (index) => {
   transform: rotateX(45deg);
 }
 
+.rotate-x-0 {
+  transform: rotateX(0deg);
+}
 /* Animations */
 @keyframes typing {
   from {
@@ -958,6 +1369,208 @@ const experienceCardBackground = (index) => {
   @apply text-base text-primary-content/80;
 }
 
+.section-projects {
+  @apply section-base bg-base-100;
+  perspective: 2000px;
+
+  .content-container {
+    @apply h-full;
+  }
+
+    .header {
+    @apply flex items-center justify-between my-8;
+    transition: opacity 0.5s ease 1.2s;
+
+    .title-wrapper {
+      @apply flex items-center gap-4;
+    }
+  }
+
+  .projects-grid {
+    @apply grid grid-cols-3 gap-8 h-[75%] relative;
+  }
+
+  /* Featured Project Card */
+  .featured-project {
+    @apply col-span-2 row-span-2 relative h-full;
+    transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
+
+    .project-image {
+      @apply absolute inset-0 w-full h-full object-cover;
+      transition: transform 0.5s ease;
+    }
+
+    .overlay {
+      @apply absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent;
+    }
+
+    .content {
+      @apply absolute inset-0 p-8 flex flex-col justify-end;
+
+      .title {
+        @apply text-4xl font-bold text-white mb-4;
+        transition: all 0.5s ease;
+      }
+
+      .description {
+        @apply text-xl text-white/80 mb-6;
+        transition: all 0.5s ease;
+      }
+
+      .tech-stack {
+        @apply flex gap-3 mb-6;
+
+        .tech-tag {
+          @apply px-4 py-2 rounded-lg bg-white/10 text-white/90 text-sm backdrop-blur-sm;
+          transition: all 0.3s ease;
+        }
+      }
+
+      .links {
+        @apply flex gap-6;
+
+        .link {
+          @apply text-white/70 flex items-center gap-2;
+          transition: all 0.3s ease;
+
+          &:hover {
+            @apply text-primary translate-x-2;
+          }
+        }
+      }
+    }
+  }
+
+  /* Other Project Cards */
+  .project-card {
+    @apply relative h-full;
+    transition: all 0.7s ease;
+
+    .project-image {
+      @apply absolute inset-0 w-full h-full object-cover;
+      transition: transform 0.5s ease;
+    }
+
+    .overlay {
+      @apply absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent;
+      transition: opacity 0.5s ease;
+    }
+
+    .content {
+      @apply absolute inset-0 p-6 flex flex-col justify-end;
+      transition: all 0.5s ease;
+
+      .title {
+        @apply text-xl font-bold text-white mb-3;
+        transition: color 0.3s ease;
+      }
+
+      .tech-stack {
+        @apply flex gap-2 mb-4;
+
+        .tech-tag {
+          @apply px-3 py-1 rounded-lg bg-white/10 text-white/90 text-xs backdrop-blur-sm;
+          transition: all 0.3s ease;
+        }
+      }
+
+      .links {
+        @apply flex gap-4;
+
+        .link {
+          @apply text-white/70 flex items-center gap-2 text-sm;
+          transition: all 0.3s ease;
+
+          &:hover {
+            @apply text-primary translate-x-2;
+          }
+        }
+      }
+    }
+  }
+}
+
+.section-skills {
+  @apply section-base bg-base-100;
+}
+
+.skills-map {
+  @apply relative;
+
+  svg {
+    @apply transition-transform duration-500;
+  }
+}
+
+@keyframes drawLine {
+  from {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  to {
+    stroke-dashoffset: 0;
+    opacity: 0.5;
+  }
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-draw-line {
+  stroke-dasharray: 1000;
+  animation: drawLine 1.5s ease-out forwards;
+}
+
+.animate-pop-in {
+  animation: popIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Add these styles to your existing SCSS */
+.skill-category {
+  @apply bg-base-200/50 backdrop-blur-sm rounded-xl p-8 transition-all duration-700;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    @apply bg-base-200/70;
+  }
+}
+
+.skill-item {
+  @apply px-4 py-3 rounded-lg bg-base-300/50 backdrop-blur-sm text-base-content/80 transition-all duration-300;
+
+  &:hover {
+    @apply bg-base-300/80 text-base-content transform -translate-y-1;
+  }
+
+  &.primary {
+    @apply bg-primary/10 text-primary;
+
+    &:hover {
+      @apply bg-primary/20;
+    }
+  }
+}
 </style>
 
 <style>
