@@ -221,6 +221,27 @@ const contactInfo = {
   timezone: 'UTC+3'
 }
 
+const descriptions = [
+  'Making JavaScript behave since 2019',
+  'Vue.js wizard with a git blame-free record',
+  'Building cool stuff with JavaScript',
+  'Writing code that doesn\'t need comments',
+  'Crafting pixel-perfect nightmares for QA'
+]
+
+const currentDescriptionIndex = ref(0)
+const isDescriptionChanging = ref(false)
+
+const rotateDescription = () => {
+  isDescriptionChanging.value = true
+  setTimeout(() => {
+    currentDescriptionIndex.value = (currentDescriptionIndex.value + 1) % descriptions.length
+    isDescriptionChanging.value = false
+  }, 500) // Half of the transition duration
+}
+
+let descriptionInterval
+
 const handleScroll = (e) => {
   e.stopPropagation()
   e.preventDefault()
@@ -265,11 +286,13 @@ onMounted(() => {
   updateHeight()
   window.addEventListener('resize', updateHeight)
   window.addEventListener('wheel', handleScroll, { passive: false })
+  descriptionInterval = setInterval(rotateDescription, 5000)
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', updateHeight)
   window.removeEventListener('wheel', handleScroll)
+  clearInterval(descriptionInterval)
 })
 
 // Generic transition classes
@@ -315,7 +338,7 @@ const getTransitionClasses = (index, {
 const heroClasses = computed(() => ({
   title: getTransitionClasses(0, { direction: 'x', reverse: true }),
   subtitle: getTransitionClasses(0, { direction: 'x' }),
-  description: getTransitionClasses(0),
+  // description: getTransitionClasses(0, { disableOpacity: true }),
   icon: getTransitionClasses(0, { includeRotate: true, reverse: true }),
   gradient: {
     'opacity-20': isInView(0),
@@ -368,13 +391,24 @@ const skillsClasses = computed(() => ({
         v-for="(section, index) in sections"
         :key="section.id"
         @click="scrollToSection(index)"
-        class="w-3 h-3 rounded-full transition-all duration-300"
-        :class="[
-          currentSection === index
-            ? 'bg-primary scale-125'
-            : 'bg-base-content/30 hover:bg-base-content/50'
-        ]"
-      />
+        class="group relative w-3 h-3 transition-all duration-300"
+      >
+        <div class="w-3 h-3 rounded-full transition-all duration-300"
+             :class="[
+               currentSection === index
+                 ? 'bg-primary scale-125'
+                 : 'bg-base-content/30 group-hover:bg-base-content/50'
+             ]"
+        />
+        <!-- Tooltip -->
+        <div class="absolute right-full top-1/2 -translate-y-1/2 mr-4 px-3 py-1.5 rounded-lg bg-base-300/80 backdrop-blur-sm
+                    text-sm font-medium text-base-content whitespace-nowrap opacity-0 -translate-x-2
+                    transition-all duration-300 pointer-events-none
+                    group-hover:opacity-100 group-hover:translate-x-0">
+          {{ section.title }}
+          <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-45 w-2 h-2 bg-base-300/80" />
+        </div>
+      </button>
     </div>
   </div>
 
@@ -406,8 +440,16 @@ const skillsClasses = computed(() => ({
             {{ sections[0].subtitle }}
           </h2>
 
-          <p class="hero-description" :class="heroClasses.description">
-            {{ sections[0].description }}
+          <p class="hero-description opacity-0"
+            :class="[
+              heroClasses.description,
+              {
+                'opacity-0 -translate-y-4': isDescriptionChanging,
+                'opacity-100 translate-y-0': !isDescriptionChanging
+              }
+            ]"
+          >
+            {{ descriptions[currentDescriptionIndex] }}
           </p>
         </div>
 
@@ -965,7 +1007,7 @@ const skillsClasses = computed(() => ({
   }
 
   &-description {
-    @apply text-xl text-base-content/70 max-w-2xl mx-auto transition-all duration-1000 transform;
+    @apply text-xl text-base-content/70 max-w-2xl mx-auto;
   }
 
   &-gradient {
@@ -1313,6 +1355,10 @@ const skillsClasses = computed(() => ({
 
 .contact-text {
   @apply text-lg font-medium;
+}
+
+.hero-description {
+  @apply text-xl text-base-content/70 max-w-2xl mx-auto transition-all duration-500 transform;
 }
 </style>
 
