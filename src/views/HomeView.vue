@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
   UserIcon,
@@ -28,7 +28,6 @@ const contentHeight = ref(0)
 const lastWheelTime = ref(0)
 const wheelThreshold = 5 // Minimum delta required to trigger scroll
 const wheelCooldown = 1000 // Time in ms before accepting next wheel event
-const currentProject = ref(0)
 
 const sections = [
   {
@@ -60,36 +59,6 @@ const sections = [
     id: 'projects',
     title: 'Personal Projects',
     description: 'A collection of my notable projects',
-    icon: CommandLineIcon
-  },
-  {
-    id: 'showcase',
-    title: 'My Work',
-    description: 'A showcase of my recent projects and achievements',
-    icon: CommandLineIcon
-  },
-  {
-    id: 'showcase-parallax',
-    title: 'Parallax View',
-    description: 'Multi-layered project presentation',
-    icon: CommandLineIcon
-  },
-  {
-    id: 'showcase-grid',
-    title: 'Perspective Grid',
-    description: 'Projects in 3D space',
-    icon: CommandLineIcon
-  },
-  {
-    id: 'showcase-curtain',
-    title: 'Dramatic Reveal',
-    description: 'Theatrical project presentation',
-    icon: CommandLineIcon
-  },
-  {
-    id: 'terminal',
-    title: 'Code is Poetry',
-    description: '> Every line of code tells a story_',
     icon: CommandLineIcon
   },
   {
@@ -138,15 +107,6 @@ const projects = [
     sourceUrl: '#',
     featured: true
   },
-  // {
-  //   id: 'project2',
-  //   title: 'Project Appcomplishd',
-  //   description: 'Your life wrapped in a single app',
-  //   image: 'https://picsum.photos/800/600?2',
-  //   technologies: ['TBD'],
-  //   liveUrl: '#',
-  //   sourceUrl: '#'
-  // },
   {
     id: 'weather-forecast-demo',
     title: 'Weather Forecast Demo',
@@ -254,10 +214,10 @@ const skillsMap = {
 }
 
 const contactInfo = {
-  email: 'contact@ssamilg.dev',
+  email: 's.samilgokmen@gmail.com',
   github: 'github.com/ssamilg',
   linkedin: 'linkedin.com/in/ssamilg',
-  location: 'Istanbul, Turkey',
+  location: 'Ankara, Türkiye',
   timezone: 'UTC+3'
 }
 
@@ -379,37 +339,6 @@ const experienceClasses = computed(() => ({
   card: getTransitionClasses(2, { direction: 'x', showScale: true, reverse: true }),
 }))
 
-const showcaseClasses = computed(() => ({
-  container: {
-    'scale-100': !isInView(4),
-    'scale-75': isInView(4)
-  },
-  image: {
-    'scale-125 blur-sm': !isInView(4),
-    'scale-100 blur-0': isInView(4)
-  },
-  overlay: {
-    'opacity-100': !isInView(4),
-    'opacity-0': isInView(4)
-  },
-  content: getTransitionClasses(4)
-}))
-
-const terminalClasses = computed(() => ({
-  container: {
-    'scale-100': !isInView(8),
-    'scale-50 !bg-opacity-95': isInView(8)
-  },
-  content: getTransitionClasses(8)
-}))
-
-const getTypingClasses = (delay) => ({
-  'typing-animation': isInView(8),
-  'opacity-0': !isInView(8),
-  'opacity-100': isInView(8),
-  'transition-delay': `${delay}s`
-});
-
 const experienceCardBackground = (index) => {
   let bgClass = 'bg-primary/90'
 
@@ -423,7 +352,6 @@ const experienceCardBackground = (index) => {
 
   return bgClass
 }
-
 
 const skillsClasses = computed(() => ({
   title: getTransitionClasses(3, { delay: 0.3 }),
@@ -447,8 +375,8 @@ const skillsClasses = computed(() => ({
             : 'bg-base-content/30 hover:bg-base-content/50'
         ]"
       />
-                </div>
-              </div>
+    </div>
+  </div>
 
   <!-- Main scroll container -->
   <div class="overflow-hidden relative" :style="{ height: contentHeight + 'px' }">
@@ -462,14 +390,13 @@ const skillsClasses = computed(() => ({
       <!-- Hero Section -->
       <div class="section-hero" :style="{ height: contentHeight + 'px' }">
         <div class="hero-gradient" :class="heroClasses.gradient">
-          <div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent"></div>
-            </div>
+          <div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent" />
+        </div>
 
         <div class="hero-blueprint"></div>
 
         <div class="hero-container">
-          <CommandLineIcon class="hero-icon"
-            :class="heroClasses.icon" />
+          <CommandLineIcon class="hero-icon" :class="heroClasses.icon" />
 
           <h1 class="hero-title" :class="heroClasses.title">
             {{ sections[0].title }}
@@ -482,12 +409,12 @@ const skillsClasses = computed(() => ({
           <p class="hero-description" :class="heroClasses.description">
             {{ sections[0].description }}
           </p>
-          </div>
+        </div>
 
         <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <ChevronDoubleDownIcon class="h-6 w-6 text-primary" />
         </div>
-          </div>
+      </div>
 
       <!-- About Section -->
       <div class="section-about" :style="{ height: contentHeight + 'px' }">
@@ -514,8 +441,8 @@ const skillsClasses = computed(() => ({
                     <div class="pin-head"></div>
                     <div class="pin-leg"></div>
                   </div>
-          </div>
-        </div>
+                </div>
+              </div>
 
               <!-- Biography Paragraphs -->
               <div class="biography-content">
@@ -555,11 +482,11 @@ const skillsClasses = computed(() => ({
                   <BookOpenIcon class="biography-icon" />
                   <p class="biography-text">{{ $tm('biography.sections')[2] }}</p>
                 </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
       <!-- Experience Section -->
       <div class="section-experience" :style="{ height: contentHeight + 'px' }">
@@ -586,8 +513,8 @@ const skillsClasses = computed(() => ({
                 <h2 class="card-role">{{ $t(item.role) }}</h2>
                 <h3 class="card-company">{{ $t(item.name) }}</h3>
                 <p class="card-description">{{ $t(item.description) }}</p>
-                        </div>
-                  </div>
+              </div>
+            </div>
 
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-4">
@@ -702,7 +629,7 @@ const skillsClasses = computed(() => ({
               <h2 class="section-title !mb-0">
                 {{ sections[4].title }}
               </h2>
-      </div>
+            </div>
           </div>
 
           <!-- Project Grid -->
@@ -862,7 +789,7 @@ const skillsClasses = computed(() => ({
           <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="flex items-center gap-4 mb-12"
-                 :class="[isInView(10) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+                 :class="[isInView(5) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
                  style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1)">
               <EnvelopeIcon class="section-icon" />
               <h2 class="section-title !mb-0">Contact</h2>
@@ -873,7 +800,7 @@ const skillsClasses = computed(() => ({
               <!-- Left Column: Contact Info -->
               <div class="space-y-8">
                 <div class="contact-card"
-                     :class="[isInView(10) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8']"
+                     :class="[isInView(5) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8']"
                      style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s">
                   <h3 class="text-2xl font-bold mb-6 text-primary">Get in Touch</h3>
                   <div class="space-y-6">
@@ -902,7 +829,7 @@ const skillsClasses = computed(() => ({
               <!-- Right Column: Social Links -->
               <div class="space-y-8">
                 <div class="contact-card"
-                     :class="[isInView(10) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8']"
+                     :class="[isInView(5) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8']"
                      style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s">
                   <h3 class="text-2xl font-bold mb-6 text-primary">Social Links</h3>
                   <div class="space-y-6">
@@ -934,14 +861,13 @@ const skillsClasses = computed(() => ({
 
             <!-- Message -->
             <p class="text-xl text-base-content/70 text-center mt-12 max-w-2xl mx-auto"
-               :class="[isInView(10) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+               :class="[isInView(5) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
                style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s">
               {{ sections[sections.length - 1].description }}
             </p>
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -978,24 +904,16 @@ const skillsClasses = computed(() => ({
     @apply section-base bg-gradient-to-t from-base-100 to-base-200;
   }
 
-  &-showcase {
+  &-skills {
+    @apply section-base bg-gradient-to-b from-base-100 to-base-200;
+  }
+
+  &-projects {
+    @apply section-base bg-gradient-to-b from-base-200 to-base-100;
+  }
+
+  &-contact {
     @apply section-base bg-base-100;
-  }
-
-  &-parallax {
-    @apply section-base bg-base-200;
-  }
-
-  &-grid {
-    @apply section-base bg-gradient-to-t from-base-200 to-base-100;
-  }
-
-  &-curtain {
-    @apply section-base bg-base-100;
-  }
-
-  &-terminal {
-    @apply section-base bg-base-200;
   }
 
   &-title {
@@ -1006,32 +924,8 @@ const skillsClasses = computed(() => ({
     }
   }
 
-  &-description {
-    @apply text-xl text-base-content/70 leading-relaxed transition-all duration-1000;
-
-    &-light {
-      @apply text-xl text-white/70;
-    }
-  }
-
   &-icon {
     @apply h-12 w-12 mb-6 text-primary transition-all duration-1000 transform;
-  }
-
-  &-half {
-    @apply md:w-1/2 space-y-6;
-  }
-
-  &-gradient {
-    @apply absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-lg;
-
-    &-reverse {
-      @apply absolute inset-0 bg-gradient-to-bl from-primary/20 to-transparent rounded-lg;
-    }
-  }
-
-  &-image-container {
-    @apply md:w-1/2 relative h-96 transition-all duration-1000 transform;
   }
 
   &-projects {
@@ -1041,7 +935,7 @@ const skillsClasses = computed(() => ({
 
 /* Container styles */
 .content-container {
-  @apply w-4/5 mx-auto px-4;
+  @apply w-4/5 mx-auto;
 }
 
 .flex-container {
@@ -1083,112 +977,6 @@ const skillsClasses = computed(() => ({
   }
 }
 
-/* Showcase styles */
-.showcase {
-  &-container {
-    @apply absolute inset-0 transition-all duration-1000;
-  }
-
-  &-image {
-    @apply w-full h-full object-cover transition-all duration-1000;
-  }
-
-  &-overlay {
-    @apply absolute inset-0 bg-base-100/50 transition-opacity duration-1000;
-  }
-
-  &-content {
-    @apply relative z-10 max-w-5xl mx-auto px-4 text-center transition-all duration-1000 transform;
-  }
-}
-
-/* Grid styles */
-.grid {
-  &-container {
-    @apply relative perspective-1000 w-full max-w-5xl mx-auto px-4;
-  }
-
-  &-layout {
-    @apply grid grid-cols-3 gap-8 transition-all duration-1000;
-  }
-
-  &-item {
-    @apply aspect-square bg-base-200 rounded-lg shadow-xl transition-all duration-1000;
-  }
-}
-
-/* Curtain styles */
-.curtain {
-  &-left {
-    @apply absolute inset-y-0 left-0 w-1/2 bg-primary transition-transform duration-1000;
-  }
-
-  &-right {
-    @apply absolute inset-y-0 right-0 w-1/2 bg-primary transition-transform duration-1000;
-  }
-}
-
-/* Terminal styles */
-.terminal {
-  &-container {
-    @apply absolute inset-0 bg-black transition-all duration-1000;
-  }
-
-  &-content {
-    @apply relative bg-black/95 rounded-lg overflow-hidden transition-all duration-1000 h-full w-full;
-    box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
-  }
-
-  &-header {
-    @apply flex items-center px-4 py-4 bg-zinc-800 border-b border-zinc-700;
-  }
-
-  &-buttons {
-    @apply flex gap-2;
-  }
-
-  &-button {
-    @apply w-6 h-6 rounded-full;
-
-    &.close {
-      @apply bg-red-500;
-    }
-
-    &.minimize {
-      @apply bg-yellow-500;
-    }
-
-    &.maximize {
-      @apply bg-green-500;
-    }
-  }
-
-  &-title {
-    @apply text-zinc-400 text-3xl ml-4;
-  }
-
-  &-body {
-    @apply p-8 font-mono text-3xl leading-relaxed;
-  }
-}
-
-/* Typing animation styles */
-.typing {
-  &-container {
-    @apply space-y-4;
-  }
-
-  &-line {
-    @apply text-zinc-300;
-    transition: opacity 0.5s ease;
-  }
-
-  &-animation {
-    animation: typing 1.5s steps(30, end) forwards;
-    animation-delay: var(--typing-delay);
-  }
-}
-
 /* Utility classes */
 .base-transition {
   @apply transition-all duration-1000;
@@ -1196,23 +984,6 @@ const skillsClasses = computed(() => ({
 
 .perspective-1000 {
   perspective: 1000px;
-}
-
-.rotate-x-45 {
-  transform: rotateX(45deg);
-}
-
-.rotate-x-0 {
-  transform: rotateX(0deg);
-}
-/* Animations */
-@keyframes typing {
-  from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
-  }
 }
 
 /* Polaroid styles */
@@ -1303,7 +1074,6 @@ const skillsClasses = computed(() => ({
   @apply text-4xl;
 }
 
-/* Add these styles to your existing SCSS */
 .curved-arrow {
   @apply absolute w-24 transition-all duration-300;
 
@@ -1343,7 +1113,6 @@ const skillsClasses = computed(() => ({
   }
 }
 
-/* Add these styles to your existing SCSS */
 .experience-container {
   @apply max-w-5xl mx-auto;
 }
@@ -1499,9 +1268,6 @@ const skillsClasses = computed(() => ({
   }
 }
 
-.section-skills {
-  @apply section-base bg-base-100;
-}
 
 .skills-map {
   @apply relative;
@@ -1511,51 +1277,6 @@ const skillsClasses = computed(() => ({
   }
 }
 
-@keyframes drawLine {
-  from {
-    stroke-dashoffset: 1000;
-    opacity: 0;
-  }
-  to {
-    stroke-dashoffset: 0;
-    opacity: 0.5;
-  }
-}
-
-@keyframes popIn {
-  from {
-    opacity: 0;
-    transform: scale(0);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-draw-line {
-  stroke-dasharray: 1000;
-  animation: drawLine 1.5s ease-out forwards;
-}
-
-.animate-pop-in {
-  animation: popIn 0.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-/* Add these styles to your existing SCSS */
 .skill-category {
   @apply bg-base-200/50 backdrop-blur-sm rounded-xl py-4 px-8 relative border border-base-300 transition-all duration-300;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
@@ -1575,11 +1296,6 @@ const skillsClasses = computed(() => ({
   &:hover {
     @apply bg-base-300/80 text-base-content transform -translate-y-0.5;
   }
-}
-
-/* Add these styles to your existing SCSS */
-.section-contact {
-  @apply section-base bg-base-100;
 }
 
 .contact-card {
