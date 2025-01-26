@@ -14,7 +14,10 @@ import {
   CpuChipIcon,
   ServerIcon,
   CircleStackIcon,
-  WrenchIcon
+  WrenchIcon,
+  EnvelopeIcon,
+  MapPinIcon,
+  ClockIcon
 } from '@heroicons/vue/24/outline'
 import VIcon from '@/components/common/VIcon.vue'
 
@@ -89,6 +92,12 @@ const sections = [
     description: '> Every line of code tells a story_',
     icon: CommandLineIcon
   },
+  {
+    id: 'contact',
+    title: 'Contact',
+    description: 'Feel free to reach out for collaborations or just a friendly hello.',
+    icon: EnvelopeIcon
+  }
 ]
 
 const experienceItems = [
@@ -195,6 +204,7 @@ const skillsMap = {
             { name: "Vite", icon: "vite" },
             { name: "Webpack", icon: "webpack" },
             { name: "Jest", icon: "jest" },
+            { name: "Vitest", icon: "vitest" },
             { name: "ESLint", icon: "eslint" },
             { name: "Prettier", icon: "prettier" }
           ]
@@ -240,31 +250,15 @@ const skillsMap = {
         }
       ]
     },
-    // {
-    //   id: "methods",
-    //   name: "Methodologies & Practices",
-    //   color: "text-purple-500",
-    //   background: "bg-purple-900/10",
-    //   categories: [
-    //     {
-    //       id: "agile",
-    //       name: "Agile",
-    //       skills: [
-    //         { name: "Scrum", icon: "" },
-    //         { name: "Kanban", icon: "" }
-    //       ]
-    //     },
-    //     {
-    //       id: "clean",
-    //       name: "Clean Code",
-    //       skills: [
-    //         { name: "Clean Code", icon: "" },
-    //         { name: "Refactoring", icon: "" }
-    //       ]
-    //     }
-    //   ]
-    // }
   ]
+}
+
+const contactInfo = {
+  email: 'contact@ssamilg.dev',
+  github: 'github.com/ssamilg',
+  linkedin: 'linkedin.com/in/ssamilg',
+  location: 'Istanbul, Turkey',
+  timezone: 'UTC+3'
 }
 
 const handleScroll = (e) => {
@@ -430,17 +424,6 @@ const experienceCardBackground = (index) => {
   return bgClass
 }
 
-const prevProject = () => {
-  if (currentProject.value > 0) {
-    currentProject.value--
-  }
-}
-
-const nextProject = () => {
-  if (currentProject.value < projects.length - 1) {
-    currentProject.value++
-  }
-}
 
 const skillsClasses = computed(() => ({
   title: getTransitionClasses(3, { delay: 0.3 }),
@@ -616,7 +599,7 @@ const skillsClasses = computed(() => ({
 
               <router-link
                 to="/cv"
-                class="px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 flex items-center gap-2 text-sm font-medium"
+                class="relative z-2 px-4 py-2 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 flex items-center gap-2 text-sm font-medium"
               >
                 View Full Experience
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
@@ -644,22 +627,34 @@ const skillsClasses = computed(() => ({
 
             <div class="grid grid-cols-2 gap-8 h-[80%]">
               <div
-                v-for="section in skillsMap.sections"
+                v-for="(section, sectionIndex) in skillsMap.sections"
                 :key="section.id"
                 class="space-y-4"
                 :class="[
                   { 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }
                 ]"
-                style="transition-delay: 0.2s"
+                :style="{
+                  transitionDelay: `${sectionIndex * 0.2}s`,
+                  transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+                }"
               >
-                <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2']">
+                <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2']"
+                    :style="{ transitionDelay: `${sectionIndex * 0.2 + 0.2}s` }">
                   <CodeBracketIcon v-if="section.id === 'dev'" class="w-7 h-7" />
                   <WrenchIcon v-if="section.id === 'cicd'" class="w-7 h-7" />
                   {{ section.name }}
                 </h3>
                 <div class="skill-category" :class="section.background">
                   <div class="space-y-6">
-                    <div v-for="category in section.categories" :key="category.id" class="subcategory">
+                    <div v-for="(category, categoryIndex) in section.categories"
+                         :key="category.id"
+                         class="subcategory"
+                         :style="{
+                           transitionDelay: `${sectionIndex * 0.2 + categoryIndex * 0.15 + 0.4}s`,
+                           opacity: isInView(3) ? '1' : '0',
+                           transform: isInView(3) ? 'translateX(0)' : 'translateX(-20px)',
+                           transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                         }">
                       <h4 class="text-lg font-semibold mb-4 flex items-center gap-2" :class="section.color">
                         <CodeBracketIcon v-if="category.id === 'coding'" class="w-5 h-5" />
                         <PaintBrushIcon v-if="category.id === 'styling'" class="w-5 h-5" />
@@ -670,7 +665,15 @@ const skillsClasses = computed(() => ({
                         {{ category.name }}
                       </h4>
                       <div class="flex flex-wrap gap-2">
-                        <div v-for="skill in category.skills" :key="skill.name" class="skill-item inline-flex items-center">
+                        <div v-for="(skill, skillIndex) in category.skills"
+                             :key="skill.name"
+                             class="skill-item inline-flex items-center"
+                             :style="{
+                               transitionDelay: `${sectionIndex * 0.2 + categoryIndex * 0.15 + skillIndex * 0.05 + 0.6}s`,
+                               opacity: isInView(3) ? '1' : '0',
+                               transform: isInView(3) ? 'translateY(0)' : 'translateY(10px)',
+                               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+                             }">
                           <div class="flex items-center gap-2 cursor-default">
                             <VIcon v-if="skill.icon" :icon="skill.icon" height="1.5rem" class="w-5 h-5" />
                             {{ skill.name }}
@@ -853,94 +856,88 @@ const skillsClasses = computed(() => ({
         </div>
       </div>
 
-      <!-- Showcase Section -->
-      <div class="section-showcase" :style="{ height: contentHeight + 'px' }">
-        <div class="showcase-container" :class="showcaseClasses.container">
-          <img src="https://picsum.photos/1920/1080"
-               alt="Showcase"
-               class="showcase-image"
-               :class="showcaseClasses.image" />
-          <div class="showcase-overlay" :class="showcaseClasses.overlay"></div>
-        </div>
+      <!-- Contact Section -->
+      <div class="section-contact" :style="{ height: contentHeight + 'px' }">
+        <div class="content-container">
+          <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="flex items-center gap-4 mb-12"
+                 :class="[isInView(10) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+                 style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1)">
+              <EnvelopeIcon class="section-icon" />
+              <h2 class="section-title !mb-0">Contact</h2>
+            </div>
 
-        <div class="showcase-content" :class="showcaseClasses.content">
-          <h2 class="section-title-light">{{ sections[3].title }}</h2>
-          <p class="section-description-light">{{ sections[3].description }}</p>
-        </div>
-      </div>
+            <!-- Contact Grid -->
+            <div class="grid grid-cols-2 gap-12">
+              <!-- Left Column: Contact Info -->
+              <div class="space-y-8">
+                <div class="contact-card"
+                     :class="[isInView(10) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8']"
+                     style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s">
+                  <h3 class="text-2xl font-bold mb-6 text-primary">Get in Touch</h3>
+                  <div class="space-y-6">
+                    <!-- Email -->
+                    <a href="mailto:contact@ssamilg.dev"
+                       class="contact-link group">
+                      <EnvelopeIcon class="w-6 h-6" />
+                      <span class="contact-text">{{ contactInfo.email }}</span>
+                    </a>
 
-      <!-- Parallax Section -->
-      <div class="section-parallax" :style="{ height: contentHeight + 'px' }">
-        <div class="showcase-container"
-             :style="{ transform: `translateY(${isInView(5) ? '0' : '100px'}) scale(${isInView(5) ? '1' : '1.5'})` }">
-          <img src="https://picsum.photos/1920/1080?1"
-               alt="Background"
-               class="showcase-image opacity-50" />
-        </div>
-        <div class="showcase-container delay-200"
-             :style="{ transform: `translateY(${isInView(5) ? '0' : '50px'}) scale(${isInView(5) ? '1' : '1.2'})` }">
-          <img src="https://picsum.photos/1920/1080?2"
-               alt="Middle"
-               class="showcase-image opacity-70" />
-                        </div>
-        <div class="showcase-content delay-400"
-             :style="{ transform: `translateY(${isInView(5) ? '0' : '25px'})` }">
-          <h2 class="section-title-light">{{ sections[5].title }}</h2>
-          <p class="section-description-light">{{ sections[5].description }}</p>
+                    <!-- Location -->
+                    <div class="contact-link">
+                      <MapPinIcon class="w-6 h-6" />
+                      <span class="contact-text">{{ contactInfo.location }}</span>
+                    </div>
+
+                    <!-- Timezone -->
+                    <div class="contact-link">
+                      <ClockIcon class="w-6 h-6" />
+                      <span class="contact-text">{{ contactInfo.timezone }}</span>
+                    </div>
                   </div>
                 </div>
-
-      <!-- Grid Section -->
-      <div class="section-grid" :style="{ height: contentHeight + 'px' }">
-        <div class="grid-container">
-          <div class="grid-layout" :class="{ 'rotate-x-45': isInView(6) }">
-            <div v-for="i in 6" :key="i"
-                 class="grid-item"
-                 :style="{ transitionDelay: `${i * 100}ms` }"
-                 :class="{ 'translate-y-0 opacity-100': isInView(6), 'translate-y-20 opacity-0': !isInView(6) }">
-              <img :src="`https://picsum.photos/400/400?${i}`"
-                   :alt="`Project ${i}`"
-                   class="showcase-image rounded-lg" />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Curtain Section -->
-      <div class="section-curtain" :style="{ height: contentHeight + 'px' }">
-        <div class="curtain-left" :class="{ '-translate-x-full': isInView(7) }"></div>
-        <div class="curtain-right" :class="{ 'translate-x-full': isInView(7) }"></div>
-        <div class="showcase-content">
-          <img src="https://picsum.photos/1920/1080?3"
-               alt="Revealed Content"
-               class="showcase-image rounded-lg shadow-2xl delay-500"
-               :class="{ 'scale-100 opacity-100': isInView(7), 'scale-90 opacity-0': !isInView(7) }" />
-        </div>
-      </div>
-
-      <!-- Terminal Section -->
-      <div class="section-terminal" :style="{ height: contentHeight + 'px' }">
-        <div class="terminal-container" :class="terminalClasses.container">
-          <div class="terminal-content" :class="terminalClasses.content">
-            <div class="terminal-header">
-              <div class="terminal-buttons">
-                <span class="terminal-button close"></span>
-                <span class="terminal-button minimize"></span>
-                <span class="terminal-button maximize"></span>
               </div>
-              <div class="terminal-title">ssamilg@dev ~ </div>
-            </div>
-            <div class="terminal-body">
-              <div class="typing-container">
-                <div v-for="(line, index) in terminalLines"
-                     :key="index"
-                     class="typing-line"
-                     :class="getTypingClasses(index * 2)">
-                  <span :class="line.prefix.class">{{ line.prefix.text }}</span>
-                  {{ line.content }}
+
+              <!-- Right Column: Social Links -->
+              <div class="space-y-8">
+                <div class="contact-card"
+                     :class="[isInView(10) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8']"
+                     style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s">
+                  <h3 class="text-2xl font-bold mb-6 text-primary">Social Links</h3>
+                  <div class="space-y-6">
+                    <!-- GitHub -->
+                    <a href="https://github.com/ssamilg"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="contact-link group">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                      </svg>
+                      <span class="contact-text">{{ contactInfo.github }}</span>
+                    </a>
+
+                    <!-- LinkedIn -->
+                    <a href="https://linkedin.com/in/ssamilg"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="contact-link group">
+                      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                      </svg>
+                      <span class="contact-text">{{ contactInfo.linkedin }}</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
+
+            <!-- Message -->
+            <p class="text-xl text-base-content/70 text-center mt-12 max-w-2xl mx-auto"
+               :class="[isInView(10) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
+               style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s">
+              {{ sections[sections.length - 1].description }}
+            </p>
           </div>
         </div>
       </div>
@@ -955,18 +952,18 @@ const skillsClasses = computed(() => ({
   &-base {
     @apply flex items-center justify-center relative overflow-hidden;
 
-    // &::before {
-    //   @apply absolute inset-0 opacity-[0.05] z-0;
-    //   content: '';
-    //   background-image:
-    //     linear-gradient(var(--blueprint-color) 1.5px, transparent 1.5px),
-    //     linear-gradient(90deg, var(--blueprint-color) 1.5px, transparent 1.5px),
-    //     linear-gradient(var(--blueprint-color) 0.75px, transparent 0.75px),
-    //     linear-gradient(90deg, var(--blueprint-color) 0.75px, transparent 0.75px);
-    //   background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
-    //   background-position: -1.5px -1.5px, -1.5px -1.5px, -0.75px -0.75px, -0.75px -0.75px;
-    //   --blueprint-color: theme('colors.primary');
-    // }
+    &::before {
+      @apply absolute inset-0 opacity-[0.05] z-0;
+      content: '';
+      background-image:
+        linear-gradient(var(--blueprint-color) 1.5px, transparent 1.5px),
+        linear-gradient(90deg, var(--blueprint-color) 1.5px, transparent 1.5px),
+        linear-gradient(var(--blueprint-color) 0.75px, transparent 0.75px),
+        linear-gradient(90deg, var(--blueprint-color) 0.75px, transparent 0.75px);
+      background-size: 50px 50px, 50px 50px, 10px 10px, 10px 10px;
+      background-position: -1.5px -1.5px, -1.5px -1.5px, -0.75px -0.75px, -0.75px -0.75px;
+      --blueprint-color: theme('colors.primary');
+    }
   }
 
   &-hero {
@@ -1560,7 +1557,7 @@ const skillsClasses = computed(() => ({
 
 /* Add these styles to your existing SCSS */
 .skill-category {
-  @apply bg-base-200/50 backdrop-blur-sm rounded-xl py-4 px-8 relative border border-base-300;
+  @apply bg-base-200/50 backdrop-blur-sm rounded-xl py-4 px-8 relative border border-base-300 transition-all duration-300;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 
   .subcategory {
@@ -1578,6 +1575,28 @@ const skillsClasses = computed(() => ({
   &:hover {
     @apply bg-base-300/80 text-base-content transform -translate-y-0.5;
   }
+}
+
+/* Add these styles to your existing SCSS */
+.section-contact {
+  @apply section-base bg-base-100;
+}
+
+.contact-card {
+  @apply bg-base-200/50 backdrop-blur-sm rounded-xl p-8 border border-base-300;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+}
+
+.contact-link {
+  @apply flex items-center gap-4 text-base-content/80 transition-all duration-300;
+
+  &.group:hover {
+    @apply text-primary transform -translate-y-0.5;
+  }
+}
+
+.contact-text {
+  @apply text-lg font-medium;
 }
 </style>
 
