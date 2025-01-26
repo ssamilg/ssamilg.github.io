@@ -8,8 +8,15 @@ import {
   ChevronDoubleDownIcon,
   RocketLaunchIcon,
   BookOpenIcon,
-  WrenchScrewdriverIcon
+  WrenchScrewdriverIcon,
+  CodeBracketIcon,
+  PaintBrushIcon,
+  CpuChipIcon,
+  ServerIcon,
+  CircleStackIcon,
+  WrenchIcon
 } from '@heroicons/vue/24/outline'
+import VIcon from '@/components/common/VIcon.vue'
 
 const { t } = useI18n()
 const currentSection = ref(0)
@@ -152,109 +159,111 @@ const projects = [
 ]
 
 const skillsMap = {
-  categories: [
+  sections: [
     {
       id: "dev",
-      name: "Development Technologies",
+      name: "Development",
       color: "text-blue-500",
-      background: "bg-blue-900/10"
+      background: "bg-blue-900/10",
+      categories: [
+        {
+          id: "coding",
+          name: "Coding",
+          skills: [
+            { name: "JavaScript", icon: "js" },
+            { name: "Vue.js", icon: "vuejs" },
+            { name: "React", icon: "reactjs" },
+            { name: "Node.js", icon: "nodejs" },
+            { name: "Next.js", icon: "nextjs" }
+          ]
+        },
+        {
+          id: "styling",
+          name: "Styling",
+          skills: [
+            { name: "HTML5", icon: "html5" },
+            { name: "CSS3", icon: "css3" },
+            { name: "Tailwind", icon: "tailwind" },
+            { name: "SCSS", icon: "sass" },
+            { name: "Bootstrap", icon: "bootstrap5" }
+          ]
+        },
+        {
+          id: "build-testing",
+          name: "Build & Testing",
+          skills: [
+            { name: "Vite", icon: "vite" },
+            { name: "Webpack", icon: "webpack" },
+            { name: "Jest", icon: "jest" },
+            { name: "ESLint", icon: "eslint" },
+            { name: "Prettier", icon: "prettier" }
+          ]
+        }
+      ]
     },
     {
       id: "cicd",
-      name: "CI/CD & Tools",
+      name: "Tools",
       color: "text-green-500",
-      background: "bg-green-900/10"
+      background: "bg-green-900/10",
+      categories: [
+        {
+          id: "vc",
+          name: "Version Control",
+          skills: [
+            { name: "Git", icon: "git" },
+            { name: "GitHub", icon: "github" },
+            { name: "GitLab", icon: "gitlab" }
+          ]
+        },
+        {
+          id: "ci-cd",
+          name: "CI/CD",
+          skills: [
+            { name: "Jenkins", icon: "jenkins" },
+            { name: "GitHub Actions", icon: "github" },
+            { name: "Surge", icon: "surge" },
+            { name: "Vercel", icon: "vercel" },
+            { name: "Netlify", icon: "netlify" }
+          ]
+        },
+        {
+          id: "other-tools",
+          name: "Other Tools",
+          skills: [
+            { name: "Docker", icon: "docker" },
+            { name: "Sentry", icon: "sentry" },
+            { name: "Firebase", icon: "firebase" },
+            { name: "Postman", icon: "postman" },
+            { name: "MongoDB", icon: "mongodb" }
+          ]
+        }
+      ]
     },
-    {
-      id: "methods",
-      name: "Methodologies & Practices",
-      color: "text-purple-500",
-      background: "bg-purple-900/10"
-    }
-  ],
-  skills: [
-    // Development Technologies
-    {
-      id: "js",
-      name: "JavaScript/TypeScript",
-      category: "dev",
-      primary: true
-    },
-    {
-      id: "vue",
-      name: "Vue.js",
-      category: "dev",
-      primary: true
-    },
-    {
-      id: "react",
-      name: "React",
-      category: "dev"
-    },
-    {
-      id: "html",
-      name: "HTML5",
-      category: "dev"
-    },
-    {
-      id: "css",
-      name: "CSS3",
-      category: "dev"
-    },
-    {
-      id: "node",
-      name: "Node.js",
-      category: "dev"
-    },
-    {
-      id: "vite",
-      name: "Vite",
-      category: "dev"
-    },
-
-    // CI/CD & Tools
-    {
-      id: "git",
-      name: "Git/GitHub",
-      category: "cicd"
-    },
-    {
-      id: "docker",
-      name: "Docker",
-      category: "cicd"
-    },
-    {
-      id: "gitlab",
-      name: "GitLab CI",
-      category: "cicd"
-    },
-    {
-      id: "vscode",
-      name: "VS Code",
-      category: "cicd"
-    },
-
-    // Methodologies & Practices
-    {
-      id: "agile",
-      name: "Agile",
-      category: "methods"
-    },
-    {
-      id: "scrum",
-      name: "Scrum",
-      category: "methods"
-    },
-    {
-      id: "kanban",
-      name: "Kanban",
-      category: "methods"
-    },
-    {
-      id: "clean",
-      name: "Clean Code",
-      category: "methods"
-    }
+    // {
+    //   id: "methods",
+    //   name: "Methodologies & Practices",
+    //   color: "text-purple-500",
+    //   background: "bg-purple-900/10",
+    //   categories: [
+    //     {
+    //       id: "agile",
+    //       name: "Agile",
+    //       skills: [
+    //         { name: "Scrum", icon: "" },
+    //         { name: "Kanban", icon: "" }
+    //       ]
+    //     },
+    //     {
+    //       id: "clean",
+    //       name: "Clean Code",
+    //       skills: [
+    //         { name: "Clean Code", icon: "" },
+    //         { name: "Refactoring", icon: "" }
+    //       ]
+    //     }
+    //   ]
+    // }
   ]
 }
 
@@ -621,52 +630,55 @@ const skillsClasses = computed(() => ({
 
       <!-- Skills Section -->
       <div class="section-skills" :style="{ height: contentHeight + 'px' }">
-        <div class="content-container h-full">
-          <!-- Header -->
-          <div class="flex items-center justify-between mb-12">
-            <div class="flex items-center gap-4">
-              <WrenchScrewdriverIcon class="section-icon" :class="skillsClasses.title" />
-              <h2 class="section-title !mb-0" :class="skillsClasses.title">
-                {{ sections[3].title }}
-              </h2>
-            </div>
-          </div>
-
-          <!-- Skills Categories -->
-          <div class="grid grid-cols-3 gap-8 h-[80%]">
-            <!-- Development Technologies -->
-            <div class="skill-category" :class="{ 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }" style="transition-delay: 0.2s">
-              <h3 class="text-xl font-bold text-blue-500 mb-6">Development Technologies</h3>
-              <div class="space-y-4">
-                <div v-for="skill in skillsMap.skills.filter(s => s.category === 'dev')"
-                     :key="skill.id"
-                     class="skill-item"
-                     :class="{ 'primary': skill.primary }">
-                  {{ skill.name }}
-                </div>
+        <div class="content-container flex items-center">
+          <div class="basis-auto">
+            <!-- Header -->
+            <div class="flex items-center justify-between mb-8">
+              <div class="flex items-center gap-4">
+                <WrenchScrewdriverIcon class="section-icon" :class="skillsClasses.title" />
+                <h2 class="section-title !mb-0" :class="skillsClasses.title">
+                  {{ sections[3].title }}
+                </h2>
               </div>
             </div>
 
-            <!-- CI/CD & Tools -->
-            <div class="skill-category" :class="{ 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }" style="transition-delay: 0.4s">
-              <h3 class="text-xl font-bold text-green-500 mb-6">CI/CD & Tools</h3>
-              <div class="space-y-4">
-                <div v-for="skill in skillsMap.skills.filter(s => s.category === 'cicd')"
-                     :key="skill.id"
-                     class="skill-item">
-                  {{ skill.name }}
-                </div>
-              </div>
-            </div>
-
-            <!-- Methodologies & Practices -->
-            <div class="skill-category" :class="{ 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }" style="transition-delay: 0.6s">
-              <h3 class="text-xl font-bold text-purple-500 mb-6">Methodologies & Practices</h3>
-              <div class="space-y-4">
-                <div v-for="skill in skillsMap.skills.filter(s => s.category === 'methods')"
-                     :key="skill.id"
-                     class="skill-item">
-                  {{ skill.name }}
+            <div class="grid grid-cols-2 gap-8 h-[80%]">
+              <div
+                v-for="section in skillsMap.sections"
+                :key="section.id"
+                class="space-y-4"
+                :class="[
+                  { 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }
+                ]"
+                style="transition-delay: 0.2s"
+              >
+                <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2']">
+                  <CodeBracketIcon v-if="section.id === 'dev'" class="w-7 h-7" />
+                  <WrenchIcon v-if="section.id === 'cicd'" class="w-7 h-7" />
+                  {{ section.name }}
+                </h3>
+                <div class="skill-category" :class="section.background">
+                  <div class="space-y-6">
+                    <div v-for="category in section.categories" :key="category.id" class="subcategory">
+                      <h4 class="text-lg font-semibold mb-4 flex items-center gap-2" :class="section.color">
+                        <CodeBracketIcon v-if="category.id === 'coding'" class="w-5 h-5" />
+                        <PaintBrushIcon v-if="category.id === 'styling'" class="w-5 h-5" />
+                        <CpuChipIcon v-if="category.id === 'build-testing'" class="w-5 h-5" />
+                        <ServerIcon v-if="category.id === 'vc'" class="w-5 h-5" />
+                        <CircleStackIcon v-if="category.id === 'ci-cd'" class="w-5 h-5" />
+                        <WrenchScrewdriverIcon v-if="category.id === 'other-tools'" class="w-5 h-5" />
+                        {{ category.name }}
+                      </h4>
+                      <div class="flex flex-wrap gap-2">
+                        <div v-for="skill in category.skills" :key="skill.name" class="skill-item inline-flex items-center">
+                          <div class="flex items-center gap-2 cursor-default">
+                            <VIcon v-if="skill.icon" :icon="skill.icon" height="1.5rem" class="w-5 h-5" />
+                            {{ skill.name }}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1548,27 +1560,23 @@ const skillsClasses = computed(() => ({
 
 /* Add these styles to your existing SCSS */
 .skill-category {
-  @apply bg-base-200/50 backdrop-blur-sm rounded-xl p-8 transition-all duration-700;
+  @apply bg-base-200/50 backdrop-blur-sm rounded-xl py-4 px-8 relative border border-base-300;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
 
-  &:hover {
-    @apply bg-base-200/70;
+  .subcategory {
+    @apply relative mb-4 last:mb-0;
+
+    h4 {
+      @apply relative mb-4;
+    }
   }
 }
 
 .skill-item {
-  @apply px-4 py-3 rounded-lg bg-base-300/50 backdrop-blur-sm text-base-content/80 transition-all duration-300;
+  @apply px-4 py-2 rounded-lg bg-base-300/50 backdrop-blur-sm text-base-content/80 transition-all duration-300 text-sm whitespace-nowrap;
 
   &:hover {
-    @apply bg-base-300/80 text-base-content transform -translate-y-1;
-  }
-
-  &.primary {
-    @apply bg-primary/10 text-primary;
-
-    &:hover {
-      @apply bg-primary/20;
-    }
+    @apply bg-base-300/80 text-base-content transform -translate-y-0.5;
   }
 }
 </style>
