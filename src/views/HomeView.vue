@@ -701,7 +701,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                   <div
                     v-for="(section, index) in skillSections"
                     :key="section.id"
-                    class="h-4 w-4 rounded-full"
+                    class="h-3 w-3 rounded-full"
                     :class="[
                       currentSkillSectionIndex === index
                         ? 'bg-primary scale-150'
@@ -738,7 +738,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                   transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
                 }"
               >
-                <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2']"
+                <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2 2xl:text-3xl']"
                     :style="{ transitionDelay: `${sectionIndex * 0.2 + 0.2}s` }">
                   <CodeBracketIcon v-if="section.id === 'dev'" class="w-7 h-7" />
                   <WrenchIcon v-if="section.id === 'cicd'" class="w-7 h-7" />
@@ -755,7 +755,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                            transform: isInView(3) ? 'translateX(0)' : 'translateX(-20px)',
                            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
                          }">
-                      <h4 class="text-lg font-semibold mb-4 flex items-center gap-2" :class="section.color">
+                      <h4 class="text-lg font-semibold mb-4 flex items-center gap-2 2xl:text-2xl" :class="section.color">
                         <CodeBracketIcon v-if="category.id === 'coding'" class="w-5 h-5" />
                         <PaintBrushIcon v-if="category.id === 'styling'" class="w-5 h-5" />
                         <CpuChipIcon v-if="category.id === 'build-testing'" class="w-5 h-5" />
@@ -774,7 +774,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                                transform: isInView(3) ? 'translateY(0)' : 'translateY(10px)',
                                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
                              }">
-                          <div class="flex items-center gap-2 cursor-default">
+                          <div class="flex items-center gap-2 cursor-default 2xl:text-xl">
                             <VIcon v-if="skill.icon" :icon="skill.icon" height="1.5rem" class="w-5 h-5" />
                             {{ skill.name }}
                           </div>
@@ -1132,7 +1132,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
 
 /* Container styles */
 .content-container {
-  @apply w-full mx-2 md:w-4/5 md:mx-auto 2xl:w-5/6;
+  @apply w-full mx-4 md:w-4/5 md:mx-auto 2xl:w-5/6;
 }
 
 .flex-container {
