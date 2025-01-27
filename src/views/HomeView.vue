@@ -21,7 +21,7 @@ import {
 } from '@heroicons/vue/24/outline'
 import VIcon from '@/components/common/VIcon.vue'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 const currentSection = ref(0)
 const isScrolling = ref(false)
 const contentHeight = ref(0)
@@ -36,38 +36,38 @@ const sections = [
   {
     id: 'hero',
     title: 'Şehit Şamil Gökmen',
-    subtitle: 'Frontend Developer',
-    description: 'who believes in the power of clean code and thoughtful design',
+    subtitle: t('header.subtitle'),
+    description: t('header.description'),
     icon: CommandLineIcon
   },
   {
     id: 'about',
-    title: 'About Me',
-    description: t('biography.sections[0]'),
+    title: t('about.title'),
+    description: t('about.description'),
     icon: UserIcon
   },
   {
     id: 'experience',
-    title: 'Experience',
-    description: 'Currently working at Sensity AI, focusing on frontend development and modern web technologies.',
+    title: t('experience.title'),
+    description: t('experience.description'),
     icon: BriefcaseIcon
   },
   {
     id: 'skills',
-    title: 'Skills',
-    description: 'Interactive technology map',
+    title: t('skills.title'),
+    description: t('skills.description'),
     icon: WrenchScrewdriverIcon
   },
   {
     id: 'projects',
-    title: 'Personal Projects',
-    description: 'A collection of my notable projects',
+    title: t('projects.title'),
+    description: t('projects.description'),
     icon: CommandLineIcon
   },
   {
     id: 'contact',
-    title: 'Contact',
-    description: 'Feel free to reach out for collaborations or just a friendly hello.',
+    title: t('contact.title'),
+    description: t('contact.description'),
     icon: EnvelopeIcon
   }
 ]
@@ -102,8 +102,8 @@ const experienceItems = [
 const projects = [
   {
     id: 'featured',
-    title: 'Iftar Timer',
-    description: 'Iftar Timer is a simple and easy-to-use application that helps you to calculate the time of Iftar.',
+    title: t('projects.featured.iftar_timer.title'),
+    description: t('projects.featured.iftar_timer.description'),
     image: new URL('@/assets/images/iftar-timer.png', import.meta.url),
     technologies: ['Vue.js', 'Tailwind'],
     liveUrl: 'https://iftartime.netlify.app/',
@@ -111,8 +111,8 @@ const projects = [
   },
   {
     id: 'weather-forecast-demo',
-    title: 'Weather Forecast Demo',
-    description: 'Weather Forecast Demo is a simple and easy-to-use application that shows the weather forecast of the selected city.',
+    title: t('projects.featured.weather_forecast.title'),
+    description: t('projects.featured.weather_forecast.description'),
     image: new URL('@/assets/images/weather-forecast.png', import.meta.url),
     technologies: ['Vue', 'Vuetify'],
     liveUrl: 'https://ssg-weather-app.netlify.app/',
@@ -120,8 +120,8 @@ const projects = [
   },
   {
     id: 'meme-generator-demo',
-    title: 'Meme Generator Demo',
-    description: 'Meme Generator Demo is a simple and easy-to-use application that helps you to generate memes.',
+    title: t('projects.featured.meme_generator.title'),
+    description: t('projects.featured.meme_generator.description'),
     image: new URL('@/assets/images/meme-generator.png', import.meta.url),
     technologies: ['Next.js'],
     liveUrl: 'https://meme-generator-ssamilg.vercel.app/',
@@ -132,13 +132,13 @@ const projects = [
 const skillSections = [
   {
     id: "dev",
-    name: "Development",
+    name: t('skills.sections.development.title'),
     color: "text-blue-500",
     background: "bg-blue-900/10",
     categories: [
       {
         id: "coding",
-        name: "Coding",
+        name: t('skills.sections.development.categories.coding'),
         skills: [
           { name: "JavaScript", icon: "js" },
           { name: "Vue.js", icon: "vuejs" },
@@ -149,7 +149,7 @@ const skillSections = [
       },
       {
         id: "styling",
-        name: "Styling",
+        name: t('skills.sections.development.categories.styling'),
         skills: [
           { name: "HTML5", icon: "html5" },
           { name: "CSS3", icon: "css3" },
@@ -160,7 +160,7 @@ const skillSections = [
       },
       {
         id: "build-testing",
-        name: "Build & Testing",
+        name: t('skills.sections.development.categories.build_testing'),
         skills: [
           { name: "Vite", icon: "vite" },
           { name: "Webpack", icon: "webpack" },
@@ -174,13 +174,13 @@ const skillSections = [
   },
   {
     id: "cicd",
-    name: "Tools",
+    name: t('skills.sections.tools.title'),
     color: "text-green-500",
     background: "bg-green-900/10",
     categories: [
       {
         id: "vc",
-        name: "Version Control",
+        name: t('skills.sections.tools.categories.version_control'),
         skills: [
           { name: "Git", icon: "git" },
           { name: "GitHub", icon: "github" },
@@ -189,7 +189,7 @@ const skillSections = [
       },
       {
         id: "ci-cd",
-        name: "CI/CD",
+        name: t('skills.sections.tools.categories.ci_cd'),
         skills: [
           { name: "Jenkins", icon: "jenkins" },
           { name: "GitHub Actions", icon: "github" },
@@ -200,7 +200,7 @@ const skillSections = [
       },
       {
         id: "other-tools",
-        name: "Other Tools",
+        name: t('skills.sections.tools.categories.other_tools'),
         skills: [
           { name: "Docker", icon: "docker" },
           { name: "Sentry", icon: "sentry" },
@@ -216,18 +216,13 @@ const skillSections = [
 const contactInfo = {
   email: 's.samilgokmen@gmail.com',
   github: 'github.com/ssamilg',
+  twitter: 'twitter.com/ssamilg',
   linkedin: 'linkedin.com/in/ssamilg',
   location: 'Ankara, Türkiye',
   timezone: 'UTC+3'
 }
 
-const descriptions = [
-  'Making JavaScript behave since 2019',
-  'Vue.js wizard with a git blame-free record',
-  'Building cool stuff with JavaScript',
-  'Writing code that doesn\'t need comments',
-  'Crafting pixel-perfect nightmares for QA'
-]
+const descriptions = computed(() => tm('header.descriptions'))
 
 const currentDescriptionIndex = ref(0)
 const isDescriptionChanging = ref(false)
@@ -235,7 +230,7 @@ const isDescriptionChanging = ref(false)
 const rotateDescription = () => {
   isDescriptionChanging.value = true
   setTimeout(() => {
-    currentDescriptionIndex.value = (currentDescriptionIndex.value + 1) % descriptions.length
+    currentDescriptionIndex.value = (currentDescriptionIndex.value + 1) % descriptions.value.length
     isDescriptionChanging.value = false
   }, 500) // Half of the transition duration
 }
@@ -480,7 +475,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
           </h1>
 
           <h2 class="hero-subtitle" :class="heroClasses.subtitle">
-            {{ sections[0].subtitle }}
+            {{ t('header.subtitle') }}
           </h2>
 
           <p class="hero-description"
@@ -624,7 +619,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                 to="/cv"
                 class=" w-full justify-center md:w-auto text-center relative z-2 px-4 py-2 rounded-xl bg-primary/10 hover:bg-primary/20 text-primary transition-all duration-300 flex items-center gap-2 text-sm font-medium"
               >
-                View Full Experience
+                {{ t('experience.actions.view_full') }}
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
                 </svg>
@@ -734,12 +729,12 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                   { 'translate-y-0 opacity-100': isInView(3), 'translate-y-8 opacity-0': !isInView(3) }
                 ]"
                 :style="{
-                  transitionDelay: `${sectionIndex * 0.2}s`,
+                  transitionDelay: `${sectionIndex * 1}s`,
                   transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
                 }"
               >
                 <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2 2xl:text-3xl']"
-                    :style="{ transitionDelay: `${sectionIndex * 0.2 + 0.2}s` }">
+                    :style="{ transitionDelay: `${sectionIndex * 1}s` }">
                   <CodeBracketIcon v-if="section.id === 'dev'" class="w-7 h-7" />
                   <WrenchIcon v-if="section.id === 'cicd'" class="w-7 h-7" />
                   {{ section.name }}
@@ -750,7 +745,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                          :key="category.id"
                          class="subcategory"
                          :style="{
-                           transitionDelay: `${sectionIndex * 0.2 + categoryIndex * 0.15 + 0.4}s`,
+                           transitionDelay: `${sectionIndex * 2 + categoryIndex * 4}s`,
                            opacity: isInView(3) ? '1' : '0',
                            transform: isInView(3) ? 'translateX(0)' : 'translateX(-20px)',
                            transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
@@ -874,7 +869,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                         <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
                         <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
                       </svg>
-                      Live Demo
+                      {{ t('projects.actions.live_demo') }}
                     </a>
                     <a
                       :href="projects[0].sourceUrl"
@@ -884,7 +879,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                       </svg>
-                      Source Code
+                      {{ t('projects.actions.source_code') }}
                     </a>
                   </div>
                 </div>
@@ -940,7 +935,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                         <path d="M11 3a1 1 0 100 2h2.586l-6.293 6.293a1 1 0 101.414 1.414L15 6.414V9a1 1 0 102 0V4a1 1 0 00-1-1h-5z" />
                         <path d="M5 5a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3a1 1 0 10-2 0v3H5V7h3a1 1 0 000-2H5z" />
                       </svg>
-                      Live Demo
+                      {{ t('projects.actions.live_demo') }}
                     </a>
                     <a
                       :href="project.sourceUrl"
@@ -950,7 +945,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                       </svg>
-                      Source Code
+                      {{ t('projects.actions.source_code') }}
                     </a>
                   </div>
                 </div>
@@ -979,7 +974,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                 <div class="contact-card"
                      :class="[isInView(5) ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8']"
                      style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.2s">
-                  <h3 class="text-2xl font-bold mb-6 text-primary">Get in Touch</h3>
+                  <h3 class="text-2xl font-bold mb-6 text-primary">{{ t('contact.actions.get_in_touch') }}</h3>
                   <div class="space-y-6">
                     <!-- Email -->
                     <a href="mailto:contact@ssamilg.dev"
@@ -1008,7 +1003,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                 <div class="contact-card"
                      :class="[isInView(5) ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8']"
                      style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.4s">
-                  <h3 class="text-2xl font-bold mb-6 text-primary">Social Links</h3>
+                  <h3 class="text-2xl font-bold mb-6 text-primary">{{ t('contact.actions.social_links') }}</h3>
                   <div class="space-y-6">
                     <!-- GitHub -->
                     <a href="https://github.com/ssamilg"
@@ -1040,7 +1035,10 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
             <p class="text-xl text-base-content/70 text-center mt-12 max-w-2xl mx-auto"
                :class="[isInView(5) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
                style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1) 0.6s">
-              {{ sections[sections.length - 1].description }}
+              {{ sections[5].description }}
+            </p>
+            <p class="text-sm text-base-content/70 absolute bottom-2 right-[50%] translate-x-[50%]">
+              {{ t('footer.copyright') }}
             </p>
           </div>
         </div>
@@ -1106,7 +1104,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
   }
 
   &-projects {
-    @apply section-base bg-base-100;
+    @apply section-base bg-gradient-to-b from-base-200 to-base-100;
   }
 
   &-contact {

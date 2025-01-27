@@ -1,7 +1,16 @@
 export default {
   header: {
     title: "Şehit Şamil Gökmen",
-    role: "Frontend Developer specializing in Vue.js and modern web applications"
+    role: "Frontend Developer specializing in Vue.js and modern web applications",
+    subtitle: "Frontend Developer",
+    description: "who believes in the power of clean code and thoughtful design",
+    descriptions: [
+      "Making JavaScript behave since 2019",
+      "Vue.js wizard with a git blame-free record",
+      "Building cool stuff with JavaScript",
+      "Writing code that doesn't need comments",
+      "Crafting pixel-perfect nightmares for QA"
+    ]
   },
   biography: {
     title: "About Me",
@@ -33,7 +42,72 @@ export default {
         description: "Core frontend developer for reybex 2.0, building modern interfaces for complex ERP modules. Specialized in creating intuitive user experiences for enterprise software.",
         period: "Nov 2019 - Jun 2021"
       }
+    },
+    actions: {
+      view_full: "View Full Experience"
     }
+  },
+  skills: {
+    title: "Skills",
+    description: "Interactive technology map",
+    sections: {
+      development: {
+        title: "Development",
+        categories: {
+          coding: "Coding",
+          styling: "Styling",
+          build_testing: "Build & Testing"
+        }
+      },
+      tools: {
+        title: "Tools",
+        categories: {
+          version_control: "Version Control",
+          ci_cd: "CI/CD",
+          other_tools: "Other Tools"
+        }
+      }
+    }
+  },
+  projects: {
+    title: "Personal Projects",
+    description: "A collection of my notable projects",
+    featured: {
+      iftar_timer: {
+        title: "Iftar Timer",
+        description: "Iftar Timer is a simple and easy-to-use application that helps you to calculate the time of Iftar."
+      },
+      weather_forecast: {
+        title: "Weather Forecast Demo",
+        description: "Weather Forecast Demo is a simple and easy-to-use application that shows the weather forecast of the selected city."
+      },
+      meme_generator: {
+        title: "Meme Generator Demo",
+        description: "Meme Generator Demo is a simple and easy-to-use application that helps you to generate memes."
+      }
+    },
+    actions: {
+      live_demo: "Live Demo",
+      source_code: "Source Code"
+    }
+  },
+  contact: {
+    title: "Contact",
+    description: "Feel free to reach out for collaborations or just a friendly hello.",
+    actions: {
+      get_in_touch: "Get in Touch",
+      social_links: "Social Links",
+      email: "Email",
+      location: "Location",
+      timezone: "Timezone"
+    },
+    links: {
+      live_demo: "Live Demo",
+      source_code: "Source Code"
+    }
+  },
+  blog: {
+    empty_state: "There is nothing here... yet."
   },
   actions: {
     downloadCV: "Download CV"
@@ -44,5 +118,12 @@ export default {
   routes: {
     home: "Home",
     cv: "CV"
-  }
+  },
+  footer: {
+    copyright: "SSG - 2025"
+  },
+  about: {
+    title: "About Me",
+    description: "My journey in tech"
+  },
 }

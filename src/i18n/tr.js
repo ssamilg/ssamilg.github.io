@@ -1,7 +1,20 @@
 export default {
   header: {
     title: "Şehit Şamil Gökmen",
-    role: "Vue.js ve modern web uygulamaları konusunda uzmanlaşmış Frontend Geliştirici"
+    role: "Vue.js ve modern web uygulamaları konusunda uzmanlaşmış Frontend Geliştirici",
+    subtitle: "Frontend Geliştirici",
+    description: "temiz kod ve düşünceli tasarımın gücüne inanan",
+    descriptions: [
+      "2019'dan beri JavaScript'i ehlileştiriyor",
+      "Git blame'siz bir Vue.js sihirbazı",
+      "JavaScript ile harika şeyler inşa ediyor",
+      "Yorum gerektirmeyen kodlar yazıyor",
+      "QA için piksel mükemmelliğinde kabuslar yaratıyor"
+    ]
+  },
+  about: {
+    title: "Hakkımda",
+    description: "Teknolojideki yolculuğum"
   },
   biography: {
     title: "Hakkımda",
@@ -33,7 +46,72 @@ export default {
         description: "Reybex 2.0'ın ana frontend geliştiricisi olarak, karmaşık ERP modülleri için modern arayüzler geliştirdim. Kurumsal yazılımlar için sezgisel kullanıcı deneyimleri oluşturma konusunda uzmanlaştım.",
         period: "Kas 2019 - Haz 2021"
       }
+    },
+    actions: {
+      view_full: "Tüm Deneyimi Görüntüle"
     }
+  },
+  skills: {
+    title: "Yetenekler",
+    description: "Etkileşimli teknoloji haritası",
+    sections: {
+      development: {
+        title: "Geliştirme",
+        categories: {
+          coding: "Kodlama",
+          styling: "Stil",
+          build_testing: "Build & Test"
+        }
+      },
+      tools: {
+        title: "Araçlar",
+        categories: {
+          version_control: "Versiyon Kontrolü",
+          ci_cd: "CI/CD",
+          other_tools: "Diğer Araçlar"
+        }
+      }
+    }
+  },
+  projects: {
+    title: "Kişisel Projeler",
+    description: "Öne çıkan projelerimin koleksiyonu",
+    featured: {
+      iftar_timer: {
+        title: "İftar Vakti",
+        description: "İftar Vakti, iftar saatini hesaplamanıza yardımcı olan basit ve kullanımı kolay bir uygulamadır."
+      },
+      weather_forecast: {
+        title: "Hava Durumu Demo",
+        description: "Hava Durumu Demo, seçilen şehrin hava durumu tahminini gösteren basit ve kullanımı kolay bir uygulamadır."
+      },
+      meme_generator: {
+        title: "Şaka Üretici Demo",
+        description: "Meme Üretici Demo, meme oluşturmanıza yardımcı olan basit ve kullanımı kolay bir uygulamadır."
+      }
+    },
+    actions: {
+      live_demo: "Canlı Demo",
+      source_code: "Kaynak Kodu"
+    }
+  },
+  contact: {
+    title: "İletişim",
+    description: "Birlikte çalışmak veya merhaba demek için iletişime geçebilirsiniz.",
+    actions: {
+      get_in_touch: "İletişime Geç",
+      social_links: "Sosyal Medya",
+      email: "E-posta",
+      location: "Konum",
+      timezone: "Saat Dilimi"
+    },
+    links: {
+      live_demo: "Canlı Demo",
+      source_code: "Kaynak Kodu"
+    }
+  },
+  blog: {
+    empty_state: "Henüz burada bir şey yok..."
   },
   actions: {
     downloadCV: "CV İndir"
@@ -44,5 +122,8 @@ export default {
   routes: {
     home: "Ana Sayfa",
     cv: "CV"
+  },
+  footer: {
+    copyright: "SSG - 2025"
   }
 }
