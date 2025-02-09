@@ -946,7 +946,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                  :class="[isInView(5) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8']"
                  style="transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1)">
               <EnvelopeIcon class="section-icon" />
-              <h2 class="section-title !mb-0">Contact</h2>
+              <h2 class="section-title !mb-0">{{ t('contact.title') }}</h2>
             </div>
 
             <!-- Contact Grid -->
