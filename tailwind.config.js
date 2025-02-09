@@ -30,24 +30,25 @@ module.exports = {
           "--rounded-badge": ".25rem",
         },
         ssg_light: {
-          "primary": "#3B82F6",          // Keep same primary for consistency
-          "primary-focus": "#1D4ED8",    // Keep same focus state
-          "primary-content": "#FFFFFF",  // Adjusted for light theme contrast
+          "primary": "#3B82F6",
+          "primary-focus": "#2563EB",
+          "primary-content": "#FFFFFF",
 
-          "secondary": "#1D4ED8",        // Keep same secondary
-          "secondary-focus": "#1E40AF",  // Keep same focus state
-          "secondary-content": "#FFFFFF", // Adjusted for light theme contrast
+          "secondary": "#1E40AF",
+          "secondary-focus": "#1E3A8A",
+          "secondary-content": "#FFFFFF",
 
-          // Light theme background progression
-          "base-100": "#FFFFFF",         // Pure white base
-          "base-200": "#F1F5F9",        // Light gray for cards/sections
-          "base-300": "#E2E8F0",        // Slightly darker for elevation
-          "base-content": "#1F2937",    // Dark gray for main text
-
-          // Keep same border radius for consistency
-          "--rounded-box": "0.25rem",
-          "--rounded-btn": "0.25rem",
-          "--rounded-badge": ".25rem",
+          // Base colors with blue tint
+          "base-100": "#EEF2FF",      // Light indigo tint
+          "base-200": "#E2E8FF",      // Slightly deeper indigo
+          "base-300": "#D1DEFF",      // More pronounced blue-gray
+          "base-content": "#1E293B",  // Dark slate for text
+        },
+        ssg_pdf: {
+          "base-100": "#FFFFFF",
+          "base-200": "#FFFFFF",
+          "base-300": "#FFFFFF",
+          "base-content": "#333333",
         },
       },
     ],
