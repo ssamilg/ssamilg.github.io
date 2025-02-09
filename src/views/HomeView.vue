@@ -768,7 +768,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
 
       <!-- Projects Section -->
       <div class="section-projects" :style="{ height: contentHeight + 'px' }">
-        <div class="content-container flex flex-col justify-center h-full md:h-[90%]">
+        <div class="content-container flex flex-col justify-center h-full md:h-[90%] max-h-[50rem]">
           <!-- Header -->
           <div class="flex items-center justify-between mb-8"
                :class="{ 'opacity-0': !isInView(4), 'opacity-100': isInView(4) }"
