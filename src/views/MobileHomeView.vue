@@ -98,7 +98,7 @@ const projects = [
     id: 'featured',
     title: t('projects.featured.iftar_timer.title'),
     description: t('projects.featured.iftar_timer.description'),
-    image: new URL('@/assets/images/iftar-timer.png', import.meta.url),
+    image: new URL('@/assets/images/iftar-timer.png', import.meta.url).href,
     technologies: ['Vue.js', 'Tailwind'],
     liveUrl: 'https://iftartime.netlify.app/',
     sourceUrl: 'https://github.com/ssamilg/iftar-time-app',
@@ -107,7 +107,7 @@ const projects = [
     id: 'weather-forecast-demo',
     title: t('projects.featured.weather_forecast.title'),
     description: t('projects.featured.weather_forecast.description'),
-    image: new URL('@/assets/images/weather-forecast.png', import.meta.url),
+    image: new URL('@/assets/images/weather-forecast.png', import.meta.url).href,
     technologies: ['Vue', 'Vuetify'],
     liveUrl: 'https://ssg-weather-app.netlify.app/',
     sourceUrl: 'https://github.com/ssamilg/weather-forecast-app'
@@ -116,7 +116,7 @@ const projects = [
     id: 'meme-generator-demo',
     title: t('projects.featured.meme_generator.title'),
     description: t('projects.featured.meme_generator.description'),
-    image: new URL('@/assets/images/meme-generator.png', import.meta.url),
+    image: new URL('@/assets/images/meme-generator.png', import.meta.url).href,
     technologies: ['Next.js'],
     liveUrl: 'https://meme-generator-ssamilg.vercel.app/',
     sourceUrl: 'https://github.com/ssamilg/meme-generator'
