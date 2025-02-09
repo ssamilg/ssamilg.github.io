@@ -1,31 +1,34 @@
 <script>
-import VTabPanelCard from '@/components/common/VTabPanelCard.vue';
+import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
 
 export default {
   name: 'BiographyCard',
-  components: { VTabPanelCard },
-  data() {
+  setup() {
+    const { tm } = useI18n();
+    const summary = computed(() => tm('biography.summary'));
+
     return {
-      biographySections : [
-        'Born in year 1998 in Ankara. Lived there until university. Finished Computer Engineering in Sakarya University.',
-        'Started proffesional work life in the last year of school. Working as a frontend developer since then. Worked in multiple companies with various sized of international teams. Currently working in an AI supported fraud detection startup Sensity to make internet a safer place.',
-        'Interested in hiphop music, sci-fi cinema, singleplayer gaming and history.',
-      ],
+      summary
     };
-  },
+  }
 };
 </script>
 
 <template>
-  <VTabPanelCard>
-    <template v-for="(section, index) in biographySections" :key="index">
-      <div class="flex flex-row">
-        <div class="basis-full">
-          {{ section }}
-        </div>
-      </div>
+  <div class="biography-section">
+    <h1 class="text-4xl font-bold text-base-content mb-4">
+      {{ $t('biography.title') }}
+    </h1>
 
-      <div v-if="index !== biographySections.length - 1" class="divider m-0">o</div>
-    </template>
-  </VTabPanelCard>  
+    <div class="bg-base-200/50 p-5 border border-gray-800 rounded">
+      <div v-for="(section, index) in summary" :key="index">
+        <p class="text-base text-base-content/80 whitespace-pre-line">
+          {{ section }}
+        </p>
+
+        <div v-if="index !== summary.length - 1" class="mb-4"/>
+      </div>
+    </div>
+  </div>
 </template>
