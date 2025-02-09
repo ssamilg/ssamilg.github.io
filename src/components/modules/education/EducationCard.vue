@@ -12,7 +12,6 @@ const educationItems = [
     department: t('education.universities.sau.department'),
     description: t('education.universities.sau.description'),
     years: t('education.universities.sau.period'),
-    technologies: ['C++', 'Java', 'Python', 'Data Structures', 'Algorithms', 'Software Engineering']
   }
 ];
 

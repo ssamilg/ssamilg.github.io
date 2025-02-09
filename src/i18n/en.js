@@ -1,9 +1,7 @@
 export default {
   header: {
     title: "Şehit Şamil Gökmen",
-    role: "Frontend Developer specializing in Vue.js and modern web applications",
     subtitle: "Frontend Developer",
-    description: "who believes in the power of clean code and thoughtful design",
     descriptions: [
       "Making JavaScript behave since 2019",
       "Vue.js wizard with a git blame-free record",
