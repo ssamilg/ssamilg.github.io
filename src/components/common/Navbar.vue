@@ -1,53 +1,59 @@
-<script>
+<script setup>
 import { ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+import { ArrowDownTrayIcon, CommandLineIcon, DocumentIcon } from '@heroicons/vue/24/outline';
+import { useDownloadCV } from '@/composables/useDownloadCV';
 
-export default {
-  name: 'Navbar',
-  setup() {
-    const { locale, t } = useI18n();
-    const theme = ref('ssg_dark');
-    const router = useRouter();
+const { locale, t } = useI18n();
+const theme = ref('ssg_dark');
+const router = useRouter();
+const route = useRoute();
+const { triggerDownload } = useDownloadCV();
 
-    const toggleTheme = () => {
-      theme.value = theme.value === 'ssg_dark' ? 'ssg_light' : 'ssg_dark';
-      document.documentElement.setAttribute('data-theme', theme.value);
-      localStorage.setItem('theme', theme.value);
-    };
+const toggleTheme = () => {
+  theme.value = theme.value === 'ssg_dark' ? 'ssg_light' : 'ssg_dark';
+  document.documentElement.setAttribute('data-theme', theme.value);
+  localStorage.setItem('theme', theme.value);
+};
 
-    // Handle locale changes
-    watch(locale, (newLocale) => {
-      document.querySelector('html').setAttribute('lang', newLocale);
-      localStorage.setItem('locale', newLocale);
-    });
+const toggleLanguage = () => {
+  locale.value = locale.value === 'en' ? 'tr' : 'en';
+};
 
-    onMounted(() => {
-      // Get saved theme and locale
-      const savedTheme = localStorage.getItem('theme') || 'ssg_dark';
-      const savedLocale = localStorage.getItem('locale') || 'en';
+const handleDownloadCV = () => {
+  triggerDownload();
+};
 
-      theme.value = savedTheme;
-      locale.value = savedLocale;
+const toggleRoute = () => {
+  const newRoute = route.path === '/' ? '/cv' : '/';
+  router.push(newRoute);
+};
 
-      document.documentElement.setAttribute('data-theme', savedTheme);
-      document.querySelector('html').setAttribute('lang', savedLocale);
-    });
+// Handle locale changes
+watch(locale, (newLocale) => {
+  document.querySelector('html').setAttribute('lang', newLocale);
+  localStorage.setItem('locale', newLocale);
+});
 
-    return {
-      theme,
-      toggleTheme,
-      locale,
-    };
-  }
-}
+onMounted(() => {
+  // Get saved theme and locale
+  const savedTheme = localStorage.getItem('theme') || 'ssg_dark';
+  const savedLocale = localStorage.getItem('locale') || 'en';
+
+  theme.value = savedTheme;
+  locale.value = savedLocale;
+
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  document.querySelector('html').setAttribute('lang', savedLocale);
+});
 </script>
 
 <template>
   <div class="navbar bg-base-200/50 backdrop-blur fixed top-0 z-50">
     <div class="navbar-start">
-      <div class="dropdown">
-        <label tabindex="0" class="btn btn-ghost lg:hidden">
+      <div class="dropdown lg:hidden">
+        <label tabindex="0" class="btn btn-ghost">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
           </svg>
@@ -55,28 +61,102 @@ export default {
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52">
           <li><router-link to="/">{{ $t('routes.home') }}</router-link></li>
           <li><router-link to="/cv">{{ $t('routes.cv') }}</router-link></li>
+          <li v-if="route.path === '/cv'">
+            <a @click="handleDownloadCV" class="flex items-center gap-2">
+              <ArrowDownTrayIcon class="w-4 h-4" />
+              {{ $t('actions.downloadCV') }}
+            </a>
+          </li>
         </ul>
       </div>
-      <router-link to="/" class="btn btn-ghost normal-case text-xl">SSG</router-link>
+
+      <!-- Route Switcher -->
+      <div class="hidden lg:flex items-center">
+        <label class="swap swap-flip flex items-center gap-1 px-2 rounded-lg hover:bg-base-300/50 transition-colors duration-300 cursor-pointer relative">
+          <input
+            type="checkbox"
+            :checked="route.path === '/cv'"
+            @change="toggleRoute"
+            class="hidden"
+          />
+
+          <!-- Home State -->
+          <div class="swap-off absolute inset-0 flex items-center transition-transform duration-300 ease-in-out">
+            <div class="flex items-center gap-2 py-2 px-2">
+              <CommandLineIcon class="w-5 h-5" />
+              <span class="font-medium">{{ $t('routes.home') }}</span>
+            </div>
+
+            <span class="text-base-content/30 mx-1">/</span>
+
+            <div class="flex items-center gap-2 py-2 px-2 opacity-40 hover:opacity-60 scale-90">
+              <DocumentIcon class="w-5 h-5" />
+              <span class="font-medium">{{ $t('routes.cv') }}</span>
+            </div>
+          </div>
+
+          <!-- CV State -->
+          <div class="swap-on absolute inset-0 flex items-center transition-transform duration-300 ease-in-out">
+            <div class="flex items-center gap-2 py-2 px-2">
+              <DocumentIcon class="w-5 h-5" />
+              <span class="font-medium">{{ $t('routes.cv') }}</span>
+            </div>
+
+            <span class="text-base-content/30 mx-1">/</span>
+
+            <div class="flex items-center gap-2 py-2 px-2 opacity-40 hover:opacity-60 scale-90">
+              <CommandLineIcon class="w-5 h-5" />
+              <span class="font-medium">{{ $t('routes.home') }}</span>
+            </div>
+          </div>
+
+          <!-- Invisible element to maintain container size -->
+          <div class="opacity-0 pointer-events-none flex items-center">
+            <div class="flex items-center gap-2 py-2 px-2">
+              <div class="w-5 h-5" />
+              <span class="font-medium">{{ $t('routes.home') }}</span>
+            </div>
+            <span class="mx-1">/</span>
+            <div class="flex items-center gap-2 py-2 px-2">
+              <div class="w-5 h-5" />
+              <span class="font-medium">{{ $t('routes.cv') }}</span>
+            </div>
+          </div>
+        </label>
+      </div>
     </div>
 
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
-        <li><router-link to="/">{{ $t('routes.home') }}</router-link></li>
-        <li><router-link to="/cv">{{ $t('routes.cv') }}</router-link></li>
+        <li v-if="route.path === '/cv'">
+          <a @click="handleDownloadCV" class="flex items-center gap-2">
+            <ArrowDownTrayIcon class="w-4 h-4" />
+            {{ $t('actions.downloadCV') }}
+          </a>
+        </li>
       </ul>
     </div>
 
     <div class="navbar-end">
       <div class="flex gap-4">
         <!-- Language Switcher -->
-        <select
-          v-model="locale"
-          class="select select-ghost select-sm"
-        >
-          <option value="en">English</option>
-          <option value="tr">Türkçe</option>
-        </select>
+        <label class="swap swap-rotate">
+          <input
+            type="checkbox"
+            :checked="locale === 'tr'"
+            @change="toggleLanguage"
+          />
+
+          <!-- EN icon -->
+          <div class="swap-off w-8 h-8 flex items-center justify-center font-bold">
+            EN
+          </div>
+
+          <!-- TR icon -->
+          <div class="swap-on w-8 h-8 flex items-center justify-center font-bold">
+            TR
+          </div>
+        </label>
 
         <!-- Theme Switcher -->
         <label class="swap swap-rotate">
