@@ -635,8 +635,8 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
           <div class="basis-full md:hidden">
             <div class="flex items-center justify-between mb-8">
               <div class="flex items-center gap-4">
-                <WrenchScrewdriverIcon class="section-icon" :class="skillsClasses.title" />
-                <h2 class="section-title !mb-0" :class="skillsClasses.title">
+                <WrenchScrewdriverIcon class="section-icon" />
+                <h2 class="section-title !mb-0">
                   {{ sections[3].title }}
                 </h2>
               </div>
@@ -649,16 +649,17 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                   <WrenchIcon v-if="currentSkillSection.id === 'cicd'" class="w-7 h-7" />
                   {{ currentSkillSection.name }}
                 </h3>
-                <div class="skill-category" :class="currentSkillSection.background">
+                <div class="skill-category"
+                     :class="[currentSkillSection.background]"
+                     :style="{
+                       transform: isInView(3) ? 'scale(1)' : 'scale(0.95)',
+                       opacity: isInView(3) ? '1' : '0',
+                       transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+                     }">
                   <div class="space-y-6">
                     <div v-for="(category) in currentSkillSection.categories"
                          :key="category.id"
-                         class="subcategory"
-                         :style="{
-                           opacity: isInView(3) ? '1' : '0',
-                           transform: isInView(3) ? 'translateX(0)' : 'translateX(-20px)',
-                           transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
-                         }">
+                         class="subcategory">
                       <h4 class="text-lg font-semibold mb-4 flex items-center gap-2" :class="currentSkillSection.color">
                         <CodeBracketIcon v-if="category.id === 'coding'" class="w-5 h-5" />
                         <PaintBrushIcon v-if="category.id === 'styling'" class="w-5 h-5" />
@@ -671,12 +672,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                       <div class="flex flex-wrap gap-2">
                         <div v-for="(skill) in category.skills"
                              :key="skill.name"
-                             class="skill-item inline-flex items-center"
-                             :style="{
-                               opacity: isInView(3) ? '1' : '0',
-                               transform: isInView(3) ? 'translateY(0)' : 'translateY(10px)',
-                               transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
-                             }">
+                             class="skill-item inline-flex items-center">
                           <div class="flex items-center gap-2 cursor-default">
                             <VIcon v-if="skill.icon" :icon="skill.icon" height="1.5rem" class="w-5 h-5" />
                             {{ skill.name }}
@@ -713,8 +709,8 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
             <!-- Header -->
             <div class="flex items-center justify-between mb-8">
               <div class="flex items-center gap-4">
-                <WrenchScrewdriverIcon class="section-icon" :class="skillsClasses.title" />
-                <h2 class="section-title !mb-0" :class="skillsClasses.title">
+                <WrenchScrewdriverIcon class="section-icon" />
+                <h2 class="section-title !mb-0">
                   {{ sections[3].title }}
                 </h2>
               </div>
@@ -722,39 +718,26 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
 
             <div class="grid grid-cols-2 gap-8 h-[80%]">
               <div
-                v-for="(section, sectionIndex) in skillSections"
+                v-for="(section) in skillSections"
                 :key="section.id"
                 class="space-y-4 hidden md:block"
-                :class="[
-                  { 'translate-y-0 opacity-100': isInView(3), 'translate-y-12 opacity-0': !isInView(3) }
-                ]"
-                :style="{
-                  transitionDelay: `${sectionIndex * 0.5}s`,
-                  transition: 'all 1s cubic-bezier(0.4, 0, 0.2, 1)'
-                }"
               >
-                <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2 2xl:text-3xl']"
-                    :style="{
-                      transitionDelay: `${sectionIndex * 0.5 + 0.3}s`,
-                      opacity: isInView(3) ? '1' : '0',
-                      transform: isInView(3) ? 'translateY(0)' : 'translateY(30px)',
-                      transition: 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'
-                    }">
+                <h3 :class="[section.color, 'text-2xl font-bold flex items-center gap-2 2xl:text-3xl']">
                   <CodeBracketIcon v-if="section.id === 'dev'" class="w-7 h-7" />
                   <WrenchIcon v-if="section.id === 'cicd'" class="w-7 h-7" />
                   {{ section.name }}
                 </h3>
-                <div class="skill-category" :class="section.background">
+                <div class="skill-category"
+                     :class="[section.background]"
+                     :style="{
+                       transform: isInView(3) ? 'scale(1)' : 'scale(0.95)',
+                       opacity: isInView(3) ? '1' : '0',
+                       transition: 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+                     }">
                   <div class="space-y-6">
-                    <div v-for="(category, categoryIndex) in section.categories"
+                    <div v-for="(category) in section.categories"
                          :key="category.id"
-                         class="subcategory"
-                         :style="{
-                           transitionDelay: `${sectionIndex * 0.5 + categoryIndex * 0.4 + 0.6}s`,
-                           opacity: isInView(3) ? '1' : '0',
-                           transform: isInView(3) ? 'translateX(0) scale(1)' : 'translateX(-50px) scale(0.95)',
-                           transition: 'all 1.2s cubic-bezier(0.34, 1.56, 0.64, 1)'
-                         }">
+                         class="subcategory">
                       <h4 class="text-lg font-semibold mb-4 flex items-center gap-2 2xl:text-2xl" :class="section.color">
                         <CodeBracketIcon v-if="category.id === 'coding'" class="w-5 h-5" />
                         <PaintBrushIcon v-if="category.id === 'styling'" class="w-5 h-5" />
@@ -765,15 +748,9 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                         {{ category.name }}
                       </h4>
                       <div class="flex flex-wrap gap-2">
-                        <div v-for="(skill, skillIndex) in category.skills"
+                        <div v-for="(skill) in category.skills"
                              :key="skill.name"
-                             class="skill-item inline-flex items-center"
-                             :style="{
-                               transitionDelay: `${sectionIndex * 0.5 + categoryIndex * 0.4 + skillIndex * 0.15 + 0.9}s`,
-                               opacity: isInView(3) ? '1' : '0',
-                               transform: isInView(3) ? 'translateY(0) scale(1)' : 'translateY(30px) scale(0.9)',
-                               transition: 'all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1)'
-                             }">
+                             class="skill-item inline-flex items-center">
                           <div class="flex items-center gap-2 cursor-default 2xl:text-xl">
                             <VIcon v-if="skill.icon" :icon="skill.icon" height="1.5rem" class="w-5 h-5" />
                             {{ skill.name }}
@@ -1403,32 +1380,19 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
 }
 
 .skill-category {
-  @apply bg-base-200/50 backdrop-blur-sm rounded-xl py-4 px-8 relative border border-base-300 transition-all duration-500;
+  @apply bg-base-200/50 backdrop-blur-sm rounded-xl py-4 px-8 relative border border-base-300 opacity-0;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  transform-origin: center;
-
-  &:hover {
-    @apply bg-base-200/70;
-    transform: translateY(-4px);
-    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
-  }
-
-  .subcategory {
-    @apply relative mb-4 last:mb-0;
-
-    h4 {
-      @apply relative mb-4;
-    }
-  }
+  transform: scale(0.95);
 }
 
 .skill-item {
-  @apply px-4 py-2 rounded-lg bg-base-300/50 backdrop-blur-sm text-base-content/80 transition-all duration-500 text-sm whitespace-nowrap;
-  transform-origin: left center;
+  @apply px-4 py-2 rounded-lg bg-base-300/50 backdrop-blur-sm text-base-content/80 text-sm whitespace-nowrap;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
   &:hover {
-    @apply bg-base-300/80 text-base-content;
-    transform: translateY(-4px) scale(1.05);
+    @apply bg-base-300/70 text-base-content;
+    transform: scale(1.05);
+    filter: brightness(1.1);
   }
 }
 
