@@ -32,7 +32,7 @@ module.exports = {
         ssg_light: {
           "primary": "#3B82F6",
           "primary-focus": "#2563EB",
-          "primary-content": "#FFFFFF",
+          "primary-content": "#1E293B",
 
           "secondary": "#1E40AF",
           "secondary-focus": "#1E3A8A",
