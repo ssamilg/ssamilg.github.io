@@ -6,12 +6,11 @@ export default {
   name: 'BiographyCard',
   setup() {
     const { tm } = useI18n();
-
-    const sections = computed(() => tm('biography.sections'));
+    const summary = computed(() => tm('biography.summary'));
 
     return {
-      sections
-    }
+      summary
+    };
   }
 };
 </script>
@@ -23,13 +22,12 @@ export default {
     </h1>
 
     <div class="bg-base-200/50 p-5 border border-gray-800 rounded">
-      <div v-for="(section, index) in sections" :key="index">
-        <p class="text-base text-base-content/80">
+      <div v-for="(section, index) in summary" :key="index">
+        <p class="text-base text-base-content/80 whitespace-pre-line">
           {{ section }}
         </p>
 
-        <div v-if="index !== sections.length - 1"
-             class="divider text-base-content/30">o</div>
+        <div v-if="index !== summary.length - 1" class="mb-4"/>
       </div>
     </div>
   </div>

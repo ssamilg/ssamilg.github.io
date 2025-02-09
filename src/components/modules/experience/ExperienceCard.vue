@@ -19,6 +19,7 @@ export default {
         // companyLogo: 'https://sensity.ai/wp-content/uploads/2024/04/sensity-logo-square.png',
         role: t('experience.roles.frontend'),
         description: t('experience.companies.sensity.description'),
+        detail: t('experience.companies.sensity.detail'),
         technologies: ['Vue.js', 'Next.js', 'Tailwind', 'Docker', 'GitHub CI/CD', 'Vitest'],
         years: t('experience.companies.sensity.period')
       },
@@ -30,6 +31,7 @@ export default {
         // companyLogo: 'https://play-lh.googleusercontent.com/9RgJbmjOoVNULZKi--OUvjxUr1isDGO7LBcpGna5pY59H-FDHouKrD0MnXi9OVMOViI',
         role: t('experience.roles.software'),
         description: t('experience.companies.pitcher.description'),
+        detail: t('experience.companies.pitcher.detail'),
         technologies: ['Vue.js', 'Angular.js', 'Node.js', 'JQuery'],
         years: t('experience.companies.pitcher.period')
       },
@@ -41,6 +43,7 @@ export default {
         companyLogo: 'https://www.reybex.com/wp-content/uploads/2024/04/Reybex_Logo_Bildmarke_white_RGB-768x768.png',
         role: t('experience.roles.frontend'),
         description: t('experience.companies.reybex.description'),
+        detail: t('experience.companies.reybex.detail'),
         technologies: ['Vue.js', 'Vuetify', 'Gitlab CI/CD', 'Jenkins'],
         years: t('experience.companies.reybex.period')
       }
@@ -101,9 +104,9 @@ export default {
         </div>
 
         <!-- Description -->
-        <p class="text-base-content/80">
-          {{ experience.description }}
-        </p>
+        <div class="text-base-content/80 whitespace-pre-line">
+          {{ experience.detail }}
+        </div>
 
         <!-- Technologies -->
         <div class="flex flex-wrap gap-2">
