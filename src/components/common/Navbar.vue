@@ -19,6 +19,11 @@ const toggleTheme = () => {
 
 const toggleLanguage = () => {
   locale.value = locale.value === 'en' ? 'tr' : 'en';
+
+  // Only refresh if on home page
+  if (route.path === '/') {
+    window.location.reload();
+  }
 };
 
 const handleDownloadCV = () => {
