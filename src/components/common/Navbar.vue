@@ -10,6 +10,15 @@ const theme = ref('ssg_dark');
 const router = useRouter();
 const route = useRoute();
 const { triggerDownload } = useDownloadCV();
+const isMenuOpen = ref(false);
+
+const closeMenu = () => {
+  isMenuOpen.value = false;
+};
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
 
 const toggleTheme = () => {
   theme.value = theme.value === 'ssg_dark' ? 'ssg_light' : 'ssg_dark';
@@ -51,6 +60,16 @@ onMounted(() => {
 
   document.documentElement.setAttribute('data-theme', savedTheme);
   document.querySelector('html').setAttribute('lang', savedLocale);
+
+  // Add click event listener to close menu when clicking outside
+  document.addEventListener('click', (event) => {
+    const dropdown = document.querySelector('.dropdown');
+    const isClickInside = dropdown?.contains(event.target);
+
+    if (!isClickInside && isMenuOpen.value) {
+      closeMenu();
+    }
+  });
 });
 </script>
 
@@ -58,16 +77,16 @@ onMounted(() => {
   <div class="navbar bg-base-200/50 backdrop-blur fixed top-0 z-50">
     <div class="navbar-start">
       <div class="dropdown lg:hidden">
-        <label tabindex="0" class="btn btn-ghost">
+        <label tabindex="0" class="btn btn-ghost" @click.stop="toggleMenu">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
           </svg>
         </label>
-        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52">
-          <li><router-link to="/">{{ $t('routes.home') }}</router-link></li>
-          <li><router-link to="/cv">{{ $t('routes.cv') }}</router-link></li>
+        <ul v-if="isMenuOpen" tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-200 rounded-box w-52">
+          <li><router-link to="/" @click="closeMenu">{{ $t('routes.home') }}</router-link></li>
+          <li><router-link to="/cv" @click="closeMenu">{{ $t('routes.cv') }}</router-link></li>
           <li v-if="route.path === '/cv'">
-            <a @click="handleDownloadCV" class="flex items-center gap-2">
+            <a @click="handleDownloadCV(); closeMenu()" class="flex items-center gap-2">
               <ArrowDownTrayIcon class="w-4 h-4" />
               {{ $t('actions.downloadCV') }}
             </a>

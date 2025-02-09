@@ -705,7 +705,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
             </div>
           </div>
 
-          <div class="hidden md:block basis-auto">
+          <div class="hidden md:block md:basis-auto">
             <!-- Header -->
             <div class="flex items-center justify-between mb-8">
               <div class="flex items-center gap-4">
@@ -1380,7 +1380,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
 }
 
 .skill-category {
-  @apply bg-base-200/50 backdrop-blur-sm rounded-xl py-4 px-8 relative border border-base-300 opacity-0;
+  @apply bg-base-200/50 backdrop-blur-sm rounded-xl p-1 lg:py-4 lg:px-8 relative border border-base-300 opacity-0;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
   transform: scale(0.95);
 }
