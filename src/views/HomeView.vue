@@ -1350,7 +1350,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
 }
 
 .experience-2nd-card {
-  @apply bg-primary/45;
+  @apply bg-primary bg-opacity-45;
 }
 
 .experience-3rd-card {
