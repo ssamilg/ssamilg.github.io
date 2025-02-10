@@ -332,7 +332,7 @@ onUnmounted(() => {
               <div class="year font-mono text-primary text-lg">{{ $t(item.period) }}</div>
               <div class="experience-card" :class="[
                 index === 0 ? 'bg-primary/90' :
-                index === 1 ? 'bg-primary/45' :
+                index === 1 ? 'bg-primary/50' :
                 'bg-primary/10'
               ]">
                 <h3 class="card-role text-lg font-bold">{{ $t(item.role) }}</h3>

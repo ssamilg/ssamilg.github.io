@@ -588,7 +588,7 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
                 class="experience-card"
                 :class="[
                   index === 0 ? 'bg-primary/90' :
-                  index === 1 ? 'bg-primary/45' :
+                  index === 1 ? 'bg-primary/50' :
                   'bg-primary/10'
                 ]"
               >
