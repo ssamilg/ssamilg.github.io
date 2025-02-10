@@ -393,20 +393,6 @@ const experienceClasses = computed(() => ({
   card: getTransitionClasses(2, { direction: 'x', showScale: true, reverse: true }),
 }))
 
-const experienceCardBackground = (index) => {
-  let bgClass = 'bg-primary'
-
-  if (index === 0) {
-    bgClass = 'experience-1st-card'
-  } else if (index === 1) {
-    bgClass = 'experience-2nd-card'
-  } else if (index === 2) {
-    bgClass = 'experience-3rd-card'
-  }
-
-  return bgClass
-}
-
 const skillsClasses = computed(() => ({
   title: getTransitionClasses(3, { delay: 0.3 }),
   description: getTransitionClasses(3, { delay: 0.5 }),
@@ -598,7 +584,14 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
               }"
             >
               <div class="year">{{ $t(item.period) }}</div>
-              <div class="experience-card" :class="experienceCardBackground(index)">
+              <div
+                class="experience-card"
+                :class="[
+                  index === 0 ? 'bg-primary/90' :
+                  index === 1 ? 'bg-primary/45' :
+                  'bg-primary/10'
+                ]"
+              >
                 <div class="flex flex-wrap">
                   <h2 class="card-role mr-4 md:mr-0">{{ $t(item.role) }}</h2>
                   <h3 class="card-company">{{ $t(item.name) }}</h3>
@@ -1343,18 +1336,6 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
       transform: translateY(-4px);
     }
   }
-}
-
-.experience-1st-card {
-  @apply bg-primary/90;
-}
-
-.experience-2nd-card {
-  @apply bg-primary bg-opacity-45;
-}
-
-.experience-3rd-card {
-  @apply bg-primary/10;
 }
 
 .card-role {
