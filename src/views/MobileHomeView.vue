@@ -432,7 +432,7 @@ onUnmounted(() => {
             <h2 class="section-title">{{ sections[5].title }}</h2>
           </div>
 
-          <p class="text-center text-base-content/70 my-4">
+          <p class="text-base-content/70 my-4">
             {{ sections[5].description }}
           </p>
 

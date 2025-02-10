@@ -394,14 +394,14 @@ const experienceClasses = computed(() => ({
 }))
 
 const experienceCardBackground = (index) => {
-  let bgClass = 'bg-primary/90'
+  let bgClass = 'bg-primary'
 
   if (index === 0) {
-    bgClass = 'bg-primary/90'
+    bgClass = 'experience-1st-card'
   } else if (index === 1) {
-    bgClass = 'bg-primary/45'
+    bgClass = 'experience-2nd-card'
   } else if (index === 2) {
-    bgClass = 'bg-primary/10'
+    bgClass = 'experience-3rd-card'
   }
 
   return bgClass
@@ -1343,6 +1343,18 @@ const currentSkillSection = computed(() => skillSections[currentSkillSectionInde
       transform: translateY(-4px);
     }
   }
+}
+
+.experience-1st-card {
+  @apply bg-primary/90;
+}
+
+.experience-2nd-card {
+  @apply bg-primary/45;
+}
+
+.experience-3rd-card {
+  @apply bg-primary/10;
 }
 
 .card-role {
