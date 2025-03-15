@@ -100,7 +100,7 @@ export default {
       },
       meme_generator: {
         title: "Meme Generator Demo",
-        description: "Meme Generator Demo is an app that randomaly fetches memes from Reddit."
+        description: "Meme Generator Demo is an app that randomly fetches memes from Reddit."
       }
     },
     actions: {
