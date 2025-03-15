@@ -97,8 +97,8 @@ export default {
     description: "Öne çıkan projelerimin koleksiyonu",
     featured: {
       iftar_timer: {
-        title: "İftar Vakti",
-        description: "İftar Vakti, iftar saatini hesaplamanıza yardımcı olan basit ve kullanımı kolay bir uygulamadır."
+        title: "iftar.app",
+        description: "iftar.app, şehrinizde iftara ne kadar kaldığını gösteren bir reklamsız, sade bir uygulamadır."
       },
       weather_forecast: {
         title: "Hava Durumu Demo",
@@ -106,7 +106,7 @@ export default {
       },
       meme_generator: {
         title: "Şaka Üretici Demo",
-        description: "Meme Üretici Demo, meme oluşturmanıza yardımcı olan basit ve kullanımı kolay bir uygulamadır."
+        description: "Şaka Üretici Demo, redditten rastgele olarak gönderiler getirmenizi sağlayan bir uygulamadır."
       }
     },
     actions: {

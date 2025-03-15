@@ -106,7 +106,7 @@ const projects = [
     description: t('projects.featured.iftar_timer.description'),
     image: '/images/iftar-timer.png',
     technologies: ['Vue.js', 'Tailwind'],
-    liveUrl: 'https://iftartime.netlify.app/',
+    liveUrl: 'https://iftar.app/',
     sourceUrl: 'https://github.com/ssamilg/iftar-time-app',
   },
   {
@@ -124,7 +124,7 @@ const projects = [
     description: t('projects.featured.meme_generator.description'),
     image: '/images/meme-generator.png',
     technologies: ['Next.js'],
-    liveUrl: 'https://meme-generator-ssamilg.vercel.app/',
+    liveUrl: 'https://meme-generator-mocha.vercel.app/',
     sourceUrl: 'https://github.com/ssamilg/meme-generator'
   }
 ]

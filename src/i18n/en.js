@@ -91,8 +91,8 @@ export default {
     description: "A collection of my notable projects",
     featured: {
       iftar_timer: {
-        title: "Iftar Timer",
-        description: "Iftar Timer is a simple and easy-to-use application that helps you to calculate the time of Iftar."
+        title: "iftar.app",
+        description: "iftar.app is an ad-free, simple application that shows the time of Iftar in your city."
       },
       weather_forecast: {
         title: "Weather Forecast Demo",
@@ -100,7 +100,7 @@ export default {
       },
       meme_generator: {
         title: "Meme Generator Demo",
-        description: "Meme Generator Demo is a simple and easy-to-use application that helps you to generate memes."
+        description: "Meme Generator Demo is an app that randomaly fetches memes from Reddit."
       }
     },
     actions: {
