@@ -78,11 +78,11 @@ const particlesOptions = {
 </script>
 
 <template>
-  <div id="cv" class="w-full">
+  <div id="cv" class="w-full h-screen">
     <!-- Hero -->
     <section
-      class="relative w-full bg-base-100 min-h-[40vh] flex items-center justify-center
-             -mt-16 pt-16 overflow-hidden"
+      class="relative w-full bg-base-100 flex items-center justify-center
+             overflow-hidden py-20 px-6"
     >
       <vue-particles
         id="hero-particles"
@@ -90,7 +90,7 @@ const particlesOptions = {
         class="absolute inset-0 z-0"
       />
 
-      <div class="relative z-10 w-full max-w-6xl mx-auto px-6">
+      <div class="relative z-10 w-full max-w-6xl">
         <div class="bg-primary/5 backdrop-blur-sm p-10 rounded">
           <div class="flex flex-col md:flex-row items-center gap-6">
             <div class="avatar flex-shrink-0">
@@ -112,7 +112,7 @@ const particlesOptions = {
                 </p>
               </div>
 
-              <div class="flex flex-wrap items-center gap-3 mt-4">
+              <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mt-4">
                 <template v-for="social in socialLinks" :key="social.icon">
                   <a
                     v-if="social.icon === 'email'"

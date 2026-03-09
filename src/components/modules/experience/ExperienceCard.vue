@@ -69,7 +69,7 @@ export default {
       class="bg-base-200/50 backdrop-blur-sm rounded p-6 mb-6"
     >
       <div class="flex flex-col gap-4">
-        <div class="flex items-center gap-4">
+        <div class="flex flex-wrap items-center gap-4">
           <div class="avatar">
             <div class="w-16 h-16 rounded">
               <img
