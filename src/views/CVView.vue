@@ -112,24 +112,39 @@ const particlesOptions = {
                 </p>
               </div>
 
-              <div class="flex flex-wrap gap-2 mt-4">
-                <a
-                  v-for="social in socialLinks"
-                  :key="social.icon"
-                  :href="social.link"
-                  :title="social.title"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="flex items-center gap-2 px-3 py-1.5 rounded-full
-                         border border-base-300 bg-base-200/40
-                         text-base-content/60 text-sm
-                         hover:border-primary/50 hover:bg-base-200 hover:text-base-content
-                         transition-all duration-200"
-                >
-                  <VIcon :icon="social.icon" height="16px" class="flex-shrink-0" />
-                  <span class="w-px h-3.5 bg-base-content/20 flex-shrink-0" />
-                  <span class="font-mono text-xs tracking-tight">{{ social.label }}</span>
-                </a>
+              <div class="flex flex-wrap items-center gap-3 mt-4">
+                <template v-for="social in socialLinks" :key="social.icon">
+                  <a
+                    v-if="social.icon === 'email'"
+                    :href="social.link"
+                    :title="social.title"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 h-10 px-3 py-1.5 rounded
+                           border border-base-300 bg-base-200/40
+                           text-base-content/60 text-sm
+                           hover:border-primary/50 hover:bg-base-200 hover:text-base-content
+                           transition-all duration-200"
+                  >
+                    <VIcon :icon="social.icon" height="20px" class="flex-shrink-0" />
+                    <span class="w-px h-3.5 bg-base-content/20 flex-shrink-0" />
+                    <span class="font-mono text tracking-tight">{{ social.label }}</span>
+                  </a>
+                  <a
+                    v-else
+                    :href="social.link"
+                    :title="social.title"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center justify-center w-10 h-10 rounded
+                           border border-base-300 bg-base-200/40
+                           text-base-content/60
+                           hover:border-primary/50 hover:bg-base-200 hover:text-base-content
+                           transition-all duration-200"
+                  >
+                    <VIcon :icon="social.icon" height="28px" />
+                  </a>
+                </template>
               </div>
             </div>
           </div>
