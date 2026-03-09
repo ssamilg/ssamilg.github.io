@@ -38,11 +38,15 @@ module.exports = {
           "secondary-focus": "#1E3A8A",
           "secondary-content": "#FFFFFF",
 
-          // Base colors with blue tint
-          "base-100": "#EEF2FF",      // Light indigo tint
-          "base-200": "#E2E8FF",      // Slightly deeper indigo
-          "base-300": "#D1DEFF",      // More pronounced blue-gray
-          "base-content": "#1E293B",  // Dark slate for text
+          // Base colors with distinct steps for layering
+          "base-100": "#F8FAFF",      // Clean, very light blue tint
+          "base-200": "#E0E7FF",      // Distinct Indigo-100 for section breaks
+          "base-300": "#C7D2FE",      // Indigo-200 for Card/Hover states
+          "base-content": "#0F172A",  // Deeper Slate for better readability
+
+          "--rounded-box": "0.25rem",
+          "--rounded-btn": "0.25rem",
+          "--rounded-badge": ".25rem",
         },
         ssg_pdf: {
           "base-100": "#FFFFFF",
