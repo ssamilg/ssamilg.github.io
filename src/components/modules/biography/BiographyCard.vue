@@ -6,7 +6,7 @@ export default {
   name: 'BiographyCard',
   setup() {
     const { tm } = useI18n();
-    const summary = computed(() => tm('biography.summary'));
+    const summary = computed(() => tm('biography.resume'));
 
     return {
       summary
@@ -16,19 +16,16 @@ export default {
 </script>
 
 <template>
-  <div class="biography-section">
+  <div>
     <h1 class="text-4xl font-bold text-base-content mb-4">
       {{ $t('biography.title') }}
     </h1>
 
-    <div class="bg-base-200/50 p-5 border border-gray-800 rounded">
-      <div v-for="(section, index) in summary" :key="index">
-        <p class="text-base text-base-content/80 whitespace-pre-line">
-          {{ section }}
-        </p>
-
-        <div v-if="index !== summary.length - 1" class="mb-4"/>
-      </div>
+    <div v-for="(section, index) in summary" :key="index">
+      <p class="text-base text-base-content/80 whitespace-pre-line">
+        {{ section }}
+      </p>
+      <div v-if="index !== summary.length - 1" class="mb-4"/>
     </div>
   </div>
 </template>

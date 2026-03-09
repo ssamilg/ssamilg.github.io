@@ -1,260 +1,194 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import html2pdf from 'html2pdf.js';
 import VIcon from '@/components/common/VIcon.vue';
 import BiographyCard from '@/components/modules/biography/BiographyCard.vue';
 import ExperienceCard from '@/components/modules/experience/ExperienceCard.vue';
 import EducationCard from '@/components/modules/education/EducationCard.vue';
-import { useDownloadCV } from '@/composables/useDownloadCV';
 
 const { t } = useI18n();
-const contentRef = ref(null);
-const { downloadCounter } = useDownloadCV();
-
-const exportToPDF = async () => {
-  const originalElement = contentRef.value;
-  const element = originalElement.cloneNode(true);
-
-  try {
-    element.setAttribute('data-theme', 'ssg_pdf');
-
-    // Remove company logo containers completely
-    const companyHeaders = element.querySelectorAll('.experience-item .flex.items-center.gap-4');
-    companyHeaders.forEach(header => {
-      // Remove avatar div
-      const avatar = header.querySelector('.avatar');
-      if (avatar) {
-        avatar.remove();
-      }
-
-      // Remove gap class from header since we don't need it anymore
-      header.classList.remove('gap-4');
-    });
-
-    // Replace social links with contact info
-    const socialButtonsContainer = element.querySelector('.social-links-container');
-    if (socialButtonsContainer) {
-      const contactInfo = document.createElement('div');
-      contactInfo.className = 'flex flex-col gap-1.5 mt-2 text-sm text-base-content/70';
-
-      const contactDetails = [
-        { text: 's.samilgokmen@gmail.com' },
-        { text: 'Ankara, Türkiye' },
-        { text: 'github.com/ssamilg' },
-        { text: 'linkedin.com/in/ssamilg' }
-      ];
-
-      contactDetails.forEach(detail => {
-        const item = document.createElement('div');
-        item.textContent = detail.text;
-        contactInfo.appendChild(item);
-      });
-
-      // Replace social buttons with contact info
-      socialButtonsContainer.innerHTML = '';
-      socialButtonsContainer.appendChild(contactInfo);
-    }
-
-    // Remove biography section
-    const bioSection = element.querySelector('.biography-section');
-    if (bioSection) {
-      bioSection.remove();
-    }
-
-    const exportBtn = element.querySelector('.export-btn');
-    if (exportBtn) {
-      exportBtn.remove();
-    }
-
-    // Remove margin from experience section after bio removal
-    const experienceSection = element.querySelector('.content > div');
-    if (experienceSection) {
-      experienceSection.classList.remove('mt-8');
-    }
-
-    // Remove centering classes and adjust wrapper for PDF
-    const contentWrapper = element.querySelector('.wrapper').parentElement.parentElement;
-    contentWrapper.className = '';
-
-    const innerWrapper = element.querySelector('.wrapper').parentElement;
-    innerWrapper.className = '';
-
-    const wrapper = element.querySelector('.wrapper');
-    if (wrapper) {
-      wrapper.style.paddingLeft = '0';
-      wrapper.style.paddingRight = '0';
-    }
-
-    const opt = {
-      margin: [10, 10],
-      filename: `${t('header.title')}_CV.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        letterRendering: true,
-        logging: false,
-        imageTimeout: 0,
-        removeContainer: true
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait'
-      }
-    };
-
-    await new Promise(resolve => setTimeout(resolve, 500));
-    await html2pdf().set(opt).from(element).save();
-  } catch (error) {
-    console.error('PDF generation failed:', error);
-    alert(t('errors.pdfGeneration'));
-  }
-};
-
-// Watch for download counter changes
-watch(downloadCounter, async (newValue, oldValue) => {
-  if (newValue > oldValue) {
-    await exportToPDF();
-  }
-});
 
 const socialLinks = computed(() => [
   {
     icon: 'github',
     link: 'https://github.com/ssamilg',
+    label: 'ssamilg',
     title: 'GitHub'
   },
   {
     icon: 'linkedin',
     link: 'https://www.linkedin.com/in/ssamilg/',
+    label: 'ssamilg',
     title: 'LinkedIn'
   },
   {
     icon: 'X',
     link: 'https://twitter.com/ssamilg/',
+    label: '@ssamilg',
     title: 'Twitter'
   },
   {
     icon: 'instagram',
     link: 'https://instagram.com/ssamilg/',
+    label: '@ssamilg',
     title: 'Instagram'
   },
   {
     icon: 'email',
     link: 'mailto:s.samilgokmen@gmail.com',
-    title: 'Email'
+    label: 's.samilgokmen@gmail.com',
+    title: t('contact.actions.email')
   }
 ]);
+
+const particlesOptions = {
+  fullScreen: { enable: false },
+  background: { color: { value: 'transparent' } },
+  fpsLimit: 60,
+  particles: {
+    color: { value: '#3B82F6' },
+    links: {
+      color: '#3B82F6',
+      distance: 150,
+      enable: true,
+      opacity: 0.5,
+      width: 1.5
+    },
+    move: {
+      enable: true,
+      speed: 0.5,
+      direction: 'none',
+      random: true,
+      straight: false,
+      outModes: { default: 'out' }
+    },
+    number: {
+      density: { enable: true, area: 800 },
+      value: 150
+    },
+    opacity: {
+      value: 0.7
+    },
+    size: {
+      value: { min: 1, max: 5 }
+    }
+  },
+  detectRetina: true
+};
 </script>
 
 <template>
-  <div id="cv">
-    <!-- Add ref to the content we want to export -->
-    <div ref="contentRef">
-      <div class="flex justify-center">
-        <div class="basis-full md:basis-3/4 lg:basis-2/4 wrapper">
-          <div class="header">
-            <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-              <div class="avatar mb-4 md:mb-0">
-                <div class="w-40 md:w-48 rounded ring ring-primary ring-offset-base-100 ring-offset-2">
-                  <img src="https://pbs.twimg.com/profile_images/1674901389888090112/kgexvPzN_400x400.jpg" alt="profile_photo"/>
-                </div>
-              </div>
+  <div id="cv" class="w-full">
+    <!-- Hero -->
+    <section
+      class="relative w-full bg-base-100 min-h-[40vh] flex items-center justify-center
+             -mt-16 pt-16 overflow-hidden"
+    >
+      <vue-particles
+        id="hero-particles"
+        :options="particlesOptions"
+        class="absolute inset-0 z-0"
+      />
 
-              <div class="flex flex-col items-center md:items-start">
-                <h1 class="text-4xl md:text-5xl font-bold text-center md:text-left mb-2 px-4 md:px-0">
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-6">
+        <div class="bg-primary/5 backdrop-blur-sm p-10 rounded">
+          <div class="flex flex-col md:flex-row items-center gap-6">
+            <div class="avatar flex-shrink-0">
+              <div class="w-36 md:w-60 rounded-lg">
+                <img
+                  src="https://pbs.twimg.com/profile_images/1674901389888090112/kgexvPzN_400x400.jpg"
+                  alt="profile_photo"
+                />
+              </div>
+            </div>
+
+            <div class="flex flex-col items-center md:items-start gap-3 flex-1">
+              <div>
+                <h1 class="text-4xl md:text-5xl font-bold text-base-content text-center md:text-left">
                   {{ $t('header.title') }}
                 </h1>
-                <p class="text-lg md:text-xl text-base-content/70 mb-4 text-center md:text-left px-4 md:px-0">
+                <p class="text-lg md:text-3xl text-primary font-medium mt-2 text-center md:text-left">
                   {{ $t('header.subtitle') }}
                 </p>
-
-                <!-- Add class for targeting social buttons -->
-                <div class="social-links-container">
-                  <div class="social-links-grid">
-                    <a
-                      v-for="social in socialLinks"
-                      :key="social.icon"
-                      :href="social.link"
-                      :title="social.title"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="social-link-item"
-                    >
-                      <VIcon :icon="social.icon" height="20px" class="social-icon"/>
-                      <span class="social-title">{{ social.title }}</span>
-                    </a>
-                  </div>
-                </div>
               </div>
-            </div>
-          </div>
 
-          <div class="content">
-            <div class="flex mt-8">
-              <BiographyCard/>
-            </div>
-
-            <div class="flex mt-8">
-              <ExperienceCard/>
-            </div>
-
-            <div class="flex mt-8">
-              <EducationCard/>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <a
+                  v-for="social in socialLinks"
+                  :key="social.icon"
+                  :href="social.link"
+                  :title="social.title"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="flex items-center gap-2 px-3 py-1.5 rounded-full
+                         border border-base-300 bg-base-200/40
+                         text-base-content/60 text-sm
+                         hover:border-primary/50 hover:bg-base-200 hover:text-base-content
+                         transition-all duration-200"
+                >
+                  <VIcon :icon="social.icon" height="16px" class="flex-shrink-0" />
+                  <span class="w-px h-3.5 bg-base-content/20 flex-shrink-0" />
+                  <span class="font-mono text-xs tracking-tight">{{ social.label }}</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </section>
+
+    <!-- About Me -->
+    <section class="w-full bg-base-200/50 py-20">
+      <div class="max-w-6xl mx-auto px-6">
+        <BiographyCard />
+      </div>
+    </section>
+
+    <!-- Experience & Education -->
+     <div class="section-experience relative">
+       <section class="max-w-6xl mx-auto px-6 py-20">
+         <ExperienceCard />
+         <div class="mt-10">
+           <EducationCard />
+         </div>
+       </section>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
 #cv {
-  width: 100%;
+  .section-experience::before {
+    @apply absolute inset-0 opacity-[0.05] z-0;
+    content: '';
+    --blueprint-line: 1.5px;
+    --blueprint-small-line: 0.75px;
+    --blueprint-size: 50px;
+    --blueprint-small-size: 10px;
+    --blueprint-color: theme('colors.primary');
 
-  .wrapper {
-    @apply pt-8 pb-16 px-6 md:px-8;
-  }
-}
+    background-image:
+      linear-gradient(var(--blueprint-color) var(--blueprint-line), transparent var(--blueprint-line)),
+      linear-gradient(90deg, var(--blueprint-color) var(--blueprint-line), transparent var(--blueprint-line)),
+      linear-gradient(var(--blueprint-color) var(--blueprint-small-line), transparent var(--blueprint-small-line)),
+      linear-gradient(90deg, var(--blueprint-color) var(--blueprint-small-line), transparent var(--blueprint-small-line));
+    background-size:
+      var(--blueprint-size) var(--blueprint-size),
+      var(--blueprint-size) var(--blueprint-size),
+      var(--blueprint-small-size) var(--blueprint-small-size),
+      var(--blueprint-small-size) var(--blueprint-small-size);
+    background-position:
+      calc(-1 * var(--blueprint-line)) calc(-1 * var(--blueprint-line)),
+      calc(-1 * var(--blueprint-line)) calc(-1 * var(--blueprint-line)),
+      calc(-1 * var(--blueprint-small-line)) calc(-1 * var(--blueprint-small-line)),
+      calc(-1 * var(--blueprint-small-line)) calc(-1 * var(--blueprint-small-line));
 
-// PDF page break controls
-.content {
-  > div {
-    @apply break-inside-avoid-page;
-  }
-}
-
-.experience-item, .education-item {
-  @apply break-inside-avoid-page mb-8;
-}
-
-.header {
-  @apply break-inside-avoid-page mb-8;
-}
-
-.social-links-container {
-  @apply mt-4 md:mt-2 break-inside-avoid;
-}
-
-.social-links-grid {
-  @apply flex flex-wrap gap-3;
-}
-
-.social-link-item {
-  @apply flex items-center gap-2 px-3 py-2 rounded-lg
-         bg-base-200/50 text-base-content/70
-         hover:bg-base-300 hover:text-base-content
-         transition-colors duration-200;
-
-  .social-icon {
-    @apply flex-shrink-0;
-  }
-
-  .social-title {
-    @apply text-sm font-medium;
+      @screen 2xl {
+      --blueprint-line: 2px;
+      --blueprint-small-line: 1px;
+      --blueprint-size: 75px;
+      --blueprint-small-size: 15px;
+    }
   }
 }
 </style>

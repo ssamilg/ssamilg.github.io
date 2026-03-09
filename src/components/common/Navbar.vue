@@ -2,14 +2,11 @@
 import { ref, onMounted, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRouter, useRoute } from 'vue-router';
-import { ArrowDownTrayIcon, CommandLineIcon, DocumentIcon } from '@heroicons/vue/24/outline';
-import { useDownloadCV } from '@/composables/useDownloadCV';
-
+import { ArrowDownTrayIcon, CommandLineIcon, DocumentTextIcon } from '@heroicons/vue/24/outline';
 const { locale, t } = useI18n();
 const theme = ref('ssg_dark');
 const router = useRouter();
 const route = useRoute();
-const { triggerDownload } = useDownloadCV();
 const isMenuOpen = ref(false);
 
 const closeMenu = () => {
@@ -36,7 +33,7 @@ const toggleLanguage = () => {
 };
 
 const handleDownloadCV = () => {
-  triggerDownload();
+  window.open('/resume', '_blank');
 };
 
 const toggleRoute = () => {
@@ -74,7 +71,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="navbar bg-base-200/50 backdrop-blur fixed top-0 z-50">
+  <div class="navbar bg-base-100/50 backdrop-blur-md fixed top-0 z-50">
     <div class="navbar-start">
       <div class="dropdown lg:hidden">
         <label tabindex="0" class="btn btn-ghost" @click.stop="toggleMenu">
@@ -114,7 +111,7 @@ onMounted(() => {
             <span class="text-base-content/30 mx-1">/</span>
 
             <div class="flex items-center gap-2 py-2 px-2 opacity-40 hover:opacity-60 scale-90">
-              <DocumentIcon class="w-5 h-5" />
+              <DocumentTextIcon class="w-5 h-5" />
               <span class="font-medium">{{ $t('routes.cv') }}</span>
             </div>
           </div>
