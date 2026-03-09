@@ -12,7 +12,7 @@ const routes = [
     name: 'home',
     component: () => {
       if (isMobile.value) {
-        return import('../views/MobileHomeView.vue')
+        return import('../views/CVView.vue')
       }
       return import('../views/HomeView.vue')
     }
