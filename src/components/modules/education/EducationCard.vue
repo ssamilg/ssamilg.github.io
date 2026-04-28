@@ -1,19 +1,20 @@
 <script setup>
-import { useI18n } from 'vue-i18n';
+import { computed } from 'vue';
+import { useCVData } from '@/composables/useCVData';
 
-const { t } = useI18n();
+const cv = useCVData();
 
-const educationItems = [
+const educationItems = computed(() => [
   {
     id: 'sau',
-    name: t('education.universities.sau.name'),
+    name: cv.value.education.sau.name,
     logo: 'https://yt3.googleusercontent.com/ytc/AIdro_kFqDe2i71WLauwfKC3bi19CMifawLk5IjUriMIJtFr504=s900-c-k-c0x00ffffff-no-rj',
     link: 'https://www.sakarya.edu.tr/',
-    department: t('education.universities.sau.department'),
-    description: t('education.universities.sau.description'),
-    years: t('education.universities.sau.period'),
+    department: cv.value.education.sau.department,
+    description: cv.value.education.sau.description,
+    years: cv.value.education.sau.period,
   }
-];
+]);
 
 const openLink = (link) => {
   window.open(link);
