@@ -4,8 +4,10 @@ import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 import html2pdf from 'html2pdf.js';
 import { EnvelopeIcon, MapPinIcon, PhoneIcon } from '@heroicons/vue/24/outline';
+import { useCVData } from '@/composables/useCVData';
 
-const { t, tm } = useI18n();
+const { t } = useI18n();
+const cv = useCVData();
 const router = useRouter();
 const contentRef = ref(null);
 const isGenerating = ref(false);
@@ -13,36 +15,39 @@ const isGenerating = ref(false);
 const experiences = computed(() => [
   {
     id: 0,
-    company: t('experience.companies.sensity.name'),
-    role: t('experience.roles.frontend'),
-    resume: t('experience.companies.sensity.resume'),
-    technologies: ['Vue.js', 'Next.js', 'React Native', 'Tailwind', 'Docker', 'GitHub CI/CD', 'Vitest'],
-    years: t('experience.companies.sensity.period')
+    role: cv.value.experience.consultant.title,
+    desc: cv.value.experience.consultant.desc,
+    years: cv.value.experience.consultant.period
   },
   {
     id: 1,
-    company: t('experience.companies.pitcher.name'),
-    role: t('experience.roles.software'),
-    resume: t('experience.companies.pitcher.resume'),
-    technologies: ['Vue.js', 'Angular.js', 'Node.js', 'JQuery'],
-    years: t('experience.companies.pitcher.period')
+    company: cv.value.experience.sensity.name,
+    role: cv.value.experience.sensity.title,
+    desc: cv.value.experience.sensity.desc,
+    years: cv.value.experience.sensity.period
   },
   {
     id: 2,
-    company: t('experience.companies.reybex.name'),
-    role: t('experience.roles.frontend'),
-    resume: t('experience.companies.reybex.resume'),
-    technologies: ['Vue.js', 'React Native', 'Vuetify', 'Gitlab CI/CD', 'Jenkins'],
-    years: t('experience.companies.reybex.period')
+    company: cv.value.experience.pitcher.name,
+    role: cv.value.experience.pitcher.title,
+    desc: cv.value.experience.pitcher.desc,
+    years: cv.value.experience.pitcher.period
+  },
+  {
+    id: 3,
+    company: cv.value.experience.reybex.name,
+    role: cv.value.experience.reybex.title,
+    desc: cv.value.experience.reybex.desc,
+    years: cv.value.experience.reybex.period
   }
 ]);
 
-const education = {
-  name: t('education.universities.sau.name'),
-  department: t('education.universities.sau.department'),
-  years: t('education.universities.sau.period'),
-  description: t('education.universities.sau.description')
-};
+const education = computed(() => ({
+  name: cv.value.education.sau.name,
+  department: cv.value.education.sau.department,
+  years: cv.value.education.sau.period,
+  description: cv.value.education.sau.description
+}));
 
 const contactInfo = [
   {
@@ -72,45 +77,7 @@ const contactInfo = [
   }
 ];
 
-const exportToPDF = async () => {
-  if (isGenerating.value) return;
-
-  isGenerating.value = true;
-  const element = contentRef.value;
-
-  try {
-    const opt = {
-      // margin: [10, 10],
-      filename: `${t('header.title')}_Resume.pdf`,
-      image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: {
-        scale: 2,
-        useCORS: true,
-        // letterRendering: true,
-        logging: false,
-        imageTimeout: 0,
-        removeContainer: true
-      },
-      jsPDF: {
-        unit: 'mm',
-        format: 'a4',
-        orientation: 'portrait'
-      }
-    };
-
-    await new Promise(resolve => setTimeout(resolve, 100));
-    await html2pdf().set(opt).from(element).save();
-    isGenerating.value = false;
-    // setTimeout(() => {
-    //   router.push('/');
-    // }, 1000);
-  } catch (error) {
-    console.error('PDF generation failed:', error);
-    isGenerating.value = false;
-  }
-};
-
-const biographySummary = computed(() => tm('biography.resume'));
+const biographySummary = computed(() => cv.value.about.resume);
 
 onMounted(() => {
   const navbar = document.querySelector(".navbar");
@@ -124,7 +91,7 @@ onMounted(() => {
   }
 
   setTimeout(() => {
-    window.print();
+    // window.print();
   }, 500);
 });
 </script>
@@ -141,8 +108,8 @@ onMounted(() => {
 
     <div ref="contentRef" class="resume-content">
          <div class="resume-header">
-           <h1 class="resume-title">{{ t('header.title') }}</h1>
-           <p class="resume-subtitle">{{ t('header.subtitle') }}</p>
+           <h1 class="resume-title">{{ cv.header.title }}</h1>
+           <p class="resume-subtitle">{{ cv.header.subtitle }}</p>
 
            <div class="contact-grid">
              <div v-for="contact in contactInfo" :key="contact.text" class="contact-item">
@@ -161,11 +128,9 @@ onMounted(() => {
          </div>
 
         <div class="resume-section">
-          <h2 class="section-title">{{ t('biography.title') }}</h2>
+          <h2 class="section-title">{{ cv.about.title }}</h2>
           <div class="section-content">
-            <p v-for="(paragraph, index) in biographySummary" :key="index" class="summary-paragraph">
-              {{ paragraph }}
-            </p>
+            <p class="summary-paragraph whitespace-pre-line" v-html="biographySummary"></p>
           </div>
         </div>
 
@@ -180,18 +145,9 @@ onMounted(() => {
                 </div>
                 <p class="entry-period">{{ exp.years }}</p>
               </div>
-              <p class="entry-description leading-relaxed whitespace-pre-line">{{ exp.resume }}</p>
-              <!-- <div class="entry-description">
-                <p class="description-intro">{{ exp.resume.split('\n')[0] }}</p>
-                <ul class="description-list">
-                  <li v-for="(item, i) in exp.resume.split('\n').filter(l => l.startsWith('-'))" :key="i">
-                    {{ item.substring(1).trim() }}
-                  </li>
-                </ul>
-              </div> -->
-              <div class="tech-tags">
-                <span v-for="tech in exp.technologies" :key="tech" class="tech-tag">{{ tech }}</span>
-              </div>
+              <ul class="entry-description description-list">
+                <li v-for="(item, i) in exp.desc" :key="i" v-html="item"></li>
+              </ul>
             </div>
           </div>
         </div>
@@ -212,43 +168,14 @@ onMounted(() => {
            </div>
          </div>
 
-         <div class="ats-keywords">
-           <span>Frontend Developer Senior Frontend Engineer Lead Frontend Developer Staff Engineer Principal Engineer</span>
-           <span>JavaScript TypeScript ES6 ES2015 ECMAScript Modern JavaScript Vanilla JavaScript</span>
-           <span>Vue.js Vue 2 Vue 3 Composition API Options API Pinia Vuex Vue Router Nuxt.js</span>
-           <span>React.js React Hooks Redux Context API Next.js React Router</span>
-           <span>Angular Angular.js AngularJS RxJS NgRx</span>
-           <span>HTML5 CSS3 SCSS SASS Less Stylus PostCSS</span>
-           <span>Tailwind CSS Bootstrap Material-UI Ant Design Vuetify DaisyUI Chakra UI</span>
-           <span>Responsive Design Mobile-First Progressive Web Apps PWA Single Page Application SPA</span>
-           <span>REST API RESTful API GraphQL WebSocket Real-time API Integration</span>
-           <span>Git GitHub GitLab Bitbucket Version Control Source Control</span>
-           <span>CI/CD Continuous Integration Continuous Deployment GitHub Actions GitLab CI Jenkins</span>
-           <span>Docker Containerization Kubernetes DevOps Infrastructure</span>
-           <span>Webpack Vite Rollup Parcel esbuild Build Tools Module Bundler</span>
-           <span>npm yarn pnpm Package Management Node Package Manager</span>
-           <span>Jest Vitest Testing Library Cypress Playwright E2E Unit Testing Integration Testing</span>
-           <span>ESLint Prettier Husky Code Quality Linting Static Analysis</span>
-           <span>Agile Scrum Kanban Sprint Planning Code Review Pull Request PR</span>
-           <span>Node.js Express.js Backend Frontend Full Stack</span>
-           <span>MongoDB PostgreSQL MySQL Redis Database NoSQL SQL</span>
-           <span>AWS Azure GCP Cloud Firebase Netlify Vercel Heroku Deployment</span>
-           <span>Performance Optimization Web Performance Lighthouse Core Web Vitals</span>
-           <span>Accessibility WCAG A11y ARIA Screen Reader SEO</span>
-           <span>UI/UX User Interface User Experience Design Systems Component Library</span>
-           <span>Cross-Browser Compatibility Browser Testing Web Standards</span>
-           <span>State Management Flux Architecture Redux Pattern</span>
-           <span>Component-Based Architecture Micro Frontend Modular Architecture</span>
-           <span>Webpack Configuration Build Optimization Tree Shaking Code Splitting</span>
-           <span>TypeScript Interfaces Generics Type Safety Static Typing</span>
-           <span>Web Components Shadow DOM Custom Elements</span>
-           <span>OAuth JWT Authentication Authorization Security CORS</span>
-           <span>Internationalization i18n Localization l10n Multi-language</span>
-           <span>Monitoring Logging Error Tracking Sentry Debugging</span>
-           <span>Documentation Technical Writing API Documentation</span>
-           <span>Mentoring Code Review Leadership Team Collaboration</span>
-           <span>Problem Solving Critical Thinking Analytical Skills</span>
-           <span>Communication Skills Team Player Self-Motivated Detail-Oriented</span>
+         <div class="resume-section">
+           <h2 class="section-title">{{ t('skills.title') }}</h2>
+           <div class="section-content skills-list">
+             <div v-for="category in cv.skills" :key="category.id" class="skill-row">
+               <span class="skill-category-label">{{ category.label }}:</span>
+               <span>{{ category.items.map(i => i.name).join(', ') }}</span>
+             </div>
+           </div>
          </div>
       </div>
     </div>
@@ -366,6 +293,23 @@ onMounted(() => {
 .section-content {
   font-size: 13px;
   color: #404040;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.skill-row {
+  display: flex;
+  gap: 6px;
+}
+
+.skill-category-label {
+  font-weight: 600;
+  color: #1a1a1a;
+  white-space: nowrap;
 }
 
 .summary-paragraph {

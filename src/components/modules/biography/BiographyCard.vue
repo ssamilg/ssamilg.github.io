@@ -1,12 +1,12 @@
 <script>
-import { useI18n } from 'vue-i18n';
 import { computed } from 'vue';
+import { useCVData } from '@/composables/useCVData';
 
 export default {
   name: 'BiographyCard',
   setup() {
-    const { tm } = useI18n();
-    const summary = computed(() => tm('biography.resume'));
+    const cv = useCVData();
+    const summary = computed(() => cv.value.about.cv);
 
     return {
       summary
@@ -21,11 +21,6 @@ export default {
       {{ $t('biography.title') }}
     </h1>
 
-    <div v-for="(section, index) in summary" :key="index">
-      <p class="text-base text-base-content/80 whitespace-pre-line">
-        {{ section }}
-      </p>
-      <div v-if="index !== summary.length - 1" class="mb-4"/>
-    </div>
+    <p class="text-base text-base-content/80 whitespace-pre-line" v-html="summary"></p>
   </div>
 </template>

@@ -5,8 +5,11 @@ import VIcon from '@/components/common/VIcon.vue';
 import BiographyCard from '@/components/modules/biography/BiographyCard.vue';
 import ExperienceCard from '@/components/modules/experience/ExperienceCard.vue';
 import EducationCard from '@/components/modules/education/EducationCard.vue';
+import SkillCard from '@/components/modules/skills/SkillCard.vue';
+import { useCVData } from '@/composables/useCVData';
 
 const { t } = useI18n();
+const cv = useCVData();
 
 const socialLinks = computed(() => [
   {
@@ -56,7 +59,7 @@ const particlesOptions = {
     },
     move: {
       enable: true,
-      speed: 0.5,
+      speed: 0.75,
       direction: 'none',
       random: true,
       straight: false,
@@ -105,10 +108,10 @@ const particlesOptions = {
             <div class="flex flex-col items-center md:items-start gap-3 flex-1">
               <div>
                 <h1 class="text-4xl md:text-5xl font-bold text-base-content text-center md:text-left">
-                  {{ $t('header.title') }}
+                  {{ cv.header.title }}
                 </h1>
                 <p class="text-lg md:text-3xl text-primary font-medium mt-2 text-center md:text-left">
-                  {{ $t('header.subtitle') }}
+                  {{ cv.header.subtitle }}
                 </p>
               </div>
 
@@ -165,6 +168,9 @@ const particlesOptions = {
          <ExperienceCard />
          <div class="mt-10">
            <EducationCard />
+         </div>
+         <div class="mt-10">
+           <SkillCard />
          </div>
        </section>
     </div>
