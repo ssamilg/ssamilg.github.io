@@ -24,7 +24,7 @@ export default {
         id: 1,
         company: cv.value.experience.sensity.name,
         companyLink: 'https://sensity.ai/',
-        companyLogo: 'https://pbs.twimg.com/profile_images/1288045838024007682/EKo6Gp7c_400x400.jpg',
+        companyLogo: 'https://pbs.twimg.com/profile_images/2064734908640112640/fW_gI8cO.jpg',
         role: cv.value.experience.sensity.title,
         desc: cv.value.experience.sensity.desc,
         years: cv.value.experience.sensity.period

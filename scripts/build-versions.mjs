@@ -253,8 +253,38 @@ function writeIndex() {
   fs.writeFileSync(path.join(previewRoot, 'index.html'), html)
 }
 
+const oldProfilePhoto = 'https://pbs.twimg.com/profile_images/1545056575718432769/bbUr82yx_400x400.jpg'
+const currentProfilePhoto = 'https://pbs.twimg.com/profile_images/1674901389888090112/kgexvPzN_400x400.jpg'
+const oldSensityLogo = 'https://pbs.twimg.com/profile_images/1288045838024007682/EKo6Gp7c_400x400.jpg'
+const currentSensityLogo = 'https://pbs.twimg.com/profile_images/2064734908640112640/fW_gI8cO.jpg'
+
+function patchExternalImages(dir) {
+  const files = []
+  const walk = (current) => {
+    fs.readdirSync(current, { withFileTypes: true }).forEach((entry) => {
+      const full = path.join(current, entry.name)
+      if (entry.isDirectory()) {
+        walk(full)
+      } else if (entry.name.endsWith('.vue') || entry.name.endsWith('.js')) {
+        files.push(full)
+      }
+    })
+  }
+  walk(path.join(dir, 'src'))
+  files.forEach((file) => {
+    const original = fs.readFileSync(file, 'utf8')
+    const next = original
+      .split(oldProfilePhoto).join(currentProfilePhoto)
+      .split(oldSensityLogo).join(currentSensityLogo)
+    if (next !== original) {
+      fs.writeFileSync(file, next)
+    }
+  })
+}
+
 async function buildHistorical(dir, version) {
   await install(dir)
+  patchExternalImages(dir)
   await viteBuild(dir, version.base)
   publish(dir, version.id)
 }
@@ -263,6 +293,7 @@ async function buildCurrent(dir, selectedIds) {
   await install(dir)
   if (selectedIds.includes('v1')) {
     patchHome(dir)
+    patchExternalImages(dir)
     await viteBuild(dir, '/v1/')
     publish(dir, 'v1')
   }
@@ -270,6 +301,7 @@ async function buildCurrent(dir, selectedIds) {
     await run('git', ['reset', '--hard', '1f61d3f'], dir)
     await run('git', ['clean', '-fd', '-e', 'node_modules'], dir)
     patchCv(dir)
+    patchExternalImages(dir)
     await viteBuild(dir, '/v2/')
     publish(dir, 'v2')
   }
