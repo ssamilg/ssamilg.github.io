@@ -1,5 +1,27 @@
 [build]
+  command = "npm run build"
+  publish = "dist"
   environment = { NODE_VERSION = "20" }
+
+[[redirects]]
+  from = "/v0.5/*"
+  to = "/v0.5/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/v0/*"
+  to = "/v0/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/v1/*"
+  to = "/v1/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/v2/*"
+  to = "/v2/index.html"
+  status = 200
 
 [[redirects]]
   from = "/*"

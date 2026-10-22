@@ -3,8 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview --port 4173",
+    "build": "vite build && node scripts/build-versions.mjs && node scripts/assemble-live.mjs",
+    "preview": "node scripts/serve-dist.mjs",
+    "versions:build": "node scripts/build-versions.mjs",
+    "versions:serve": "node scripts/serve-versions.mjs",
     "test:unit": "vitest --environment jsdom",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
