@@ -129,7 +129,7 @@ export default {
     description: "My journey in tech"
   },
   placeholder: {
-    eyebrowBefore: "Automation Engineer @ ",
+    eyebrowBefore: "Automation Engineer {'@'} ",
     eyebrowBrand: "VERA",
     lead: "I used to build software for money, now I do it for fun",
     theme: {
@@ -149,7 +149,7 @@ export default {
           role: "Independent Technical Consultant",
           place: "",
           period: "since 2026",
-          summary: "WordPress migrations, web solutions, server infrastructure."
+          summary: "WordPress migrations, web solutions, server infrastructure and more"
         }
       }
     },

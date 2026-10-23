@@ -131,7 +131,7 @@ export default {
     description: "Teknolojideki yolculuğum"
   },
   placeholder: {
-    eyebrowBefore: "Otomasyon Mühendisi @ ",
+    eyebrowBefore: "Otomasyon Mühendisi {'@'} ",
     eyebrowBrand: "VERA",
     lead: "Yazılımı para için yapardım, şimdi keyif için yapıyorum",
     theme: {
@@ -151,7 +151,7 @@ export default {
           role: "Bağımsız Teknik Danışman",
           place: "",
           period: "2026'dan beri",
-          summary: "WordPress taşımaları, web çözümleri, sunucu altyapısı."
+          summary: "WordPress taşımaları, web çözümleri, sunucu altyapısı ve daha fazlası."
         }
       }
     },
