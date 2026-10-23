@@ -2,7 +2,16 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+
+const otherLanguage = computed(() => (locale.value === 'en' ? 'Türkçe' : 'English'))
+
+const toggleLanguage = () => {
+  const next = locale.value === 'en' ? 'tr' : 'en'
+  locale.value = next
+  document.documentElement.setAttribute('lang', next)
+  localStorage.setItem('locale', next)
+}
 
 const entries = computed(() => [
   {
@@ -50,6 +59,9 @@ const entries = computed(() => [
 
 <template>
   <div class="versions-page bg-base-100 text-base-content">
+    <button type="button" class="language" @click="toggleLanguage">
+      {{ otherLanguage }}
+    </button>
     <div class="mx-auto max-w-3xl px-6 pb-28 pt-12 md:pt-20">
       <p class="font-mono text-xs uppercase tracking-[0.22em] text-primary">
         {{ t('versionsPage.eyebrow') }}
@@ -92,6 +104,22 @@ const entries = computed(() => [
     linear-gradient(90deg, hsl(var(--p) / 0.08) 1px, transparent 1px);
   background-size: 48px 48px;
   background-position: -1px -1px;
+}
+
+.language {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 20;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .version-list {
