@@ -39,7 +39,10 @@ export function versionBar(currentId) {
     return `<a href="${version.base}"${current}>${version.id}</a>`
   }).join('')
   const versionsCurrent = currentId === 'index' ? ' aria-current="page"' : ''
-  const bar = `<nav id="version-archive-bar"><a href="/versions/"${versionsCurrent}>Versions</a>${links}</nav>
+  const nowCurrent = currentId === 'now' ? ' aria-current="page"' : ''
+  const versionsLink = `<a href="/versions/"${versionsCurrent}>Versions</a>`
+  const nowLink = `<a href="/"${nowCurrent}>Now</a>`
+  const bar = `<nav id="version-archive-bar">${versionsLink}${links}${nowLink}</nav>
 <style>
   #version-archive-bar {
     position: fixed;

@@ -1,19 +1,16 @@
 <script>
-import Navbar from '@/components/common/Navbar.vue'
 import VersionBar from '@/components/common/VersionBar.vue'
 
 export default {
   name: 'App',
   components: {
-    Navbar,
     VersionBar
   }
 }
 </script>
 
 <template>
-  <Navbar />
-  <main class="w-full pt-16"> <!-- Add padding-top to account for fixed navbar -->
+  <main>
     <router-view />
   </main>
   <VersionBar />
@@ -22,5 +19,10 @@ export default {
 <style>
 #app {
   min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  width: 100%;
 }
 </style>

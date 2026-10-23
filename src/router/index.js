@@ -1,31 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { ref, onMounted, onUnmounted } from 'vue'
-
-const isMobile = ref(false)
-const checkMobile = () => {
-  isMobile.value = window.innerWidth < 768 // lg breakpoint in Tailwind
-}
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: () => {
-      if (isMobile.value) {
-        return import('../views/CVView.vue')
-      }
-      return import('../views/HomeView.vue')
-    }
+    component: () => import('../views/PlaceholderView.vue')
   },
   {
     path: '/cv',
-    name: 'cv',
-    component: () => import('../views/CVView.vue')
+    redirect: '/'
   },
   {
     path: '/resume',
-    name: 'resume',
-    component: () => import('../views/ResumeView.vue')
+    redirect: '/'
   },
   {
     path: '/versions',
@@ -38,11 +25,5 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
-
-// Check mobile on initial load and window resize
-if (typeof window !== 'undefined') {
-  checkMobile()
-  window.addEventListener('resize', checkMobile)
-}
 
 export default router

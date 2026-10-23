@@ -130,6 +130,56 @@ export default {
     title: "Hakkımda",
     description: "Teknolojideki yolculuğum"
   },
+  placeholder: {
+    eyebrowBefore: "Otomasyon Mühendisi @ ",
+    eyebrowBrand: "VERA",
+    lead: "Yazılımı para için yapardım, şimdi keyif için yapıyorum",
+    theme: {
+      dark: "Koyu",
+      light: "Açık"
+    },
+    now: {
+      label: "Şimdi",
+      items: {
+        vera: {
+          role: "Otomasyon Mühendisi",
+          place: "Vera Elektromekanik",
+          period: "Eyl 2026 - Günümüz",
+          summary: "Yüksek gerilim trafo merkezleri için SCADA sistemleri, RTU entegrasyonları ve PLC programlama."
+        },
+        consultant: {
+          role: "Bağımsız Teknik Danışman",
+          place: "",
+          period: "2026'dan beri",
+          summary: "WordPress taşımaları, web çözümleri, sunucu altyapısı."
+        }
+      }
+    },
+    before: {
+      label: "Önce",
+      items: {
+        sensity: {
+          role: "Kıdemli Frontend Mühendisi",
+          place: "Sensity AI",
+          period: "Ağu 2022 - Ara 2025"
+        },
+        pitcher: {
+          role: "Yazılım Mühendisi",
+          place: "Pitcher AG",
+          period: "Haz 2021 - Ağu 2022"
+        },
+        reybex: {
+          role: "Frontend Geliştirici",
+          place: "reybex ERP",
+          period: "Kas 2019 - Haz 2021"
+        }
+      }
+    },
+    contact: {
+      label: "İletişim",
+      location: "Ankara, Türkiye"
+    }
+  },
   versionsPage: {
     eyebrow: "Versiyonlar",
     title: "Eskileri de tuttum",

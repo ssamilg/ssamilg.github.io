@@ -12,12 +12,14 @@ const entries = [
 ]
 
 const onVersions = computed(() => route.name === 'versions')
+const onCurrent = computed(() => route.name === 'home')
 </script>
 
 <template>
   <nav id="version-archive-bar">
     <a href="/versions" :aria-current="onVersions ? 'page' : undefined">Versions</a>
     <a v-for="entry in entries" :key="entry.id" :href="entry.href">{{ entry.id }}</a>
+    <a href="/" :aria-current="onCurrent ? 'page' : undefined">Now</a>
   </nav>
 </template>
 

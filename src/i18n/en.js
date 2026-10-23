@@ -128,6 +128,56 @@ export default {
     title: "About Me",
     description: "My journey in tech"
   },
+  placeholder: {
+    eyebrowBefore: "Automation Engineer @ ",
+    eyebrowBrand: "VERA",
+    lead: "I used to build software for money, now I do it for fun",
+    theme: {
+      dark: "Dark",
+      light: "Light"
+    },
+    now: {
+      label: "Now",
+      items: {
+        vera: {
+          role: "Automation Engineer",
+          place: "Vera Elektromekanik",
+          period: "Sep 2026 - Present",
+          summary: "SCADA systems, RTU integrations, and PLC programming for high-voltage substations."
+        },
+        consultant: {
+          role: "Independent Technical Consultant",
+          place: "",
+          period: "since 2026",
+          summary: "WordPress migrations, web solutions, server infrastructure."
+        }
+      }
+    },
+    before: {
+      label: "Before",
+      items: {
+        sensity: {
+          role: "Senior Frontend Engineer",
+          place: "Sensity AI",
+          period: "Aug 2022 - Dec 2025"
+        },
+        pitcher: {
+          role: "Software Engineer",
+          place: "Pitcher AG",
+          period: "Jun 2021 - Aug 2022"
+        },
+        reybex: {
+          role: "Frontend Developer",
+          place: "reybex ERP",
+          period: "Nov 2019 - Jun 2021"
+        }
+      }
+    },
+    contact: {
+      label: "Contact",
+      location: "Ankara, Türkiye"
+    }
+  },
   versionsPage: {
     eyebrow: "Versions",
     title: "I kept the old ones",
