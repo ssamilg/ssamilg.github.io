@@ -62,12 +62,16 @@ export function versionBar(currentId) {
   return bar
 }
 
-export function applyVersionBar(html, currentId) {
+export function stripVersionBar(html) {
   const start = html.indexOf('<nav id="version-archive-bar">')
   const styleEnd = start === -1 ? -1 : html.indexOf('</style>', start)
   const stripped = start === -1 || styleEnd === -1
     ? html
     : `${html.slice(0, start)}${html.slice(styleEnd + '</style>'.length)}`
-  const withBar = stripped.replace('</body>', `${versionBar(currentId)}\n  </body>`)
+  return stripped
+}
+
+export function applyVersionBar(html, currentId) {
+  const withBar = stripVersionBar(html).replace('</body>', `${versionBar(currentId)}\n  </body>`)
   return withBar
 }

@@ -130,6 +130,40 @@ export default {
     title: "Hakkımda",
     description: "Teknolojideki yolculuğum"
   },
+  versionsPage: {
+    eyebrow: "Versiyonlar",
+    title: "Eskileri de tuttum",
+    intro: "Burası birkaç kez değişti. Eskilerini silmedim. Belki ben dönerim diye, belki sen.",
+    open: "Aç",
+    items: {
+      v0: {
+        period: "2023 – 2025",
+        title: "Dört sekme, bir fotoğraf",
+        body: "İlk düzgün hali buydu. Ortada adım, sonra ben, işler, bir türlü dolduramadığım blog ve biraz müzik. İki yıl kadar böyle kaldı."
+      },
+      v05: {
+        period: "Ocak 2025",
+        title: "İki haftalık bir kâğıt",
+        body: "Sekmeleri kaldırdım. Ortaya, birine olduğu gibi uzatabileceğim bir sayfa çıktı. Türkçesi, İngilizcesi, aydınlık bir tema, PDF'i de vardı. Hoşuma gitti. Çabuk da geçti. Sonra kayan bir sayfa istedim."
+      },
+      v1: {
+        period: "2025 – 2026",
+        title: "Bir ekran, sonra öbürü",
+        body: "Yerleştiğim ana sayfa bu. Üstte bir merhaba, sonra ben, işler, araçlar, yaptığım birkaç şey. En altta da bana yazabileceğin yer. Sekmeye basmıyorsun, aşağı iniyorsun."
+      },
+      v2: {
+        period: "2026",
+        title: "Uzun hali",
+        body: "Ana sayfa misafirlik gibi kalınca CV'yi yazdım. İşin tamamı burada, yetenekler de küçük ikonlarıyla. İsteyen basıp alıyor."
+      },
+      now: {
+        mark: "Şimdi",
+        period: "Bugün",
+        title: "Buradasın",
+        body: "Sitenin bugünkü hali. Yukarıdakiler çıktığım yerler. Yenisi gelene kadar bu duruyor."
+      }
+    }
+  },
   resume: {
     generating: "Özgeçmişiniz oluşturuluyor...",
     skills: {

@@ -128,6 +128,40 @@ export default {
     title: "About Me",
     description: "My journey in tech"
   },
+  versionsPage: {
+    eyebrow: "Versions",
+    title: "I kept the old ones",
+    intro: "This place has changed its clothes a few times. I left the earlier ones standing, in case I want to walk back through them. Or in case you do.",
+    open: "Open",
+    items: {
+      v0: {
+        period: "2023 – 2025",
+        title: "Four tabs and a photo",
+        body: "The first real one. My name in the middle, then me, the jobs, a blog I never quite filled, and a little music. It stayed like that for about two years."
+      },
+      v05: {
+        period: "January 2025",
+        title: "Two weeks as a document",
+        body: "I took the tabs away and tried to make a page you could hand to someone. English and Turkish, a light theme, a PDF. I liked it briefly. Then I wanted the page to move."
+      },
+      v1: {
+        period: "2025 – 2026",
+        title: "One screen at a time",
+        body: "The home I ended up living in. A hello, then me, the work, the tools, a few things I built, and a way to reach me. You walk through it instead of clicking tabs."
+      },
+      v2: {
+        period: "2026",
+        title: "The long version",
+        body: "When the home page felt too much like a visit, I wrote the CV. The work in full, the skills with their little icons, and a page that prints if a file is what someone needs."
+      },
+      now: {
+        mark: "Now",
+        period: "Today",
+        title: "Where you are",
+        body: "This is the current site. The ones above are rooms I moved out of. This one stays until the next move."
+      }
+    }
+  },
   resume: {
     generating: "Generating your resume...",
     skills: {

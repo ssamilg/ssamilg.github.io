@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { applyVersionBar, versions } from './version-bar.mjs'
+import { applyVersionBar, stripVersionBar, versions } from './version-bar.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const previewRoot = path.join(root, 'version-preview')
@@ -23,12 +23,9 @@ function main() {
     throw new Error('Run the site build and version build before assembling')
   }
   versions.forEach((version) => copyVersion(version.id))
-  const versionsDir = path.join(distRoot, 'versions')
-  fs.mkdirSync(versionsDir, { recursive: true })
-  const indexHtml = applyVersionBar(fs.readFileSync(path.join(previewRoot, 'index.html'), 'utf8'), 'index')
-  fs.writeFileSync(path.join(versionsDir, 'index.html'), indexHtml)
+  fs.rmSync(path.join(distRoot, 'versions'), { recursive: true, force: true })
   const liveIndex = path.join(distRoot, 'index.html')
-  fs.writeFileSync(liveIndex, applyVersionBar(fs.readFileSync(liveIndex, 'utf8'), null))
+  fs.writeFileSync(liveIndex, stripVersionBar(fs.readFileSync(liveIndex, 'utf8')))
   console.log('Versions assembled into dist')
 }
 

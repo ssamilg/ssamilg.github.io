@@ -51,8 +51,6 @@ function resolveFile(urlPath) {
     } else {
       filePath = path.join(root, 'index.html')
     }
-  } else if (urlPath === '/versions' || urlPath === '/versions/' || urlPath === '/versions/index.html') {
-    filePath = path.join(distRoot, 'versions/index.html')
   } else if (urlPath !== '/' && urlPath !== '/index.html') {
     const candidate = path.normalize(path.join(distRoot, urlPath.replace(/^\//, '')))
     const insideDist = candidate.startsWith(`${distRoot}${path.sep}`)
